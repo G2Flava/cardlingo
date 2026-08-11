@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f5f2" />
+  <title>CardLingo · 角色卡安全翻译器</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="CardLingo 导航">
+      <div class="rail-top">
+        <button class="rail-menu" aria-label="菜单">☰</button>
+        <div class="wordmark">CARD<br>LINGO</div>
+      </div>
+      <nav class="rail-nav">
+        <button class="rail-link active" data-jump="dropzone"><span>01</span> 导入</button>
+        <button class="rail-link" data-jump="workspace"><span>02</span> 翻译</button>
+        <button class="rail-link" data-jump="exportPanel"><span>03</span> 导出</button>
+      </nav>
+      <div class="rail-bottom">
+        <span class="local-dot"></span>
+        <span>LOCAL FIRST</span>
+      </div>
+    </aside>
+
+    <div class="page">
+      <header class="masthead">
+        <div>
+          <div class="eyebrow">CHARACTER CARD TRANSLATOR / 2026</div>
+          <h1>角色卡，<em>安全翻译。</em></h1>
+        </div>
+        <div class="mast-actions">
+          <button id="openSettings" class="text-btn">API 设置 ↗</button>
+          <button id="themeToggle" class="square-btn" title="切换主题" aria-label="切换主题">◐</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="dropzone" class="hero-drop" tabindex="0">
+          <input id="fileInput" type="file" accept=".png,.json,.charx,application/json,image/png" hidden />
+          <div class="hero-copy">
+            <div class="section-no">01 / IMPORT</div>
+            <h2>把角色卡<br>放到这里。</h2>
+            <p>读取 PNG / JSON / CHARX，自动识别 Character Card V1 / V2 / V3。所有解析与重新封装都在你的浏览器中完成。</p>
+          </div>
+          <div class="upload-card">
+            <div class="upload-arrow">↗</div>
+            <div>
+              <strong>拖入文件</strong>
+              <span>或从设备中选择</span>
+            </div>
+            <button id="chooseFile" class="black-btn">选择角色卡</button>
+          </div>
+          <div class="support-line"><span>PNG</span><span>JSON</span><span>CHARX</span><span>CC V1—V3</span><span>WORLD BOOK</span></div>
+        </section>
+
+        <section id="workspace" class="workspace hidden">
+          <div class="workspace-head">
+            <div><div class="section-no">02 / TRANSLATE</div><h2>翻译工作台</h2></div>
+            <div class="status-inline"><span class="local-dot"></span> 原文件不会被修改</div>
+          </div>
+
+          <div class="work-grid">
+            <aside class="character-sheet">
+              <div class="avatar-wrap"><img id="avatar" alt="角色卡头像" /></div>
+              <div class="character-copy">
+                <div class="tiny-label">CURRENT CARD</div>
+                <h3 id="cardName">未命名角色</h3>
+                <p id="cardSpec">—</p>
+                <div class="meta-table">
+                  <div><span>FORMAT</span><b id="fileTypeChip">—</b></div>
+                  <div><span>FIELDS</span><b id="fieldCountChip">0 字段</b></div>
+                </div>
+              </div>
+              <div class="side-actions">
+                <button id="replaceFile" class="line-btn">更换文件</button>
+                <button id="resetCard" class="line-btn danger-text">清空</button>
+              </div>
+            </aside>
+
+            <section class="editor-sheet">
+              <div class="tabs" role="tablist">
+                <button class="tab active" data-tab="translate">翻译</button>
+                <button class="tab" data-tab="fields">字段</button>
+                <button class="tab" data-tab="json">JSON</button>
+                <button class="tab" data-tab="log">日志</button>
+              </div>
+
+              <div id="tab-translate" class="tab-content active">
+                <div class="two-col top-fields">
+                  <label class="field"><span>源语言 / SOURCE</span><select id="sourceLang"><option value="auto">自动识别</option><option value="en">英文</option><option value="ja">日文</option><option value="ko">韩文</option><option value="zh">中文</option></select></label>
+                  <label class="field"><span>目标语言 / TARGET</span><select id="targetLang"><option value="zh-CN">简体中文</option><option value="zh-TW">繁体中文</option><option value="en">英文</option><option value="ja">日文</option><option value="ko">韩文</option></select></label>
+                </div>
+
+                <section class="setting-section">
+                  <div class="setting-title"><div><span>01</span><h3>安全翻译范围</h3></div><button id="selectSafe" class="micro-btn">恢复推荐</button></div>
+                  <p class="setting-desc">默认只翻译自然语言内容，结构字段与程序内容不会被改动。</p>
+                  <div id="translationOptions" class="check-grid"></div>
+                </section>
+
+                <section class="setting-section">
+                  <div class="setting-title"><div><span>02</span><h3>变量与结构保护</h3></div></div>
+                  <p class="setting-desc">翻译前替换成占位符，翻译后原样还原。占位符丢失时自动判为失败。</p>
+                  <div class="protection-list"><span>{{user}} / {{char}}</span><span>HTML / XML</span><span>CODE</span><span>URL</span><span>${变量}</span><span>&lt;% 模板 %&gt;</span></div>
+                  <label class="field topgap"><span>自定义不可翻译词</span><textarea id="customProtected" rows="4" placeholder="每行一个；也可写正则 /.../flags"></textarea></label>
+                </section>
+
+                <section class="setting-section">
+                  <div class="setting-title"><div><span>03</span><h3>翻译策略</h3></div></div>
+                  <p class="setting-desc">保持 RP 文风，不解释、不总结、不改写设定；世界书按条目处理。</p>
+                  <div class="two-col">
+                    <label class="field"><span>每批最大字符</span><input id="batchChars" type="number" min="1000" max="60000" step="1000" value="12000" /></label>
+                    <label class="field"><span>并发请求</span><input id="concurrency" type="number" min="1" max="5" value="2" /></label>
+                  </div>
+                  <label class="field topgap"><span>额外翻译要求</span><textarea id="extraPrompt" rows="4" placeholder="例如：人名保留英文；对白更自然；不要翻译专有名词……"></textarea></label>
+                </section>
+
+                <div id="progressWrap" class="progress-wrap hidden">
+                  <div class="progress-top"><span id="progressText">准备中…</span><strong id="progressPercent">0%</strong></div>
+                  <div class="progress-bar"><i id="progressBar"></i></div>
+                </div>
+
+                <div class="action-row sticky-actions">
+                  <button id="testApi" class="line-btn">测试 API</button>
+                  <button id="cancelTranslate" class="line-btn danger-text hidden">停止</button>
+                  <button id="quickDownload" class="line-btn">一键下载中文版</button>
+                  <button id="startTranslate" class="black-btn grow">开始安全翻译 ↗</button>
+                </div>
+              </div>
+
+              <div id="tab-fields" class="tab-content">
+                <div class="toolbar"><input id="fieldSearch" class="search" placeholder="搜索字段路径或内容…" /><button id="showChanged" class="micro-btn">仅显示已翻译</button></div>
+                <div id="fieldList" class="field-list"></div>
+              </div>
+
+              <div id="tab-json" class="tab-content">
+                <div class="json-head"><span>当前角色卡数据</span><div><button id="copyJson" class="micro-btn">复制</button><button id="applyJson" class="micro-btn">应用编辑</button></div></div>
+                <textarea id="jsonEditor" class="json-editor" spellcheck="false"></textarea>
+              </div>
+
+              <div id="tab-log" class="tab-content"><pre id="logBox" class="log-box">等待载入角色卡…</pre></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="exportPanel" class="export-panel hidden">
+          <div class="export-copy"><div class="section-no">03 / EXPORT</div><h2>带走中文版。</h2><p id="exportHint">保留原格式，原始文件不会被修改。</p></div>
+          <div class="export-actions">
+            <button id="exportJson" class="line-btn">导出 JSON</button>
+            <button id="exportOriginalFormat" class="line-btn">导出原格式</button>
+            <button id="quickDownloadBottom" class="black-btn">一键下载中文版 ↗</button>
+          </div>
+        </section>
+      </main>
+
+      <footer><span>CardLingo / LOCAL-FIRST</span><span>角色卡解析、编辑、重新封装均在本地完成</span><span>API KEY 只发送给你选择的模型服务</span></footer>
+    </div>
+  </div>
+
+  <dialog id="settingsDialog" class="modal">
+    <form method="dialog" class="modal-card" id="settingsForm">
+      <div class="modal-head"><div><div class="section-no">SETTINGS</div><h2>API 设置</h2><p>支持 OpenAI 兼容 Chat Completions 与 Responses API。</p></div><button value="cancel" class="close-btn">×</button></div>
+      <div class="modal-body">
+        <label class="field"><span>快速预设</span><select id="providerPreset"><option value="deepseek-flash">DeepSeek V4 Flash</option><option value="deepseek-pro">DeepSeek V4 Pro</option><option value="openai-compatible">OpenAI 兼容 / 自定义</option></select></label>
+        <label class="field"><span>API 密钥</span><div class="input-inline"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-…" /><button type="button" id="toggleKey" class="micro-btn">显示</button></div></label>
+        <label class="check-line"><input id="rememberKey" type="checkbox" /> <span>在此浏览器保存 API Key（公用设备不建议）</span></label>
+        <label class="field"><span>基础 URL</span><input id="baseUrl" value="https://api.deepseek.com" /><small>填写服务根地址即可，程序会自动补全接口路径。</small></label>
+        <label class="field"><span>模型名称</span><input id="modelName" value="deepseek-v4-flash" /></label>
+        <div class="field"><span>API 协议</span><div class="radio-row"><label><input type="radio" name="protocol" value="chat" checked /> Chat Completions</label><label><input type="radio" name="protocol" value="responses" /> Responses API</label></div></div>
+        <div class="two-col"><label class="field"><span>Temperature</span><input id="temperature" type="number" min="0" max="2" step="0.05" value="0.2" /></label><label class="field"><span>超时（秒）</span><input id="timeoutSec" type="number" min="15" max="300" value="120" /></label></div>
+        <label class="check-line"><input id="nonThinking" type="checkbox" checked /> <span>请求非思考模式（服务支持时）</span></label>
+      </div>
+      <div class="modal-foot"><button value="cancel" class="line-btn">取消</button><button id="saveSettings" value="default" class="black-btn">保存设置</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" integrity="sha256-rMfkFFWoB2W1/Zx+4bgHim0WC7vKRVrq6FTeZclH1Z4=" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
