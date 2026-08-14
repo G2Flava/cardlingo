@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta name="theme-color" content="#111827" />
-  <title>CardLingo · 角色卡翻译器 v1.1.4</title>
+  <title>CardLingo · 角色卡翻译器 v1.1.5</title>
   <style>
 :root{
   --bg:#111827;--panel:#182033;--panel2:#1e293b;--panel3:#222d42;--line:#344158;--text:#edf2f7;--muted:#8e9bb3;--accent:#35d0a5;--accent2:#2ba986;--danger:#ef6b73;--shadow:0 20px 60px rgba(0,0,0,.24);--top:72px;--side:286px
@@ -81,7 +81,7 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
 </style>
 
 <script>
-window.CARDLINGO_BUILD="1.1.2-script-trigger-visibility";
+window.CARDLINGO_BUILD="1.1.5-visibility-ui-fix";
 console.info("CardLingo build:", window.CARDLINGO_BUILD);
 </script>
 </head>
@@ -94,7 +94,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <div class="brand-icon">卡</div>
         <div>
           <div class="brand-name">CardLingo</div>
-          <div class="brand-sub">Character Card Translator · v1.1.4 · LANGUAGE SCOPE</div>
+          <div class="brand-sub">Character Card Translator · v1.1.5 · VISIBILITY UI FIX</div>
         </div>
       </div>
       <div class="topbar-actions">
@@ -152,7 +152,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <button id="clearAutosaveBtn" class="side-btn compact">⌫ 清除此卡自动保存</button>
       </div>
 
-      <div style="font-size:10px;color:var(--muted);padding:10px 4px 2px">BUILD v1.1.4 · LANGUAGE SCOPE · Risu / CCv3 · SAFE STRUCTURE</div>
+      <div style="font-size:10px;color:var(--muted);padding:10px 4px 2px">BUILD v1.1.5 · VISIBILITY UI FIX · Risu / CCv3 · SAFE STRUCTURE</div>
       <div class="sidebar-footer">
         <select id="uiLanguage" class="compact-select" aria-label="界面语言">
           <option value="zh">中文</option>
@@ -241,7 +241,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
               <div id="bookEntries" class="book-entries"></div>
             </div>
           </div>
-
+        </div>
 
         <div id="scriptsView" class="view">
           <div class="visibility-explain"><b>安全原则：</b>CardLingo 只做静态读取与编辑，绝不会执行导入卡里的 JavaScript、Lua、HTML 或触发器。正则表达式、代码、触发条件默认禁止自动翻译，避免破坏插件逻辑。</div>
@@ -264,6 +264,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         </div>
 
         <div id="detectView" class="view">
+          <div class="info-tip" style="margin-bottom:10px"><b>v1.1.5：</b>检测结果会直接显示在本页下方；若检测到可翻译词条，会出现勾选列表与“翻译已勾选外显词条”按钮。</div>
           <div class="visibility-explain"><b>外显检测现在直接给你“可处理词条”。</b>检测完成后，优先列出会出现在聊天框、固定界面、显示正则、触发器 UI 与角色书界面代码中的实际词条。可逐条勾选或一键全选，再用下方按钮翻译；翻译结果会直接写回原字段/原词条，导出时就是同步后的版本。代码、正则条件、变量和未解析模块保持锁定。</div>
           <div class="visibility-toolbar"><button id="runVisibilityScanBtn" class="primary-btn">重新检测</button><button id="exportVisibilityReportBtn" class="soft-btn">导出检测报告</button></div>
           <div id="visibilitySummary" class="visibility-summary"></div>
@@ -273,7 +274,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
             <div class="visibility-translate-bar"><button id="translateVisibilitySelectedBtn" class="primary-btn">翻译已勾选外显词条</button><button id="visibilityTranslateOptions" class="mini-btn lang-options" title="翻译语言设置">⋯</button><small id="visibilityTranslateScope">EN + KO</small><span class="spacer"></span><small>整词条翻译 · 同步写回原位置</small></div>
           </div>
           <details class="visibility-details"><summary>查看检测依据 / 风险线索（高级）</summary><div id="visibilityList" class="visibility-list"></div></details>
-        </div>        </div>
+        </div>
       </section>
     </main>
 
@@ -1126,7 +1127,7 @@ function closeDialog(el){if(!el)return;if(typeof el.close==='function')el.close(
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function setUiLanguage(lang){const m=UI[lang]||UI.zh;$$('.main-tab').forEach(x=>x.textContent=m[x.dataset.view]||x.textContent);if(!['detect'].includes(state.view))$('#batchTranslateTop').textContent=m.batch;storageSet('cardlingo-ui-lang',lang)}
 function bind(){loadSettings();loadGlossary();loadTranslationLanguagePrefs();$('#sidebarAvatar').src=fallbackAvatar();const openFile=()=>$('#fileInput').click();$('#importCardBtn').onclick=openFile;$('#welcomeImportBtn').onclick=openFile;$('#fileInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#importJsonBtn').onclick=()=>$('#jsonImportInput').click();$('#jsonImportInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#menuBtn').onclick=openSidebar;$('#sidebarMask').onclick=closeSidebar;$$('.main-tab').forEach(x=>x.onclick=()=>switchView(x.dataset.view));$('#batchTranslateBtn').onclick=currentPrimaryAction;$('#batchTranslateTop').onclick=currentPrimaryAction;$('#batchTranslateOptions').onclick=()=>openTranslationLanguageDialog(batchLanguageKey(),state.view==='book'?'一键翻译角色书':'一键翻译角色');$('#batchTranslateTopOptions').onclick=()=>openTranslationLanguageDialog(batchLanguageKey(),state.view==='book'?'一键翻译角色书':'一键翻译角色');$('#rollbackAllBtn').onclick=rollbackCurrentView;$('#addGreetingBtn').onclick=addGreeting;$('#createBookBtn').onclick=createBook;$('#addBookEntryBtn').onclick=addBookEntry;$('#addBookFolderBtn').onclick=addBookFolder;$('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#historyBtn').onclick=()=>{openDialog($('#historyDialog'));renderHistoryList()};$('#closeHistory').onclick=()=>closeDialog($('#historyDialog'));$('#undoDialogBtn').onclick=undo;$('#redoDialogBtn').onclick=redo;$('#restoreOriginalBtn').onclick=restoreWholeOriginal;$('#settingsBtn').onclick=()=>openDialog($('#settingsDialog'));$('#saveSettingsBtn').onclick=e=>{e.preventDefault();saveSettings();closeDialog($('#settingsDialog'))};$('#translationStyle').onchange=()=>{const v=$('#translationStyle').value;if(v==='novel'&&Number($('#temperature').value)<0.4)$('#temperature').value='0.55';};['modelName','batchChars','targetLang','sourceLang','translationStyle','translateNames','translateTags','translateBookKeys'].forEach(id=>{const el=$('#'+id);if(el)el.addEventListener('change',renderCostEstimate)});$('#modelName')?.addEventListener('input',renderCostEstimate);$('#toggleApiKey').onclick=()=>{$('#apiKey').type=$('#apiKey').type==='password'?'text':'password'};$('#testApiBtn').onclick=testApi;$('#glossaryBtn').onclick=()=>{openDialog($('#glossaryDialog'));renderGlossary()};$('#closeGlossary').onclick=()=>closeDialog($('#glossaryDialog'));$('#termScanBtn').onclick=()=>{openDialog($('#termScanDialog'));renderTermCandidates();closeSidebar()};$('#closeTermScan').onclick=()=>closeDialog($('#termScanDialog'));$('#runTermScanBtn').onclick=scanTerms;$('#selectAllTermsBtn').onclick=()=>{for(const x of state.termCandidates)x.selected=true;renderTermCandidates()};$('#applyTermsBtn').onclick=applyTermCandidates;$('#clearConsistencyBtn').onclick=clearConsistencyMemory;$('#integrityBtn').onclick=()=>{runIntegrityCheck(true);openDialog($('#integrityDialog'));closeSidebar()};$('#visibilityBtn').onclick=()=>{switchView('detect');runVisibilityScan(false);closeSidebar()};$('#scanVisibilityFromScriptsBtn').onclick=()=>{switchView('detect');runVisibilityScan(false)};$('#runVisibilityScanBtn').onclick=()=>runVisibilityScan(false);$('#exportVisibilityReportBtn').onclick=exportVisibilityReport;$('#visibilitySelectAll').onchange=e=>setAllVisibilityTargets(e.target.checked);$('#visibilityClearSelectionBtn').onclick=()=>setAllVisibilityTargets(false);$('#translateVisibilitySelectedBtn').onclick=translateSelectedVisibilityTargets;$('#visibilityTranslateOptions').onclick=()=>openTranslationLanguageDialog(visibilityLanguageKey(),'外显词条批量翻译');$('#addRegexScriptBtn').onclick=addRegexScript;$('#addTriggerBtn').onclick=addTrigger;$('#closeIntegrity').onclick=()=>closeDialog($('#integrityDialog'));$('#closeTranslationLanguage').onclick=()=>closeDialog($('#translationLanguageDialog'));$('#cancelTranslationLanguage').onclick=()=>closeDialog($('#translationLanguageDialog'));$('#saveTranslationLanguage').onclick=saveTranslationLanguageDialog;$('#translationLangEn').onchange=updateTranslationLanguageDialogWarning;$('#translationLangKo').onchange=updateTranslationLanguageDialogWarning;$('#runIntegrityBtn').onclick=()=>runIntegrityCheck(false);$('#exportIntegrityBtn').onclick=exportIntegrityReport;$('#resumeTranslateBtn').onclick=resumePendingTranslation;$('#clearAutosaveBtn').onclick=clearCurrentAutosave;$('#addGlossaryBtn').onclick=()=>{state.glossary.push({source:'',target:'',category:'name',note:''});saveGlossary();renderGlossary()};$('#importGlossaryBtn').onclick=()=>$('#glossaryImportInput').click();$('#glossaryImportInput').onchange=e=>{if(e.target.files?.[0])importGlossary(e.target.files[0]);e.target.value=''};$('#exportGlossaryBtn').onclick=exportGlossary;$('#clearGlossaryBtn').onclick=()=>{if(confirm('确定清空全部术语吗？')){state.glossary=[];saveGlossary();renderGlossary()}};$('#assistantBtn').onclick=()=>{$('#assistantPanel').classList.add('open');closeSidebar()};$('#closeAssistant').onclick=()=>$('#assistantPanel').classList.remove('open');$('#sendChatBtn').onclick=sendAssistant;$('#chatInput').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')sendAssistant()});$('#clearCardBtn').onclick=()=>{if(confirm('确定清空当前角色卡吗？'))clearCard()};$('#exportJsonBtn').onclick=exportJson;$('#exportImageBtn').onclick=()=>{try{downloadBlob(exportPng(),`${safeBaseName(state.file?.name)}_中文版.${state.fileType==='apng'?'apng':'png'}`)}catch(e){toast(e.message)}};$('#quickDownloadBtn').onclick=quickDownload;$('#cancelTranslateBtn').onclick=()=>{state.abortController?.abort();hideProgress()};$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');storageSet('cardlingo-theme',document.body.classList.contains('light')?'light':'dark')};if(storageGet('cardlingo-theme')==='light')document.body.classList.add('light');const lang=storageGet('cardlingo-ui-lang')||'zh';$('#uiLanguage').value=lang;setUiLanguage(lang);$('#uiLanguage').onchange=e=>setUiLanguage(e.target.value);window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}});updateHistoryUI();renderActualUsage();renderConsistencyBadge();renderIntegrityBadge();renderVisibilityBadge();updateBatchLanguageButtons();updateAutosaveUi('自动保存：等待载入文件')}
-const CARDLINGO_VERSION="1.1.4-visibility-target-select-translate";
+const CARDLINGO_VERSION="1.1.5-visibility-ui-fix";
 let __cardLingoBooted=false;
 function showBootError(err){console.error('[CardLingo boot error]',err);const el=document.getElementById('bootError');if(el){el.hidden=false;el.textContent='CardLingo 启动失败：'+(err?.message||String(err))+'。请截图这一行发给我。'}}
 function bootCardLingo(){if(__cardLingoBooted)return;__cardLingoBooted=true;try{const touch=(navigator.maxTouchPoints||0)>0||(window.matchMedia&&matchMedia('(pointer:coarse)').matches);if(touch)document.body.classList.add('touch-ui');bind();document.documentElement.dataset.cardlingoReady='1'}catch(err){showBootError(err)}}
