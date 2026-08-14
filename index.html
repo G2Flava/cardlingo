@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta name="theme-color" content="#111827" />
-  <title>CardLingo · 角色卡翻译器 v1.0.5</title>
+  <title>CardLingo · 角色卡翻译器 v1.0.7</title>
   <style>
 :root{
   --bg:#111827;--panel:#182033;--panel2:#1e293b;--panel3:#222d42;--line:#344158;--text:#edf2f7;--muted:#8e9bb3;--accent:#35d0a5;--accent2:#2ba986;--danger:#ef6b73;--shadow:0 20px 60px rgba(0,0,0,.24);--top:72px;--side:286px
@@ -56,6 +56,11 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
 #bootError[hidden]{display:none!important}
 
 </style>
+
+<script>
+window.CARDLINGO_BUILD="1.0.7-format-matrix";
+console.info("CardLingo build:", window.CARDLINGO_BUILD);
+</script>
 </head>
 <body>
   <div id="bootError" hidden></div>
@@ -66,7 +71,7 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
         <div class="brand-icon">卡</div>
         <div>
           <div class="brand-name">CardLingo</div>
-          <div class="brand-sub">Character Card Translator · v1.0.3</div>
+          <div class="brand-sub">Character Card Translator · v1.0.7 · FORMAT MATRIX</div>
         </div>
       </div>
       <div class="topbar-actions">
@@ -81,16 +86,16 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
         <div class="preview-frame"><img id="sidebarAvatar" alt="角色头像" /></div>
         <div class="preview-meta">
           <div id="sidebarName" class="preview-name">尚未载入角色卡</div>
-          <div id="sidebarSpec" class="preview-spec">PNG / JSON / CHARX</div>
+          <div id="sidebarSpec" class="preview-spec">PNG / APNG / JSON / JSONL / CHARX / JPG-CHARX / ZIP / LOREBOOK</div>
         </div>
       </div>
 
       <div class="sidebar-section">
         <div class="section-label">文件</div>
-        <input id="fileInput" type="file" accept=".png,.json,.charx,image/png,application/json" hidden />
-        <input id="jsonImportInput" type="file" accept=".json,application/json" hidden />
-        <button id="importCardBtn" class="side-btn">⇧ 导入角色卡</button>
-        <button id="importJsonBtn" class="side-btn">{ } 导入 JSON</button>
+        <input id="fileInput" type="file" accept=".png,.apng,.json,.jsonl,.charx,.zip,.jpg,.jpeg,.lorebook,image/png,image/jpeg,application/json,application/zip" hidden />
+        <input id="jsonImportInput" type="file" accept=".json,.jsonl,.lorebook,application/json,application/x-ndjson" hidden />
+        <button id="importCardBtn" class="side-btn">⇧ 导入文件</button>
+        <button id="importJsonBtn" class="side-btn">{ } 导入 JSON / 角色书</button>
         <button id="exportImageBtn" class="side-btn" disabled>⇩ 导出图片卡</button>
         <button id="exportJsonBtn" class="side-btn" disabled>⇩ 导出 JSON</button>
         <button id="quickDownloadBtn" class="side-btn accent" disabled>⇩ 一键下载中文版</button>
@@ -112,6 +117,7 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
         <div id="historySummary" class="history-summary">暂无修改</div>
       </div>
 
+      <div style="font-size:10px;color:var(--muted);padding:10px 4px 2px">BUILD v1.0.7 · FORMAT MATRIX · SAFE SEGMENTS</div>
       <div class="sidebar-footer">
         <select id="uiLanguage" class="compact-select" aria-label="界面语言">
           <option value="zh">中文</option>
@@ -128,9 +134,9 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
         <div class="welcome-inner">
           <div class="welcome-icon">⇧</div>
           <h1>导入角色卡开始翻译</h1>
-          <p>支持 SillyTavern Character Card V1 / V2 / V3，PNG、JSON 与 CHARX。角色卡与角色书分开编辑，支持单字段翻译、一键批量翻译、术语表、AI 助手、导出与翻译回退。</p>
+          <p>支持 Character Card V1 / V2 / V3、PNG / APNG、JSON、标准 CHARX、Risu JPEG-CHARX、CHARX ZIP，以及独立角色书 JSON / .lorebook。按文件签名识别，扩展名写错也会尽量自动判断；未知字段、CHARX 资产和附加文件原样保留。</p>
           <button id="welcomeImportBtn" class="primary-btn large">选择角色卡</button>
-          <div class="welcome-tags"><span>PNG</span><span>JSON</span><span>CHARX</span><span>V1/V2/V3</span><span>Character Book</span></div>
+          <div class="welcome-tags"><span>PNG/APNG</span><span>JSON V1/V2/V3</span><span>CHARX</span><span>JPG-CHARX</span><span>ZIP</span><span>LOREBOOK</span></div>
         </div>
       </section>
 
@@ -227,7 +233,7 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
         <div class="dialog-body">
           <div class="toolbar-row">
             <button id="addGlossaryBtn" class="primary-btn">＋ 新增词条</button>
-            <div class="toolbar-right"><input id="glossaryImportInput" type="file" accept=".json,application/json" hidden /><button id="importGlossaryBtn" class="soft-btn">导入</button><button id="exportGlossaryBtn" class="soft-btn">导出</button><button id="clearGlossaryBtn" class="soft-btn danger-text">清空</button></div>
+            <div class="toolbar-right"><input id="glossaryImportInput" type="file" accept=".json,.jsonl,.lorebook,application/json,application/x-ndjson" hidden /><button id="importGlossaryBtn" class="soft-btn">导入</button><button id="exportGlossaryBtn" class="soft-btn">导出</button><button id="clearGlossaryBtn" class="soft-btn danger-text">清空</button></div>
           </div>
           <div class="info-tip">建议把角色名、地名、组织名和固定术语写入术语表。目标译文为空的词条将被忽略。</div>
           <div id="glossaryList" class="glossary-list"></div>
@@ -270,15 +276,15 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   <script>
 'use strict';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const state={file:null,fileType:null,originalBytes:null,originalCard:null,card:null,pngMetaKey:null,charxZip:null,view:'character',history:[],redo:[],fieldHistory:new Map(),glossary:[],abortController:null,isTranslating:false,assistantPatches:null};
+const state={file:null,fileType:null,sourceExt:null,containerKind:'card',originalBytes:null,originalCard:null,originalContainer:null,card:null,pngMetaKey:null,charxZip:null,charxPrefix:null,charxEntryCount:0,charxCardPath:'card.json',lorebookAdapter:null,jsonlAdapter:null,view:'character',history:[],redo:[],fieldHistory:new Map(),glossary:[],abortController:null,isTranslating:false,assistantPatches:null};
 const CARD_FIELDS=[
-  {path:['data','name'],fallback:['name'],label:'名称',en:'NAME',type:'input',translate:'name'},
-  {path:['data','tags'],fallback:['tags'],label:'标签',en:'TAGS',type:'tags',translate:'tags'},
-  {path:['data','description'],fallback:['description'],label:'描述',en:'DESCRIPTION',type:'textarea',size:'large',translate:'text'},
-  {path:['data','personality'],fallback:['personality'],label:'性格',en:'PERSONALITY',type:'textarea',size:'medium',translate:'text'},
-  {path:['data','scenario'],fallback:['scenario'],label:'场景',en:'SCENARIO',type:'textarea',size:'medium',translate:'text'},
-  {path:['data','first_mes'],fallback:['first_mes'],label:'首条消息',en:'FIRST MESSAGE',type:'textarea',size:'large',translate:'text'},
-  {path:['data','mes_example'],fallback:['mes_example'],label:'示例对话',en:'EXAMPLE DIALOGUE',type:'textarea',size:'large',translate:'text'},
+  {path:['data','name'],fallback:['name'],fallbacks:[['char_name']],label:'名称',en:'NAME',type:'input',translate:'name'},
+  {path:['data','tags'],fallback:['tags'],fallbacks:[['char_tags']],label:'标签',en:'TAGS',type:'tags',translate:'tags'},
+  {path:['data','description'],fallback:['description'],fallbacks:[['char_persona'],['persona']],label:'描述',en:'DESCRIPTION',type:'textarea',size:'large',translate:'text'},
+  {path:['data','personality'],fallback:['personality'],fallbacks:[['char_personality']],label:'性格',en:'PERSONALITY',type:'textarea',size:'medium',translate:'text'},
+  {path:['data','scenario'],fallback:['scenario'],fallbacks:[['world_scenario']],label:'场景',en:'SCENARIO',type:'textarea',size:'medium',translate:'text'},
+  {path:['data','first_mes'],fallback:['first_mes'],fallbacks:[['char_greeting'],['greeting']],label:'首条消息',en:'FIRST MESSAGE',type:'textarea',size:'large',translate:'text'},
+  {path:['data','mes_example'],fallback:['mes_example'],fallbacks:[['example_dialogue'],['example_messages']],label:'示例对话',en:'EXAMPLE DIALOGUE',type:'textarea',size:'large',translate:'text'},
 ];
 const ADVANCED_FIELDS=[
   {path:['data','creator_notes'],fallback:['creator_notes'],label:'作者说明',en:'CREATOR NOTES',type:'textarea',size:'medium',translate:'text'},
@@ -291,13 +297,29 @@ function storageGet(k,fallback=null){try{const v=window.localStorage.getItem(k);
 function storageSet(k,v){try{window.localStorage.setItem(k,v);return true}catch{return false}}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2400)}
 function cardData(card=state.card){return card?.data&&typeof card.data==='object'?card.data:card}
-function detectSpec(card){if(card?.spec)return `${card.spec}${card.spec_version?` · ${card.spec_version}`:''}`;return cardData(card)?.name?'Character Card':'未知结构'}
-function safeBaseName(name){return(name||'character').replace(/\.(png|json|charx)$/i,'')}
+function detectSpec(card){
+  if(state.containerKind==='lorebook')return state.lorebookAdapter?.label||'Standalone Lorebook';
+  if(card?.spec)return `${card.spec}${card.spec_version?` · ${card.spec_version}`:''}`;
+  const d=cardData(card)||{};
+  if(d.char_name||d.char_persona||d.char_greeting)return 'Legacy / Off-spec JSON';
+  return d.name?'Character Card V1 / Legacy':'未知结构';
+}
+function fileExt(name){const m=String(name||'').toLowerCase().match(/\.([^.]+)$/);return m?m[1]:''}
+function safeBaseName(name){return(name||'character').replace(/\.charx\.zip$/i,'').replace(/\.(png|apng|jsonl?|charx|zip|jpe?g|lorebook)$/i,'')}
+function formatLabel(){
+  const map={png:'PNG Card',apng:'APNG Card',json:'JSON Card',jsonl:'JSONL',charx:'CHARX',charxzip:'CHARX ZIP',charxjpeg:'JPEG-CHARX',lorebook:'Standalone Lorebook'};
+  return map[state.fileType]||String(state.fileType||'').toUpperCase()||'UNKNOWN';
+}
 function pathExists(obj,path){let o=obj;for(const k of path){if(o==null||!(k in Object(o)))return false;o=o[k]}return true}
 function pathGet(obj,path){let o=obj;for(const k of path){if(o==null)return undefined;o=o[k]}return o}
 function ensurePath(obj,path){let o=obj;for(let i=0;i<path.length-1;i++){const k=path[i];if(o[k]==null||typeof o[k]!=='object')o[k]=typeof path[i+1]==='number'?[]:{};o=o[k]}return o}
 function pathSet(obj,path,val){const o=ensurePath(obj,path);o[path[path.length-1]]=val}
-function resolvePath(def){if(pathExists(state.card,def.path))return def.path;if(def.fallback&&pathExists(state.card,def.fallback))return def.fallback;return state.card?.data?def.path:def.fallback||def.path}
+function resolvePath(def){
+  const candidates=[def.path,def.fallback,...(def.fallbacks||[])].filter(Boolean);
+  for(const p of candidates)if(pathExists(state.card,p))return p;
+  if(state.card?.data)return def.path;
+  return def.fallback||def.fallbacks?.[0]||def.path;
+}
 function originalValue(path){return pathGet(state.originalCard,path)}
 function pathKey(path){return path.map(String).join('.')}
 function markFieldHistory(path,before,after,label='翻译'){const key=pathKey(path);if(before===after)return;const list=state.fieldHistory.get(key)||[];list.push({before,after,label,time:Date.now()});state.fieldHistory.set(key,list)}
@@ -322,14 +344,194 @@ function concatArrays(parts){const n=parts.reduce((s,p)=>s+p.length,0),out=new U
 function pngChunks(bytes){const sig=[137,80,78,71,13,10,26,10];if(!sig.every((v,i)=>bytes[i]===v))throw new Error('不是有效 PNG');let pos=8,out=[];while(pos+12<=bytes.length){const len=readU32(bytes,pos),type=new TextDecoder('ascii').decode(bytes.subarray(pos+4,pos+8)),data=bytes.subarray(pos+8,pos+8+len);out.push({type,data,raw:bytes.subarray(pos,pos+12+len)});pos+=12+len;if(type==='IEND')break}return out}
 function makeChunk(type,data){const tb=new TextEncoder().encode(type);return concatArrays([writeU32(data.length),tb,data,writeU32(crc32(concatArrays([tb,data])))])}
 function textChunk(keyword,value){return makeChunk('tEXt',concatArrays([new TextEncoder().encode(keyword),new Uint8Array([0]),new TextEncoder().encode(value)]))}
-function extractPngCard(bytes){const found={};for(const c of pngChunks(bytes)){if(c.type!=='tEXt')continue;const z=c.data.indexOf(0);if(z<0)continue;const key=new TextDecoder('latin1').decode(c.data.subarray(0,z));if(key!=='ccv3'&&key!=='chara')continue;const val=new TextDecoder('latin1').decode(c.data.subarray(z+1));try{found[key]=JSON.parse(b64ToUtf8(val))}catch{}}if(found.ccv3)return{card:found.ccv3,key:'ccv3'};if(found.chara)return{card:found.chara,key:'chara'};throw new Error('PNG 中未找到 ccv3 / chara 角色卡数据')}
+function startsWithBytes(bytes,sig){return sig.every((v,i)=>bytes[i]===v)}
+function isPngBytes(bytes){return bytes?.length>=8&&startsWithBytes(bytes,[137,80,78,71,13,10,26,10])}
+function isJpegBytes(bytes){return bytes?.length>=3&&bytes[0]===0xff&&bytes[1]===0xd8&&bytes[2]===0xff}
+function readLE16(a,o){return(a[o]|(a[o+1]<<8))>>>0}
+function readLE32(a,o){return(a[o]|(a[o+1]<<8)|(a[o+2]<<16)|(a[o+3]<<24))>>>0}
+function findZipStart(bytes){
+  if(!bytes||bytes.length<22)return-1;
+  const min=Math.max(0,bytes.length-22-65535);
+  let eocd=-1;
+  for(let i=bytes.length-22;i>=min;i--)if(bytes[i]===0x50&&bytes[i+1]===0x4b&&bytes[i+2]===0x05&&bytes[i+3]===0x06){eocd=i;break}
+  if(eocd<0)return-1;
+  const cdSize=readLE32(bytes,eocd+12),cdOffset=readLE32(bytes,eocd+16),actualCd=eocd-cdSize,prefix=actualCd-cdOffset;
+  if(prefix<0||prefix>bytes.length)return-1;
+  return prefix;
+}
+async function inflateZlib(bytes){
+  if(typeof DecompressionStream!=='function')throw new Error('当前浏览器不支持压缩 PNG 文本块解压');
+  const ds=new DecompressionStream('deflate'),ab=await new Response(new Blob([bytes]).stream().pipeThrough(ds)).arrayBuffer();
+  return new Uint8Array(ab);
+}
+async function pngTextEntries(bytes){
+  const out=[];
+  for(const c of pngChunks(bytes)){
+    try{
+      if(c.type==='tEXt'){
+        const z=c.data.indexOf(0);if(z<0)continue;
+        out.push({key:new TextDecoder('latin1').decode(c.data.subarray(0,z)),value:new TextDecoder('latin1').decode(c.data.subarray(z+1))});
+      }else if(c.type==='zTXt'){
+        const z=c.data.indexOf(0);if(z<0||z+2>c.data.length)continue;
+        const key=new TextDecoder('latin1').decode(c.data.subarray(0,z)),method=c.data[z+1];if(method!==0)continue;
+        const raw=await inflateZlib(c.data.subarray(z+2));out.push({key,value:new TextDecoder().decode(raw)});
+      }else if(c.type==='iTXt'){
+        let p=0;const takeZero=()=>{const i=c.data.indexOf(0,p);if(i<0)return null;const b=c.data.subarray(p,i);p=i+1;return b};
+        const kb=takeZero();if(!kb||p+2>c.data.length)continue;const key=new TextDecoder('latin1').decode(kb),compressed=c.data[p++],method=c.data[p++];
+        if(takeZero()==null||takeZero()==null)continue;let raw=c.data.subarray(p);if(compressed===1){if(method!==0)continue;raw=await inflateZlib(raw)}
+        out.push({key,value:new TextDecoder().decode(raw)});
+      }
+    }catch{}
+  }
+  return out;
+}
+function parseCardTextValue(val){
+  const attempts=[()=>JSON.parse(b64ToUtf8(val)),()=>JSON.parse(String(val).trim())];
+  for(const fn of attempts)try{return fn()}catch{}
+  return null;
+}
+async function extractPngCard(bytes){
+  const found={};
+  for(const e of await pngTextEntries(bytes))if(e.key==='ccv3'||e.key==='chara'){const j=parseCardTextValue(e.value);if(j)found[e.key]=j}
+  if(found.ccv3)return{card:found.ccv3,key:'ccv3'};if(found.chara)return{card:found.chara,key:'chara'};
+  throw new Error('PNG/APNG 中未找到 ccv3 / chara 角色卡数据');
+}
 function toV2(v3){const out=clone(v3);out.spec='chara_card_v2';out.spec_version='2.0';if(out.data){for(const k of['assets','nickname','creator_notes_multilingual','source','group_only_greetings','creation_date','modification_date'])delete out.data[k]}return out}
-function exportPng(){if(state.fileType!=='png'||!state.originalBytes)throw new Error('当前不是 PNG 角色卡');const chunks=pngChunks(state.originalBytes),parts=[state.originalBytes.subarray(0,8)],isV3=state.card?.spec==='chara_card_v3'||state.pngMetaKey==='ccv3';let inserted=false;for(const c of chunks){if(c.type==='tEXt'){const z=c.data.indexOf(0),key=z>=0?new TextDecoder('latin1').decode(c.data.subarray(0,z)):'';if(key==='ccv3'||key==='chara')continue}if(c.type==='IEND'&&!inserted){if(isV3){parts.push(textChunk('ccv3',utf8ToB64(JSON.stringify(state.card))));parts.push(textChunk('chara',utf8ToB64(JSON.stringify(toV2(state.card)))))}else parts.push(textChunk('chara',utf8ToB64(JSON.stringify(state.card))));inserted=true}parts.push(c.raw)}return new Blob([concatArrays(parts)],{type:'image/png'})}
-function findCharxAvatar(card,zip){const assets=card?.data?.assets||[];for(const a of assets){const m=String(a?.uri||'').match(/^embeded:\/\/(.+)$/);if(m&&zip.file(m[1])&&['icon','avatar','character'].includes(String(a.type).toLowerCase()))return zip.file(m[1])}for(const n of Object.keys(zip.files))if(/^assets\/.*\.(png|webp|jpg|jpeg)$/i.test(n))return zip.file(n);return null}
-async function exportCharx(){if(!state.charxZip)throw new Error('CHARX 缓存不存在');state.charxZip.file('card.json',JSON.stringify(state.card,null,2));return state.charxZip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}})}
+function exportPng(){
+  if(!['png','apng'].includes(state.fileType)||!state.originalBytes)throw new Error('当前不是 PNG / APNG 角色卡');
+  const chunks=pngChunks(state.originalBytes),parts=[state.originalBytes.subarray(0,8)],isV3=state.card?.spec==='chara_card_v3'||state.pngMetaKey==='ccv3';let inserted=false;
+  for(const c of chunks){
+    let skip=false;
+    if(['tEXt','zTXt','iTXt'].includes(c.type)){
+      let key='';if(c.type==='tEXt'||c.type==='zTXt'){const z=c.data.indexOf(0);if(z>=0)key=new TextDecoder('latin1').decode(c.data.subarray(0,z))}else{const z=c.data.indexOf(0);if(z>=0)key=new TextDecoder('latin1').decode(c.data.subarray(0,z))}
+      if(key==='ccv3'||key==='chara')skip=true;
+    }
+    if(skip)continue;
+    if(c.type==='IEND'&&!inserted){
+      if(isV3){parts.push(textChunk('ccv3',utf8ToB64(JSON.stringify(state.card))));parts.push(textChunk('chara',utf8ToB64(JSON.stringify(toV2(state.card)))))}
+      else parts.push(textChunk('chara',utf8ToB64(JSON.stringify(state.card))));inserted=true;
+    }
+    parts.push(c.raw);
+  }
+  return new Blob([concatArrays(parts)],{type:'image/png'});
+}
+function embeddedAssetPath(uri){const m=String(uri||'').match(/^embedd?ed:\/\/(.+)$/i);return m?m[1]:null}
+function findCharxAvatar(card,zip){
+  const assets=card?.data?.assets||[];
+  for(const a of assets){const p=embeddedAssetPath(a?.uri);if(p&&zip.file(p)&&['icon','avatar','character'].includes(String(a.type).toLowerCase()))return zip.file(p)}
+  for(const n of Object.keys(zip.files))if(/^assets\/.*\.(png|webp|jpg|jpeg|avif)$/i.test(n))return zip.file(n);return null;
+}
+async function loadCharx(bytes){
+  if(!window.JSZip)throw new Error('JSZip 未加载，请刷新页面');
+  const start=findZipStart(bytes);if(start<0)throw new Error('未检测到有效 ZIP / CHARX 容器');
+  const zip=await JSZip.loadAsync(bytes.subarray(start));
+  const names=Object.keys(zip.files).filter(n=>!zip.files[n].dir&&/(^|\/)card\.json$/i.test(n)).sort((a,b)=>(a.toLowerCase()==='card.json'?-1000:0)-(b.toLowerCase()==='card.json'?-1000:0)||a.length-b.length);
+  const cardPath=names[0];if(!cardPath)throw new Error('ZIP/CHARX 中未找到 card.json');
+  const raw=(await zip.file(cardPath).async('string')).replace(/^\uFEFF/,'');
+  const card=JSON.parse(raw);return{zip,card,cardPath,prefix:start>0?bytes.subarray(0,start):null,start,count:Object.keys(zip.files).length};
+}
+async function exportCharxBytes(){
+  if(!state.charxZip)throw new Error('CHARX 缓存不存在');
+  state.charxZip.file(state.charxCardPath||'card.json',JSON.stringify(state.card,null,2));
+  const bytes=await state.charxZip.generateAsync({type:'uint8array',compression:'DEFLATE',compressionOptions:{level:1},streamFiles:true});
+  return bytes;
+}
+async function exportCharx(){return new Blob([await exportCharxBytes()],{type:'application/zip'})}
+async function exportJpegCharx(){
+  if(!state.charxPrefix)throw new Error('JPEG-CHARX 图像前缀不存在');
+  return new Blob([state.charxPrefix,await exportCharxBytes()],{type:'image/jpeg'});
+}
 function fallbackAvatar(){const svg='<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400"><rect width="100%" height="100%" fill="#1e293b"/><circle cx="150" cy="130" r="55" fill="#35d0a5" opacity=".22"/><path d="M55 360c15-85 58-130 95-130s80 45 95 130" fill="#35d0a5" opacity=".22"/></svg>';return URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}))}
-async function parseFile(file){state.file=file;state.fileType=file.name.split('.').pop().toLowerCase();state.originalBytes=new Uint8Array(await file.arrayBuffer());state.pngMetaKey=null;state.charxZip=null;let avatar=fallbackAvatar();if(state.fileType==='png'){const r=extractPngCard(state.originalBytes);state.card=r.card;state.pngMetaKey=r.key;avatar=URL.createObjectURL(file)}else if(state.fileType==='json'){state.card=JSON.parse(new TextDecoder().decode(state.originalBytes))}else if(state.fileType==='charx'){if(!window.JSZip)throw new Error('JSZip 未加载，请联网刷新');const zip=await JSZip.loadAsync(state.originalBytes),f=zip.file('card.json');if(!f)throw new Error('CHARX 根目录缺少 card.json');state.card=JSON.parse(await f.async('string'));state.charxZip=zip;const af=findCharxAvatar(state.card,zip);if(af)avatar=URL.createObjectURL(await af.async('blob'))}else throw new Error('仅支持 PNG / JSON / CHARX');state.originalCard=clone(state.card);state.history=[];state.redo=[];state.fieldHistory.clear();$('#sidebarAvatar').src=avatar;$('#welcome').classList.add('hidden');$('#editor').classList.remove('hidden');$('#clearCardBtn').disabled=false;$('#batchTranslateTop').disabled=false;$('#exportJsonBtn').disabled=false;$('#exportImageBtn').disabled=state.fileType!=='png';$('#quickDownloadBtn').disabled=false;renderAll();toast(`已载入：${file.name}`)}
-function renderAll(){if(!state.card)return;const d=cardData()||{};$('#sidebarName').textContent=d.name||'未命名角色';$('#sidebarSpec').textContent=`${detectSpec(state.card)} · ${(state.fileType||'json').toUpperCase()}`;renderCharacterFields();renderGreetings();renderAdvancedFields();renderBook();updateHistoryUI();updateRollbackButton()}
+function looksLikeCard(j){
+  if(!j||typeof j!=='object'||Array.isArray(j))return false;
+  if(['chara_card_v2','chara_card_v3'].includes(j.spec))return true;
+  const d=j.data&&typeof j.data==='object'?j.data:j;
+  return !!(d.name||d.char_name) && !!(d.description||d.char_persona||d.personality||d.first_mes||d.char_greeting);
+}
+function blankCardWithBook(name,book){return{spec:'chara_card_v3',spec_version:'3.0',data:{name:name||'Standalone Lorebook',description:'',personality:'',scenario:'',first_mes:'',mes_example:'',creator_notes:'',system_prompt:'',post_history_instructions:'',alternate_greetings:[],character_book:book,tags:[],creator:'',character_version:'',extensions:{},group_only_greetings:[],assets:[]}}}
+function splitKeys(v){if(Array.isArray(v))return v.map(String);return String(v??'').split(',').map(x=>x.trim()).filter(Boolean)}
+function normalizeGenericEntry(raw={}){return{...clone(raw),name:raw.name??'',comment:raw.comment??raw.displayName??'',keys:splitKeys(raw.keys??raw.key),secondary_keys:splitKeys(raw.secondary_keys??raw.keysecondary??raw.secondkey),content:String(raw.content??''),enabled:raw.enabled!==undefined?!!raw.enabled:raw.disable!==undefined?!raw.disable:true,insertion_order:Number(raw.insertion_order??raw.order??raw.insertorder??100),depth:Number(raw.depth??4),constant:!!(raw.constant??raw.alwaysActive),selective:!!raw.selective,extensions:clone(raw.extensions||{})}}
+function normalizeRisuEntry(raw={}){return{...clone(raw),name:raw.name??'',comment:raw.comment??'',keys:splitKeys(raw.key),secondary_keys:splitKeys(raw.secondkey),content:String(raw.content??''),enabled:raw.enabled!==undefined?!!raw.enabled:true,insertion_order:Number(raw.insertorder??100),depth:Number(raw.depth??4),constant:!!raw.alwaysActive,selective:!!raw.selective,extensions:clone(raw.extensions||{})}}
+function adaptStandaloneLorebook(obj){
+  if(!obj||typeof obj!=='object')return null;
+  if(obj.type==='risu'&&Array.isArray(obj.data)){
+    const entries=obj.data.map(normalizeRisuEntry),book={name:obj.name||'Imported Risu Lorebook',description:obj.description||'',entries,extensions:{}};
+    return{book,adapter:{kind:'risu',label:'Risu Lorebook JSON',original:clone(obj)}};
+  }
+  if((obj.type==='risuModule'||obj.module||obj.lorebook)&&Array.isArray(obj.lorebook||obj.module?.lorebook)){
+    const arr=obj.lorebook||obj.module.lorebook,entries=arr.map(normalizeRisuEntry),book={name:obj.name||obj.module?.name||'Risu Module Lorebook',description:obj.description||obj.module?.description||'',entries,extensions:{}};
+    return{book,adapter:{kind:'risu-module-json',label:'Risu Module JSON · Lorebook',original:clone(obj),nested:!!obj.module}};
+  }
+  if(obj.character_book&&obj.character_book.entries){return{book:clone(obj.character_book),adapter:{kind:'character-book-wrapper',label:'Character Book JSON',original:clone(obj)}}}
+  if(obj.entries&&(!looksLikeCard(obj))){
+    if(Array.isArray(obj.entries))return{book:clone(obj),adapter:{kind:'entries-array',label:'Standalone Lorebook JSON',original:clone(obj)}};
+    if(typeof obj.entries==='object'){
+      const keys=Object.keys(obj.entries),entries=keys.map(k=>normalizeGenericEntry(obj.entries[k]));
+      const book={name:obj.name||'World Info',description:obj.description||'',scan_depth:obj.scan_depth,token_budget:obj.token_budget,recursive_scanning:obj.recursive_scanning,extensions:clone(obj.extensions||{}),entries};
+      return{book,adapter:{kind:'entries-object',label:'World Info JSON',original:clone(obj),entryKeys:keys}};
+    }
+  }
+  return null;
+}
+function risuFromBookEntry(e,raw={}){const x=clone(raw),keys=(e.keys||[]).join(', '),second=(e.secondary_keys||[]).join(', ');if('key'in x||keys)x.key=keys;if('secondkey'in x||second)x.secondkey=second;x.content=e.content??'';if('comment'in x||e.comment)x.comment=e.comment??'';if('alwaysActive'in x||e.constant)x.alwaysActive=!!e.constant;if('selective'in x||e.selective)x.selective=!!e.selective;if('insertorder'in x||Number(e.insertion_order??100)!==100)x.insertorder=Number(e.insertion_order??100);if('enabled'in x||e.enabled===false)x.enabled=e.enabled!==false;return x}
+function genericObjectFromBookEntry(e,raw={}){const x=clone(raw);if('keys'in x||!('key'in x))x.keys=clone(e.keys||[]);else x.key=clone(e.keys||[]);if('secondary_keys'in x)x.secondary_keys=clone(e.secondary_keys||[]);else if('keysecondary'in x)x.keysecondary=clone(e.secondary_keys||[]);else if('secondkey'in x)x.secondkey=(e.secondary_keys||[]).join(', ');x.content=e.content??'';if('name'in x||e.name)x.name=e.name??'';if('comment'in x||e.comment)x.comment=e.comment??'';if('enabled'in x)x.enabled=e.enabled!==false;if('disable'in x)x.disable=e.enabled===false;if('insertion_order'in x)x.insertion_order=Number(e.insertion_order??100);else if('order'in x)x.order=Number(e.insertion_order??100);else if('insertorder'in x)x.insertorder=Number(e.insertion_order??100);if('constant'in x)x.constant=!!e.constant;if('alwaysActive'in x)x.alwaysActive=!!e.constant;if('selective'in x)x.selective=!!e.selective;if('depth'in x)x.depth=Number(e.depth??4);return x}
+function buildStandaloneLorebookExport(){
+  const a=state.lorebookAdapter,b=getBook();if(!a||!b)return b;
+  if(a.kind==='entries-array')return clone(b);
+  if(a.kind==='character-book-wrapper'){const o=clone(a.original);o.character_book=clone(b);return o}
+  if(a.kind==='entries-object'){
+    const o=clone(a.original),old=o.entries||{},res={};(b.entries||[]).forEach((e,i)=>{const k=a.entryKeys?.[i]??String(i);res[k]=genericObjectFromBookEntry(e,old[k]||{})});o.entries=res;
+    for(const k of['name','description','scan_depth','token_budget','recursive_scanning'])if((k in o||(b[k]!==''&&b[k]!==undefined))&&k in b&&b[k]!==undefined)o[k]=clone(b[k]);return o;
+  }
+  if(a.kind==='risu'){
+    const o=clone(a.original);o.name=b.name||o.name;o.description=b.description||o.description;o.data=(b.entries||[]).map((e,i)=>risuFromBookEntry(e,o.data?.[i]||{}));return o;
+  }
+  if(a.kind==='risu-module-json'){
+    const o=clone(a.original),target=a.nested?(o.module??={}):o,old=target.lorebook||[];target.name=b.name||target.name;target.description=b.description||target.description;target.lorebook=(b.entries||[]).map((e,i)=>risuFromBookEntry(e,old[i]||{}));return o;
+  }
+  return clone(b);
+}
+async function parseJsonObject(obj){
+  const lb=adaptStandaloneLorebook(obj);
+  if(lb){state.containerKind='lorebook';state.lorebookAdapter=lb.adapter;state.originalContainer=clone(obj);state.card=blankCardWithBook(lb.book.name,lb.book);state.fileType='lorebook';return}
+  if(!looksLikeCard(obj))throw new Error('JSON 不是可识别的角色卡或角色书');
+  state.containerKind='card';state.card=obj;state.fileType='json';
+}
+function parseJsonlText(text){
+  const lines=String(text||'').replace(/^\uFEFF/,'').split(/\r?\n/),parsed=[];
+  for(let i=0;i<lines.length;i++){
+    const t=lines[i].trim();if(!t)continue;
+    try{const obj=JSON.parse(t);if(looksLikeCard(obj)||adaptStandaloneLorebook(obj))parsed.push({index:i,obj})}catch{}
+  }
+  if(!parsed.length)return null;
+  return{lines,index:parsed[0].index,obj:parsed[0].obj,count:parsed.length};
+}
+function buildJsonlExportText(){
+  if(!state.jsonlAdapter)return JSON.stringify(currentJsonExportObject());
+  const lines=[...state.jsonlAdapter.lines];lines[state.jsonlAdapter.index]=JSON.stringify(currentJsonExportObject());return lines.join('\n');
+}
+async function parseFile(file){
+  state.file=file;state.sourceExt=fileExt(file.name);state.originalBytes=new Uint8Array(await file.arrayBuffer());state.pngMetaKey=null;state.charxZip=null;state.charxPrefix=null;state.charxEntryCount=0;state.charxCardPath='card.json';state.containerKind='card';state.lorebookAdapter=null;state.jsonlAdapter=null;state.originalContainer=null;let avatar=fallbackAvatar();
+  const bytes=state.originalBytes,zipStart=findZipStart(bytes);
+  if(isPngBytes(bytes)){
+    const r=await extractPngCard(bytes);state.card=r.card;state.pngMetaKey=r.key;state.fileType=state.sourceExt==='apng'?'apng':'png';avatar=URL.createObjectURL(new Blob([bytes],{type:'image/png'}));
+  }else if(isJpegBytes(bytes)&&zipStart>0){
+    const r=await loadCharx(bytes);state.card=r.card;state.charxZip=r.zip;state.charxPrefix=r.prefix;state.charxEntryCount=r.count;state.charxCardPath=r.cardPath;state.fileType='charxjpeg';avatar=URL.createObjectURL(new Blob([state.charxPrefix],{type:'image/jpeg'}));
+  }else if(zipStart===0||['charx','zip'].includes(state.sourceExt)){
+    const r=await loadCharx(bytes);state.card=r.card;state.charxZip=r.zip;state.charxPrefix=r.prefix;state.charxEntryCount=r.count;state.charxCardPath=r.cardPath;state.fileType=state.sourceExt==='zip'?'charxzip':'charx';const af=findCharxAvatar(state.card,r.zip);if(af)avatar=URL.createObjectURL(await af.async('blob'));
+  }else{
+    const text=new TextDecoder().decode(bytes).replace(/^\uFEFF/,'');let obj=null,parsed=false;
+    try{obj=JSON.parse(text);parsed=true}catch{}
+    if(parsed){await parseJsonObject(obj)}else{
+      const jl=parseJsonlText(text);if(!jl)throw new Error('无法识别文件：支持 PNG/APNG、JSON/JSONL、CHARX/ZIP、JPEG-CHARX 与 .lorebook');
+      state.jsonlAdapter=jl;await parseJsonObject(jl.obj);state.fileType='jsonl';
+    }
+  }
+  state.originalCard=clone(state.card);state.history=[];state.redo=[];state.fieldHistory.clear();$('#sidebarAvatar').src=avatar;$('#welcome').classList.add('hidden');$('#editor').classList.remove('hidden');$('#clearCardBtn').disabled=false;$('#batchTranslateTop').disabled=false;$('#exportJsonBtn').disabled=false;$('#exportImageBtn').disabled=!['png','apng'].includes(state.fileType);$('#quickDownloadBtn').disabled=false;
+  const charTab=$('.main-tab[data-view="character"]');if(charTab)charTab.disabled=state.containerKind==='lorebook';switchView(state.containerKind==='lorebook'?'book':'character',true);renderAll();
+  const extra=state.charxEntryCount?` · ${state.charxEntryCount} 个容器文件`:'';toast(`已载入：${file.name} · ${formatLabel()}${extra}`);
+}
+function renderAll(){if(!state.card)return;const d=cardData()||{};$('#sidebarName').textContent=d.name||'未命名角色';$('#sidebarSpec').textContent=`${detectSpec(state.card)} · ${formatLabel()}`;renderCharacterFields();renderGreetings();renderAdvancedFields();renderBook();updateHistoryUI();updateRollbackButton()}
 function makeField(def,group='character'){const path=resolvePath(def),value=pathGet(state.card,path),key=pathKey(path),wrap=document.createElement('div');wrap.className='card-field';const display=def.type==='tags'?(Array.isArray(value)?value.join(', '):(value||'')):(value??'');const hist=(state.fieldHistory.get(key)||[]).length;wrap.innerHTML=`<div class="field-head"><div class="field-title">${escapeHtml(def.label)} <small>(${escapeHtml(def.en)})</small></div><div class="field-actions">${def.translate?'<button class="mini-btn translate">翻译</button>':''}${hist?'<button class="mini-btn rollback">回退</button>':''}<button class="mini-btn restore">原文</button></div></div>${def.type==='input'||def.type==='tags'?'<input />':`<textarea class="${def.size||''}"></textarea>`}<div class="field-foot"><span>${hist?'<b class="translated-mark">已翻译 · 可回退</b>':'编辑会直接写入当前卡'}</span><span class="char-count"></span></div>`;const el=wrap.querySelector(def.type==='input'||def.type==='tags'?'input':'textarea');el.value=display;wrap.querySelector('.char-count').textContent=`${String(display).length} 字符`;let last=clone(value);el.addEventListener('focus',()=>{last=clone(pathGet(state.card,path))});el.addEventListener('input',()=>wrap.querySelector('.char-count').textContent=`${el.value.length} 字符`);el.addEventListener('change',()=>{const before=clone(last),after=def.type==='tags'?el.value.split(',').map(x=>x.trim()).filter(Boolean):el.value;pathSet(state.card,path,after);recordTransaction(`编辑 ${def.label}`,[{path,before,after:clone(after)}]);last=clone(after);renderAll()});const t=wrap.querySelector('.translate');if(t)t.onclick=()=>translateSingle(path,def.label,def.translate);const rb=wrap.querySelector('.rollback');if(rb)rb.onclick=()=>rollbackField(path);wrap.querySelector('.restore').onclick=()=>restoreField(path);return wrap}
 function renderCharacterFields(){const root=$('#characterFields');root.innerHTML='';CARD_FIELDS.forEach(d=>root.appendChild(makeField(d)))}
 function renderAdvancedFields(){const root=$('#advancedFields');root.innerHTML='';ADVANCED_FIELDS.forEach(d=>root.appendChild(makeField(d)))}
@@ -342,7 +544,7 @@ function renderBookEntries(){const root=$('#bookEntries');root.innerHTML='';cons
 function $$call(root,sel){return[...root.querySelectorAll(sel)]}
 function rollbackBookEntry(i){const bp=getBookPath(),prefix=pathKey([...bp,'entries',i]),changes=[];for(const [key,list] of state.fieldHistory){if(!key.startsWith(prefix)||!list.length)continue;const path=key.split('.').map(x=>/^\d+$/.test(x)?Number(x):x),h=list.pop();changes.push({path,before:clone(pathGet(state.card,path)),after:clone(h.before)})}if(!changes.length)return toast('该条目没有可回退翻译');for(const c of changes)pathSet(state.card,c.path,c.after);recordTransaction(`回退角色书条目 ${i+1}`,changes);renderAll()}
 function updateRollbackButton(){let any=false;for(const [k,v] of state.fieldHistory){if(!v.length)continue;if(state.view==='book'?k.includes('character_book'):!k.includes('character_book')){any=true;break}}$('#rollbackAllBtn').disabled=!any}
-function switchView(v){state.view=v;$$('.main-tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$('#characterView').classList.toggle('active',v==='character');$('#bookView').classList.toggle('active',v==='book');$('#batchTranslateBtn').textContent=v==='book'?'一键翻译角色书':'一键翻译角色';updateRollbackButton()}
+function switchView(v,silent=false){if(state.containerKind==='lorebook'&&v==='character'){if(!silent)toast('当前导入的是独立角色书');v='book'}state.view=v;$$('.main-tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$('#characterView').classList.toggle('active',v==='character');$('#bookView').classList.toggle('active',v==='book');$('#batchTranslateBtn').textContent=v==='book'?'一键翻译角色书':'一键翻译角色';updateRollbackButton()}
 function collectCharacterTranslateTargets(){const out=[];const includeName=$('#translateNames').checked,includeTags=$('#translateTags').checked;for(const d of [...CARD_FIELDS,...ADVANCED_FIELDS]){if(d.translate==='name'&&!includeName)continue;if(d.translate==='tags'&&!includeTags)continue;const path=resolvePath(d),val=pathGet(state.card,path);if(d.type==='tags'&&Array.isArray(val)&&val.length)out.push({path,label:d.label,text:val.join(', '),kind:'tags'});else if(typeof val==='string'&&val.trim())out.push({path,label:d.label,text:val,kind:d.translate})}const gp=greetingsPath(),arr=pathGet(state.card,gp)||[];arr.forEach((v,i)=>{if(typeof v==='string'&&v.trim())out.push({path:[...gp,i],label:`备选开场 ${i+1}`,text:v,kind:'text'})});return out}
 function collectBookTranslateTargets(){const out=[],bp=getBookPath(),book=getBook();if(!book)return out;if(typeof book.name==='string'&&book.name.trim())out.push({path:[...bp,'name'],label:'角色书名称',text:book.name,kind:'text'});if(typeof book.description==='string'&&book.description.trim())out.push({path:[...bp,'description'],label:'角色书描述',text:book.description,kind:'text'});for(const [i,e] of(book.entries||[]).entries()){for(const k of['name','comment','content'])if(typeof e[k]==='string'&&e[k].trim())out.push({path:[...bp,'entries',i,k],label:`条目 ${i+1} ${k}`,text:e[k],kind:'text'});if($('#translateBookKeys').checked){for(const k of['keys','secondary_keys'])if(Array.isArray(e[k])&&e[k].length)out.push({path:[...bp,'entries',i,k],label:`条目 ${i+1} ${k}`,text:e[k].join(', '),kind:'tags'})}}return out}
 function protectionPatterns(){
@@ -516,17 +718,27 @@ function appendMsg(role,text,patches=null){const root=$('#chatMessages');if(root
 function parseDotPath(s){return s.split('.').filter(Boolean).map(x=>/^\d+$/.test(x)?Number(x):x)}
 function applyAssistantPatches(patches){const changes=[];for(const p of patches){const path=parseDotPath(p.path);if(!path.length||['spec','spec_version'].includes(String(path[0])))continue;const before=clone(pathGet(state.card,path)),after=clone('text'in p?p.text:p.value);pathSet(state.card,path,after);changes.push({path,before,after})}recordTransaction('AI 助手应用修改',changes);renderAll();toast(`已应用 ${changes.length} 项修改`)}
 function restoreWholeOriginal(){if(!state.originalCard)return;const before=clone(state.card),after=clone(state.originalCard);state.card=after;state.fieldHistory.clear();state.history=[];state.redo=[];renderAll();toast('已恢复整张原始角色卡')}
-function exportJson(){if(!state.card)return;downloadBlob(new Blob([JSON.stringify(state.card,null,2)],{type:'application/json'}),`${safeBaseName(state.file?.name)}_translated.json`)}
-async function quickDownload(){if(!state.card)return;const base=`${safeBaseName(state.file?.name)}_中文版`;try{if(state.fileType==='png')downloadBlob(exportPng(),base+'.png');else if(state.fileType==='charx')downloadBlob(await exportCharx(),base+'.charx');else downloadBlob(new Blob([JSON.stringify(state.card,null,2)],{type:'application/json'}),base+'.json')}catch(e){toast(`下载失败：${e.message}`)}}
-function clearCard(){state.file=null;state.card=null;state.originalCard=null;state.originalBytes=null;state.history=[];state.redo=[];state.fieldHistory.clear();$('#editor').classList.add('hidden');$('#welcome').classList.remove('hidden');$('#sidebarName').textContent='尚未载入角色卡';$('#sidebarSpec').textContent='PNG / JSON / CHARX';$('#sidebarAvatar').src=fallbackAvatar();for(const id of['clearCardBtn','batchTranslateTop','exportJsonBtn','exportImageBtn','quickDownloadBtn'])$('#'+id).disabled=true;updateHistoryUI();closeSidebar()}
+function currentJsonExportObject(){return state.containerKind==='lorebook'?buildStandaloneLorebookExport():state.card}
+function exportJson(){if(!state.card)return;if(state.fileType==='jsonl'){downloadBlob(new Blob([buildJsonlExportText()],{type:'application/x-ndjson'}),`${safeBaseName(state.file?.name)}_translated.jsonl`);return}const ext=state.containerKind==='lorebook'&&state.sourceExt==='lorebook'?'.lorebook':'.json';downloadBlob(new Blob([JSON.stringify(currentJsonExportObject(),null,2)],{type:'application/json'}),`${safeBaseName(state.file?.name)}_translated${ext}`)}
+async function quickDownload(){if(!state.card)return;const base=`${safeBaseName(state.file?.name)}_中文版`;try{
+  if(state.fileType==='png')downloadBlob(exportPng(),base+'.png');
+  else if(state.fileType==='apng')downloadBlob(exportPng(),base+'.apng');
+  else if(state.fileType==='charx')downloadBlob(await exportCharx(),base+'.charx');
+  else if(state.fileType==='charxzip')downloadBlob(await exportCharx(),base+'.charx');
+  else if(state.fileType==='charxjpeg')downloadBlob(await exportJpegCharx(),base+(state.sourceExt==='jpeg'?'.jpeg':'.jpg'));
+  else if(state.fileType==='jsonl')downloadBlob(new Blob([buildJsonlExportText()],{type:'application/x-ndjson'}),base+'.jsonl');
+  else if(state.containerKind==='lorebook'){const ext=state.sourceExt==='lorebook'?'.lorebook':'.json';downloadBlob(new Blob([JSON.stringify(buildStandaloneLorebookExport(),null,2)],{type:'application/json'}),base+ext)}
+  else downloadBlob(new Blob([JSON.stringify(state.card,null,2)],{type:'application/json'}),base+'.json');
+}catch(e){toast(`下载失败：${e.message}`)}}
+function clearCard(){state.file=null;state.fileType=null;state.sourceExt=null;state.containerKind='card';state.card=null;state.originalCard=null;state.originalContainer=null;state.originalBytes=null;state.charxZip=null;state.charxPrefix=null;state.charxEntryCount=0;state.charxCardPath='card.json';state.lorebookAdapter=null;state.jsonlAdapter=null;state.history=[];state.redo=[];state.fieldHistory.clear();$('#editor').classList.add('hidden');$('#welcome').classList.remove('hidden');$('#sidebarName').textContent='尚未载入角色卡';$('#sidebarSpec').textContent='PNG / APNG / JSON / JSONL / CHARX / JPG-CHARX / ZIP / LOREBOOK';$('#sidebarAvatar').src=fallbackAvatar();const charTab=$('.main-tab[data-view="character"]');if(charTab)charTab.disabled=false;for(const id of['clearCardBtn','batchTranslateTop','exportJsonBtn','exportImageBtn','quickDownloadBtn'])$('#'+id).disabled=true;updateHistoryUI();closeSidebar()}
 function openSidebar(){$('#sidebar').classList.add('open');$('#sidebarMask').classList.add('show')}
 function closeSidebar(){$('#sidebar').classList.remove('open');$('#sidebarMask').classList.remove('show')}
 function openDialog(el){if(!el)return;if(typeof el.showModal==='function'){if(!el.open)el.showModal()}else el.setAttribute('open','')}
 function closeDialog(el){if(!el)return;if(typeof el.close==='function')el.close();else el.removeAttribute('open')}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function setUiLanguage(lang){const m=UI[lang]||UI.zh;$$('.main-tab').forEach(x=>x.textContent=x.dataset.view==='character'?m.character:m.book);$('#batchTranslateTop').textContent=m.batch;storageSet('cardlingo-ui-lang',lang)}
-function bind(){loadSettings();loadGlossary();$('#sidebarAvatar').src=fallbackAvatar();const openFile=()=>$('#fileInput').click();$('#importCardBtn').onclick=openFile;$('#welcomeImportBtn').onclick=openFile;$('#fileInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#importJsonBtn').onclick=()=>$('#jsonImportInput').click();$('#jsonImportInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#menuBtn').onclick=openSidebar;$('#sidebarMask').onclick=closeSidebar;$$('.main-tab').forEach(x=>x.onclick=()=>switchView(x.dataset.view));$('#batchTranslateBtn').onclick=batchTranslateCurrent;$('#batchTranslateTop').onclick=batchTranslateCurrent;$('#rollbackAllBtn').onclick=rollbackCurrentView;$('#addGreetingBtn').onclick=addGreeting;$('#createBookBtn').onclick=createBook;$('#addBookEntryBtn').onclick=addBookEntry;$('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#historyBtn').onclick=()=>{openDialog($('#historyDialog'));renderHistoryList()};$('#closeHistory').onclick=()=>closeDialog($('#historyDialog'));$('#undoDialogBtn').onclick=undo;$('#redoDialogBtn').onclick=redo;$('#restoreOriginalBtn').onclick=restoreWholeOriginal;$('#settingsBtn').onclick=()=>openDialog($('#settingsDialog'));$('#saveSettingsBtn').onclick=e=>{e.preventDefault();saveSettings();closeDialog($('#settingsDialog'))};$('#translationStyle').onchange=()=>{const v=$('#translationStyle').value;if(v==='novel'&&Number($('#temperature').value)<0.4)$('#temperature').value='0.55';};$('#toggleApiKey').onclick=()=>{$('#apiKey').type=$('#apiKey').type==='password'?'text':'password'};$('#testApiBtn').onclick=testApi;$('#glossaryBtn').onclick=()=>{openDialog($('#glossaryDialog'));renderGlossary()};$('#closeGlossary').onclick=()=>closeDialog($('#glossaryDialog'));$('#addGlossaryBtn').onclick=()=>{state.glossary.push({source:'',target:'',category:'name',note:''});saveGlossary();renderGlossary()};$('#importGlossaryBtn').onclick=()=>$('#glossaryImportInput').click();$('#glossaryImportInput').onchange=e=>{if(e.target.files?.[0])importGlossary(e.target.files[0]);e.target.value=''};$('#exportGlossaryBtn').onclick=exportGlossary;$('#clearGlossaryBtn').onclick=()=>{if(confirm('确定清空全部术语吗？')){state.glossary=[];saveGlossary();renderGlossary()}};$('#assistantBtn').onclick=()=>{$('#assistantPanel').classList.add('open');closeSidebar()};$('#closeAssistant').onclick=()=>$('#assistantPanel').classList.remove('open');$('#sendChatBtn').onclick=sendAssistant;$('#chatInput').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')sendAssistant()});$('#clearCardBtn').onclick=()=>{if(confirm('确定清空当前角色卡吗？'))clearCard()};$('#exportJsonBtn').onclick=exportJson;$('#exportImageBtn').onclick=()=>{try{downloadBlob(exportPng(),`${safeBaseName(state.file?.name)}_中文版.png`)}catch(e){toast(e.message)}};$('#quickDownloadBtn').onclick=quickDownload;$('#cancelTranslateBtn').onclick=()=>{state.abortController?.abort();hideProgress()};$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');storageSet('cardlingo-theme',document.body.classList.contains('light')?'light':'dark')};if(storageGet('cardlingo-theme')==='light')document.body.classList.add('light');const lang=storageGet('cardlingo-ui-lang')||'zh';$('#uiLanguage').value=lang;setUiLanguage(lang);$('#uiLanguage').onchange=e=>setUiLanguage(e.target.value);window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}});updateHistoryUI()}
-const CARDLINGO_VERSION="1.0.5-safe-segments";
+function bind(){loadSettings();loadGlossary();$('#sidebarAvatar').src=fallbackAvatar();const openFile=()=>$('#fileInput').click();$('#importCardBtn').onclick=openFile;$('#welcomeImportBtn').onclick=openFile;$('#fileInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#importJsonBtn').onclick=()=>$('#jsonImportInput').click();$('#jsonImportInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#menuBtn').onclick=openSidebar;$('#sidebarMask').onclick=closeSidebar;$$('.main-tab').forEach(x=>x.onclick=()=>switchView(x.dataset.view));$('#batchTranslateBtn').onclick=batchTranslateCurrent;$('#batchTranslateTop').onclick=batchTranslateCurrent;$('#rollbackAllBtn').onclick=rollbackCurrentView;$('#addGreetingBtn').onclick=addGreeting;$('#createBookBtn').onclick=createBook;$('#addBookEntryBtn').onclick=addBookEntry;$('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#historyBtn').onclick=()=>{openDialog($('#historyDialog'));renderHistoryList()};$('#closeHistory').onclick=()=>closeDialog($('#historyDialog'));$('#undoDialogBtn').onclick=undo;$('#redoDialogBtn').onclick=redo;$('#restoreOriginalBtn').onclick=restoreWholeOriginal;$('#settingsBtn').onclick=()=>openDialog($('#settingsDialog'));$('#saveSettingsBtn').onclick=e=>{e.preventDefault();saveSettings();closeDialog($('#settingsDialog'))};$('#translationStyle').onchange=()=>{const v=$('#translationStyle').value;if(v==='novel'&&Number($('#temperature').value)<0.4)$('#temperature').value='0.55';};$('#toggleApiKey').onclick=()=>{$('#apiKey').type=$('#apiKey').type==='password'?'text':'password'};$('#testApiBtn').onclick=testApi;$('#glossaryBtn').onclick=()=>{openDialog($('#glossaryDialog'));renderGlossary()};$('#closeGlossary').onclick=()=>closeDialog($('#glossaryDialog'));$('#addGlossaryBtn').onclick=()=>{state.glossary.push({source:'',target:'',category:'name',note:''});saveGlossary();renderGlossary()};$('#importGlossaryBtn').onclick=()=>$('#glossaryImportInput').click();$('#glossaryImportInput').onchange=e=>{if(e.target.files?.[0])importGlossary(e.target.files[0]);e.target.value=''};$('#exportGlossaryBtn').onclick=exportGlossary;$('#clearGlossaryBtn').onclick=()=>{if(confirm('确定清空全部术语吗？')){state.glossary=[];saveGlossary();renderGlossary()}};$('#assistantBtn').onclick=()=>{$('#assistantPanel').classList.add('open');closeSidebar()};$('#closeAssistant').onclick=()=>$('#assistantPanel').classList.remove('open');$('#sendChatBtn').onclick=sendAssistant;$('#chatInput').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')sendAssistant()});$('#clearCardBtn').onclick=()=>{if(confirm('确定清空当前角色卡吗？'))clearCard()};$('#exportJsonBtn').onclick=exportJson;$('#exportImageBtn').onclick=()=>{try{downloadBlob(exportPng(),`${safeBaseName(state.file?.name)}_中文版.${state.fileType==='apng'?'apng':'png'}`)}catch(e){toast(e.message)}};$('#quickDownloadBtn').onclick=quickDownload;$('#cancelTranslateBtn').onclick=()=>{state.abortController?.abort();hideProgress()};$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');storageSet('cardlingo-theme',document.body.classList.contains('light')?'light':'dark')};if(storageGet('cardlingo-theme')==='light')document.body.classList.add('light');const lang=storageGet('cardlingo-ui-lang')||'zh';$('#uiLanguage').value=lang;setUiLanguage(lang);$('#uiLanguage').onchange=e=>setUiLanguage(e.target.value);window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}});updateHistoryUI()}
+const CARDLINGO_VERSION="1.0.7-format-matrix";
 let __cardLingoBooted=false;
 function showBootError(err){console.error('[CardLingo boot error]',err);const el=document.getElementById('bootError');if(el){el.hidden=false;el.textContent='CardLingo 启动失败：'+(err?.message||String(err))+'。请截图这一行发给我。'}}
 function bootCardLingo(){if(__cardLingoBooted)return;__cardLingoBooted=true;try{const touch=(navigator.maxTouchPoints||0)>0||(window.matchMedia&&matchMedia('(pointer:coarse)').matches);if(touch)document.body.classList.add('touch-ui');bind();document.documentElement.dataset.cardlingoReady='1'}catch(err){showBootError(err)}}
