@@ -1,12 +1,10 @@
-# CardLingo v1.1.2 · 脚本/触发器/外显检测版
+# CardLingo v1.1.4 · 外显词条勾选翻译
 
-新增：
-- Risu 正则脚本编辑器（editinput/editoutput/editprocess/editdisplay/edittrans）
-- Risu Trigger 编辑器（conditions/effect JSON、lowLevelAccess）
-- backgroundHTML / virtualscript / toggles / viewScreen 等插件相关配置编辑
-- CHARX .lua/.js/.html/.css/.risum 资源清单
-- 外显检测：固定界面、聊天框外显、可见控制、隐藏逻辑、外部网络、低层权限、未解析模块
-- 检测报告 JSON 导出
-- 所有脚本只做静态分析，绝不执行；代码/正则默认不自动翻译
+本版重点：外显检测结果不再只显示线索，而是优先生成“可翻译外显词条”清单。
 
-部署：覆盖 GitHub Pages 根目录 index.html。
+- 支持逐条勾选与一键全选可翻译外显词条。
+- 下方统一“翻译已勾选外显词条”按钮，旁边 `⋯` 可独立设置 EN / KO 源语言范围。
+- 翻译完成直接写回角色卡原字段、原正则 OUT、原触发器可见文本、原角色书外显词条，不生成脱离原卡的副本。
+- 固定背景 / backgroundHTML、显示正则、输出正则、可见触发器、结构化 Toggle 文案、含 UI/HTML 的角色书词条可进入可翻译列表。
+- JS / Lua / CSS / module.risum、正则条件、TriggerCode/TriggerLua、变量和结构键继续锁定，避免破坏插件。
+- 检测线索仍保留在“查看检测依据 / 风险线索（高级）”折叠区。
