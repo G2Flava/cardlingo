@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta name="theme-color" content="#111827" />
-  <title>CardLingo · 角色卡翻译器 v1.0.7</title>
+  <title>CardLingo · 角色卡翻译器 v1.0.8</title>
   <style>
 :root{
   --bg:#111827;--panel:#182033;--panel2:#1e293b;--panel3:#222d42;--line:#344158;--text:#edf2f7;--muted:#8e9bb3;--accent:#35d0a5;--accent2:#2ba986;--danger:#ef6b73;--shadow:0 20px 60px rgba(0,0,0,.24);--top:72px;--side:286px
@@ -58,7 +58,7 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
 </style>
 
 <script>
-window.CARDLINGO_BUILD="1.0.7-format-matrix";
+window.CARDLINGO_BUILD="1.0.8-ios-charx-picker";
 console.info("CardLingo build:", window.CARDLINGO_BUILD);
 </script>
 </head>
@@ -71,7 +71,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <div class="brand-icon">卡</div>
         <div>
           <div class="brand-name">CardLingo</div>
-          <div class="brand-sub">Character Card Translator · v1.0.7 · FORMAT MATRIX</div>
+          <div class="brand-sub">Character Card Translator · v1.0.8 · iOS CHARX FIX</div>
         </div>
       </div>
       <div class="topbar-actions">
@@ -92,7 +92,9 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
 
       <div class="sidebar-section">
         <div class="section-label">文件</div>
-        <input id="fileInput" type="file" accept=".png,.apng,.json,.jsonl,.charx,.zip,.jpg,.jpeg,.lorebook,image/png,image/jpeg,application/json,application/zip" hidden />
+        <!-- iOS Safari/Files may grey out unknown extensions such as .charx when accept is present.
+             Keep the general importer unfiltered and validate the file by signature/extension in JS instead. -->
+        <input id="fileInput" type="file" hidden />
         <input id="jsonImportInput" type="file" accept=".json,.jsonl,.lorebook,application/json,application/x-ndjson" hidden />
         <button id="importCardBtn" class="side-btn">⇧ 导入文件</button>
         <button id="importJsonBtn" class="side-btn">{ } 导入 JSON / 角色书</button>
@@ -117,7 +119,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <div id="historySummary" class="history-summary">暂无修改</div>
       </div>
 
-      <div style="font-size:10px;color:var(--muted);padding:10px 4px 2px">BUILD v1.0.7 · FORMAT MATRIX · SAFE SEGMENTS</div>
+      <div style="font-size:10px;color:var(--muted);padding:10px 4px 2px">BUILD v1.0.8 · iOS CHARX PICKER · SAFE SEGMENTS</div>
       <div class="sidebar-footer">
         <select id="uiLanguage" class="compact-select" aria-label="界面语言">
           <option value="zh">中文</option>
@@ -134,7 +136,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <div class="welcome-inner">
           <div class="welcome-icon">⇧</div>
           <h1>导入角色卡开始翻译</h1>
-          <p>支持 Character Card V1 / V2 / V3、PNG / APNG、JSON、标准 CHARX、Risu JPEG-CHARX、CHARX ZIP，以及独立角色书 JSON / .lorebook。按文件签名识别，扩展名写错也会尽量自动判断；未知字段、CHARX 资产和附加文件原样保留。</p>
+          <p>支持 Character Card V1 / V2 / V3、PNG / APNG、JSON、标准 CHARX、Risu JPEG-CHARX、CHARX ZIP，以及独立角色书 JSON / .lorebook。iPhone/iPad 的文件选择器不再限制扩展名，.charx 会保持可选；导入后再由 CardLingo 按文件签名与内容校验。未知字段、CHARX 资产和附加文件原样保留。</p>
           <button id="welcomeImportBtn" class="primary-btn large">选择角色卡</button>
           <div class="welcome-tags"><span>PNG/APNG</span><span>JSON V1/V2/V3</span><span>CHARX</span><span>JPG-CHARX</span><span>ZIP</span><span>LOREBOOK</span></div>
         </div>
