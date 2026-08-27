@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="theme-color" content="#111827" />
-  <title>CardLingo · 角色卡翻译器 v1.3.2</title>
+  <meta name="theme-color" content="#050505" />
+  <title>CardLingo · 角色卡翻译器 v1.4.1</title>
   <style>
 :root{
   --bg:#111827;--panel:#182033;--panel2:#1e293b;--panel3:#222d42;--line:#344158;--text:#edf2f7;--muted:#8e9bb3;--accent:#35d0a5;--accent2:#2ba986;--danger:#ef6b73;--shadow:0 20px 60px rgba(0,0,0,.24);--top:72px;--side:286px
@@ -148,14 +148,341 @@ body.touch-ui .glossary-row .glossary-delete{grid-column:1/-1;}
 .provider-credential-status{border:1px solid var(--line);border-radius:11px;padding:10px 12px;color:var(--muted);font-size:11px;line-height:1.55;background:rgba(255,255,255,.018)}
 .provider-credential-status.ok{border-color:#2d745f;background:rgba(53,208,165,.06);color:#a6e9d6}.provider-credential-status.warn{border-color:#765f34;background:rgba(255,211,138,.06);color:#e4cf9f}.provider-credential-status.error{border-color:#7a3e46;background:rgba(239,107,115,.07);color:#ffb0b6}
 
-/* ===== v1.3.2 Format Conversion Core ===== */
+/* ===== v1.3.3 TPG Package Adapter ===== */
 .format-convert-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.format-convert-grid .full{grid-column:1/-1}.format-source-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--panel2);display:grid;gap:7px}.format-source-card strong{font-size:15px}.format-source-card small{color:var(--muted);line-height:1.55}.format-badge{display:inline-flex;align-items:center;width:max-content;border:1px solid #2d745f;background:rgba(53,208,165,.07);color:#9cebd4;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;letter-spacing:.06em}.format-mode-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.format-mode-option{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel2);display:flex;gap:9px;align-items:flex-start;cursor:pointer}.format-mode-option input{margin-top:3px;accent-color:var(--accent)}.format-mode-option strong{display:block;font-size:12px}.format-mode-option small{display:block;color:var(--muted);font-size:10px;line-height:1.5;margin-top:3px}.format-report-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.format-report-stat{border:1px solid var(--line);border-radius:11px;padding:11px;background:var(--panel2)}.format-report-stat b{display:block;font-size:19px;color:var(--text)}.format-report-stat span{display:block;color:var(--muted);font-size:9px;margin-top:3px}.format-compat-list{display:grid;gap:7px;margin-top:10px}.format-compat-item{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:11px;line-height:1.55;display:flex;gap:9px}.format-compat-item.ok{border-color:#2d745f;background:rgba(53,208,165,.05)}.format-compat-item.warn{border-color:#765f34;background:rgba(255,211,138,.05)}.format-compat-item .mark{font-weight:900;flex:none}.format-integrity{border:1px solid var(--line);border-radius:11px;padding:10px 12px;font-size:11px;line-height:1.65}.format-integrity.ok{border-color:#2d745f;color:#a6e9d6;background:rgba(53,208,165,.05)}.format-integrity.warn{border-color:#765f34;color:#e4cf9f;background:rgba(255,211,138,.05)}.format-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px}@media(max-width:720px){.format-convert-grid,.format-mode-row{grid-template-columns:1fr}.format-report-grid{grid-template-columns:1fr 1fr}.format-convert-grid .full{grid-column:auto}.format-actions>*{flex:1}.format-actions .primary-btn{min-width:100%}}
 </style>
 
 <script>
-window.CARDLINGO_BUILD="1.3.2-format-conversion-core-catai-adapter";
+window.CARDLINGO_BUILD="1.4.1-monochrome-hard-edge";
+window.CARDLINGO_TRANSLATION_ENGINE="semantic-block-v1 + strict-segment-v2";
 console.info("CardLingo build:", window.CARDLINGO_BUILD);
 </script>
+
+  <style id="cardlingo-monochrome-hard-edge-v141">
+/* CardLingo v1.4.1 · Monochrome / Minimal / Hard Edge
+   UI-only override: functionality and data model intentionally untouched. */
+:root{
+  --bg:#050505;
+  --panel:#0b0b0b;
+  --panel2:#101010;
+  --panel3:#171717;
+  --line:#303030;
+  --line-strong:#545454;
+  --text:#f4f4f4;
+  --muted:#8c8c8c;
+  --accent:#f4f4f4;
+  --accent2:#d8d8d8;
+  --danger:#d0d0d0;
+  --shadow:none;
+  --top:68px;
+  --side:280px;
+}
+body.light{
+  --bg:#f4f4f2;
+  --panel:#ffffff;
+  --panel2:#ededeb;
+  --panel3:#e3e3e0;
+  --line:#c7c7c3;
+  --line-strong:#8d8d88;
+  --text:#0a0a0a;
+  --muted:#686864;
+  --accent:#0a0a0a;
+  --accent2:#242424;
+  --danger:#1d1d1d;
+  --shadow:none;
+}
+html,body{background:var(--bg);color:var(--text)}
+body{letter-spacing:.005em}
+
+/* Remove decorative softness globally from product UI. */
+:where(button,input,textarea,select,.topbar,.sidebar,.preview-frame,.welcome-icon,.welcome-tags span,
+.card-field,.book-entry,.lang-options-btn,.lang-option-card,.lang-scope-summary,.compact-select,
+.entry-badge,.assistant-panel,.msg,.dialog-card,.info-tip,.history-item,.progress-card,.runtime-status,
+.runtime-mini,.toast,.settings-nav,.settings-nav button,.settings-section-card,.settings-icon,.api-status,
+.provider-help,.model-pick,.openrouter-model-center,.ormc-filter,.ormc-card,.ormc-badge,.usage-actual-card,
+.visibility-summary-card,.visibility-target-panel,.visibility-target-preview,.visibility-filter-btn,
+.visibility-chip,.visibility-explain,.visibility-unit-item,.intelligence-core,.intelligence-stat,
+.intelligence-badge,.intel-confidence,.script-section,.script-badge,.trigger-card-head,.module-file,
+.project-summary,.format-conversion-shell,.format-conversion-card,.format-report-item,.format-pill){
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+/* Bars and major structure */
+.topbar{
+  background:var(--bg)!important;
+  border-bottom:1px solid var(--line-strong)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  padding-inline:20px;
+}
+.sidebar{
+  background:var(--bg)!important;
+  border-right:1px solid var(--line-strong)!important;
+  padding:18px 14px;
+}
+.main{background:var(--bg)}
+.editor{max-width:1060px;padding-top:30px}
+.editor-header{
+  border-bottom:1px solid var(--line-strong)!important;
+  margin-bottom:28px;
+}
+
+/* Brand: typographic, no gradient token. */
+.brand{gap:12px}
+.brand-icon{
+  width:36px!important;height:36px!important;
+  border-radius:0!important;
+  background:var(--text)!important;
+  color:var(--bg)!important;
+  border:1px solid var(--text)!important;
+  font-size:18px;
+}
+.brand-name{font-size:21px;letter-spacing:.015em;font-weight:760}
+.brand-sub{letter-spacing:.12em;text-transform:uppercase}
+
+/* Buttons: strict rectangular hierarchy. */
+.icon-btn,.soft-btn,.primary-btn,.side-btn,.tool-btn,.mini-btn.lang-options,.lang-options-btn,
+.settings-nav button,.model-pick,.ormc-filter,.visibility-filter-btn{
+  border-radius:0!important;
+  transition:background-color .1s linear,color .1s linear,border-color .1s linear!important;
+}
+.icon-btn,.soft-btn,.side-btn,.tool-btn,.lang-options-btn{
+  background:transparent!important;
+  border:1px solid var(--line-strong)!important;
+  color:var(--text)!important;
+}
+.icon-btn:hover,.soft-btn:hover,.side-btn:hover,.tool-btn:hover,.lang-options-btn:hover{
+  background:var(--text)!important;color:var(--bg)!important;border-color:var(--text)!important;
+}
+.primary-btn{
+  background:var(--text)!important;
+  color:var(--bg)!important;
+  border:1px solid var(--text)!important;
+  font-weight:760;
+}
+.primary-btn:hover{background:var(--bg)!important;color:var(--text)!important}
+.side-btn.accent{
+  background:var(--text)!important;
+  color:var(--bg)!important;
+  border-color:var(--text)!important;
+}
+.tool-btn.danger,.mini-btn.danger,.danger-text{color:var(--text)!important}
+.badge{
+  background:var(--text)!important;color:var(--bg)!important;border-radius:0!important;
+  font-weight:800;padding:2px 5px;
+}
+
+/* Tabs: strong typographic hierarchy, no pill treatment. */
+.tabs{gap:18px}
+.main-tab{
+  padding:15px 2px 13px;
+  border-bottom-width:2px!important;
+  color:var(--muted)!important;
+  font-size:15px;
+  font-weight:680;
+  letter-spacing:.04em;
+}
+.main-tab.active{color:var(--text)!important;border-bottom-color:var(--text)!important}
+
+/* Panels and fields */
+.card-field,.book-entry,.settings-section-card,.script-section,.visibility-target-panel,.intelligence-core,
+.usage-actual-card,.project-summary{
+  background:var(--panel)!important;
+  border:1px solid var(--line)!important;
+}
+.card-field,.book-entry{padding:18px}
+.field-stack{gap:14px}
+.field-head,.entry-head{margin-bottom:12px}
+.field-title,.entry-title{
+  color:var(--text)!important;
+  font-size:13px;
+  font-weight:780;
+  letter-spacing:.065em;
+}
+.field-title small,.entry-number{color:var(--muted)!important;font-weight:600}
+.subsection-head h2,.section-label{
+  color:var(--text)!important;
+  font-weight:800;
+  letter-spacing:.12em;
+}
+.section-label{font-size:9px}
+
+/* Inputs: squared, low decoration, visible focus state. */
+.card-field input,.card-field textarea,.book-entry input,.book-entry textarea,.book-entry select,
+.form-field input,.form-field textarea,.form-field select,.chat-input-wrap textarea,.inline-input input,
+.book-meta-grid input,.book-meta-grid textarea,.book-meta-grid select,.settings-page input,
+.settings-page textarea,.settings-page select,.glossary-row input,.glossary-row select{
+  background:var(--bg)!important;
+  color:var(--text)!important;
+  border:1px solid var(--line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.card-field input:focus,.card-field textarea:focus,.book-entry input:focus,.book-entry textarea:focus,
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus,.settings-page input:focus,
+.settings-page textarea:focus,.settings-page select:focus{
+  border-color:var(--text)!important;
+  outline:1px solid var(--text)!important;
+  outline-offset:-1px;
+}
+
+/* Mini-actions are text controls; color no longer carries hierarchy. */
+.mini-btn{color:var(--text)!important;font-weight:650}
+.mini-btn.rollback,.mini-btn.restore,.mini-btn.restore-entry{color:var(--muted)!important}
+.translated-mark{color:var(--text)!important;font-weight:800}
+
+/* Chips / badges: monochrome outlines. */
+.entry-badge,.script-badge,.visibility-chip,.intelligence-badge,.intel-confidence,.ormc-badge,.format-pill,
+.meta-origin,.ok-badge{
+  background:transparent!important;
+  color:var(--muted)!important;
+  border:1px solid var(--line-strong)!important;
+  border-radius:0!important;
+}
+.entry-badge.folder,.entry-badge.child,.entry-badge.structural,
+.visibility-chip.visible,.visibility-chip.locked,.intelligence-badge.high,.intel-confidence.high,
+.ok-badge,.ormc-badge.discount,.ormc-badge.free{
+  color:var(--text)!important;border-color:var(--text)!important;background:transparent!important;
+}
+
+/* Status uses weight/borders before color. */
+.api-status,.provider-credential-status{
+  border-radius:0!important;background:transparent!important;color:var(--muted)!important;
+}
+.api-status i{border-radius:0!important;background:var(--muted)!important}
+.api-status.ok,.api-status.testing,.api-status.error{color:var(--text)!important;border-color:var(--line-strong)!important}
+.api-status.ok i,.api-status.testing i,.api-status.error i{background:var(--text)!important}
+.lang-scope-summary,.runtime-status,.runtime-settings-note,.structure-note,.provider-help,.info-tip{
+  background:var(--panel2)!important;
+  border-color:var(--line)!important;
+  color:var(--muted)!important;
+}
+.lang-scope-summary.ok,.lang-scope-summary.warn,.lang-scope-summary.error,
+.runtime-status.ok,.runtime-status.wait,.runtime-status.error{
+  background:var(--panel2)!important;border-color:var(--line-strong)!important;color:var(--text)!important;
+}
+.runtime-status strong,.runtime-status.ok strong,.runtime-status.wait strong,.runtime-status.error strong{
+  color:var(--text)!important;
+}
+
+/* Settings */
+.settings-page{max-width:1180px;padding-top:32px}
+.settings-page-header{border-bottom:1px solid var(--line-strong)!important;margin-bottom:26px}
+.settings-page-header h1{font-size:30px;letter-spacing:.01em}
+.settings-shell{grid-template-columns:190px minmax(0,1fr);gap:24px}
+.settings-nav{
+  background:transparent!important;
+  border:1px solid var(--line)!important;
+  padding:0!important;
+  gap:0!important;
+}
+.settings-nav button{
+  border:0!important;border-bottom:1px solid var(--line)!important;padding:13px 14px!important;
+}
+.settings-nav button:last-child{border-bottom:0!important}
+.settings-nav button:hover,.settings-nav button.active{
+  background:var(--text)!important;color:var(--bg)!important;
+}
+.settings-section-card{padding:22px}
+.settings-section-title{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+.settings-section-title .settings-icon{
+  background:transparent!important;border:1px solid var(--line-strong)!important;color:var(--text)!important;
+}
+.settings-section-title h2{font-size:18px;letter-spacing:.025em}
+
+/* OpenRouter catalogue: information density over decoration. */
+.openrouter-model-center{background:var(--bg)!important;border-color:var(--line-strong)!important}
+.ormc-head,.ormc-tools{border-bottom:1px solid var(--line)!important}
+.ormc-filter-row{border-bottom:1px solid var(--line);padding-top:10px!important}
+.ormc-filter.active{
+  background:var(--text)!important;color:var(--bg)!important;border-color:var(--text)!important;
+}
+.ormc-card{
+  background:var(--panel)!important;border:1px solid var(--line)!important;padding:16px!important;
+}
+.ormc-card:hover,.ormc-card.selected,.ormc-selected{
+  border-color:var(--text)!important;background:var(--panel2)!important;box-shadow:none!important;
+}
+.ormc-provider,.ormc-status,.ormc-desc,.ormc-meta{color:var(--muted)!important}
+.ormc-name{color:var(--text)!important;font-weight:800}
+
+/* Visibility / Intelligence: neutral audit-console appearance. */
+.visibility-summary-card,.intelligence-core{background:var(--panel)!important;border-color:var(--line-strong)!important}
+.visibility-summary-card strong,.intelligence-stat strong,.integrity-score{color:var(--text)!important}
+.visibility-filter-bar,.smart-selection-actions,.knowledge-actions,.intelligence-actions{
+  border-color:var(--line)!important;
+}
+.visibility-filter-btn.active{
+  background:var(--text)!important;color:var(--bg)!important;border-color:var(--text)!important;
+}
+.visibility-target-row{border-color:var(--line)!important;background:transparent!important}
+.visibility-target-row:hover{background:var(--panel2)!important}
+.visibility-target-preview,.visibility-explain,.visibility-unit-item{
+  background:var(--bg)!important;border-color:var(--line)!important;
+}
+
+/* Dialogs, assistant, progress */
+.dialog::backdrop{background:rgba(0,0,0,.78)!important;backdrop-filter:none!important}
+.dialog-card,.assistant-panel,.progress-card{
+  background:var(--bg)!important;border-color:var(--line-strong)!important;box-shadow:none!important;
+}
+.dialog-head,.panel-head,.assistant-options,.chat-input-wrap{border-color:var(--line)!important}
+.msg.user{
+  background:var(--text)!important;color:var(--bg)!important;border:1px solid var(--text)!important;
+}
+.msg.assistant{background:var(--panel)!important;border-color:var(--line)!important}
+.spinner{border-color:var(--line)!important;border-top-color:var(--text)!important;border-radius:50%!important}
+.progress-bar{border-radius:0!important;background:var(--panel2)!important;height:4px!important}
+.progress-bar i{background:var(--text)!important}
+.progress-overlay{background:rgba(0,0,0,.72)!important}
+.toast{
+  background:var(--text)!important;color:var(--bg)!important;border:1px solid var(--text)!important;
+  border-radius:0!important;font-weight:650;
+}
+
+/* Welcome: less ornamental, stronger headline. */
+.welcome{padding:48px 28px}
+.welcome-inner{max-width:720px}
+.welcome-icon{
+  width:64px!important;height:64px!important;border:1px solid var(--line-strong)!important;
+  background:transparent!important;font-size:28px!important;
+}
+.welcome h1{font-size:38px;line-height:1.08;letter-spacing:-.025em;margin-bottom:18px}
+.welcome p{max-width:580px;margin-inline:auto;color:var(--muted)!important;line-height:1.7}
+.welcome-tags{gap:0!important;border:1px solid var(--line);display:inline-flex!important;margin-top:28px!important}
+.welcome-tags span{border:0!important;border-right:1px solid var(--line)!important;padding:8px 10px!important}
+.welcome-tags span:last-child{border-right:0!important}
+.app-version-footer{letter-spacing:.13em;text-transform:uppercase;color:var(--muted)!important}
+.app-version-footer b{color:var(--text)!important}
+
+/* Square check/radio accents, native controls remain accessible. */
+input[type="checkbox"],input[type="radio"]{accent-color:var(--text)}
+
+/* Hard separator rhythm. */
+.sidebar-section,.sidebar-card-preview,.settings-divider,.subsection{border-color:var(--line)!important}
+hr{border:0;border-top:1px solid var(--line)!important}
+
+/* Reduce motion and visual noise. */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+@media(max-width:900px){
+  :root{--top:68px}
+  .topbar{padding-inline:16px}
+  .brand-name{font-size:20px}
+  .editor{padding:20px 14px 84px}
+  .tabs{gap:12px;overflow-x:auto;scrollbar-width:none}
+  .main-tab{padding-inline:0;min-width:max-content}
+  .card-field,.book-entry{padding:15px}
+  .settings-page{padding:20px 14px 90px}
+  .settings-shell{grid-template-columns:1fr;gap:14px}
+  .settings-nav{position:static;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .settings-nav button{border-right:1px solid var(--line)!important}
+  .settings-nav button:nth-child(even){border-right:0!important}
+  .settings-page-header h1{font-size:26px}
+  .welcome h1{font-size:32px}
+}
+  </style>
 </head>
 <body>
   <div id="bootError" hidden></div>
@@ -190,9 +517,9 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <!-- iOS Safari/Files may grey out unknown extensions such as .charx when accept is present.
              Keep the general importer unfiltered and validate the file by signature/extension in JS instead. -->
         <input id="fileInput" type="file" hidden />
-        <input id="jsonImportInput" type="file" accept=".json,.jsonl,.lorebook,application/json,application/x-ndjson" hidden />
+        <input id="jsonImportInput" type="file" hidden />
         <button id="importCardBtn" class="side-btn">⇧ 导入文件</button>
-        <button id="importJsonBtn" class="side-btn">{ } 导入 JSON / 角色书</button>
+        <button id="importJsonBtn" class="side-btn">{ } 导入 JSON / 角色书 / TPG</button>
         <button id="exportImageBtn" class="side-btn" disabled>⇩ 导出图片卡</button>
         <button id="exportJsonBtn" class="side-btn" disabled>⇩ 导出 JSON</button>
         <button id="quickDownloadBtn" class="side-btn accent" disabled>⇩ 一键下载中文版</button>
@@ -241,11 +568,11 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
         <div class="welcome-inner">
           <div class="welcome-icon">⇧</div>
           <h1>导入角色卡开始翻译</h1>
-          <p>支持 Character Card V1 / V2 / V3、PNG / APNG、JSON / JSONL、CHARX、Risu JPEG-CHARX、独立角色书，以及 catai JSON 自动识别与 Tavo / SillyTavern V2 转换。未知字段、CHARX 资产和 catai 私有元数据尽量无损保留；转换后可直接进入翻译、外显检测与编辑。</p>
+          <p>支持 Character Card V1 / V2 / V3、PNG / APNG、JSON / JSONL、CHARX、Risu JPEG-CHARX、独立角色书，以及 catai JSON 自动识别与 Tavo / SillyTavern V2 转换；同时可安全识别 Tavo .tpg 插件包。未知字段、CHARX/TPG 资产和 catai 私有元数据尽量无损保留；转换后可直接进入翻译、外显检测与编辑。</p>
           <button id="welcomeImportBtn" class="primary-btn large">选择角色卡</button>
-          <div class="welcome-tags"><span>PNG/APNG</span><span>JSON V1/V2/V3</span><span>CHARX</span><span>JPG-CHARX</span><span>LOREBOOK</span><span>CATAI → TAVO</span><span>Risu Scripts</span><span>Visibility Scan</span></div>
+          <div class="welcome-tags"><span>PNG/APNG</span><span>JSON V1/V2/V3</span><span>CHARX</span><span>JPG-CHARX</span><span>LOREBOOK</span><span>CATAI → TAVO</span><span>TAVO TPG</span><span>Risu Scripts</span><span>Visibility Scan</span></div>
         </div>
-        <footer id="appVersionFooter" class="app-version-footer home-version" aria-label="CardLingo 版本"><b>CardLingo v1.3.2</b> · Format Conversion Core · Catai Adapter</footer>
+        <footer id="appVersionFooter" class="app-version-footer home-version" aria-label="CardLingo 版本"><b>CardLingo v1.4.1</b> · Monochrome Hard Edge UI · Semantic Block Engine · Runtime Core</footer>
       </section>
 
       <section id="editor" class="editor hidden">
@@ -331,7 +658,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
             <div id="triggersList" class="script-list"></div>
           </div>
           <div class="script-section">
-            <div class="script-section-head"><h2>CHARX 脚本 / 模块资源</h2></div>
+            <div class="script-section-head"><h2>脚本 / 模块资源</h2></div>
             <div id="scriptResourcesList" class="module-file-list"></div>
           </div>
         </div>
@@ -425,7 +752,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
               <div class="api-grid">
                 <label class="form-field"><span>目标语言</span><select id="targetLang"><option value="zh-CN">简体中文</option><option value="zh-TW">繁体中文</option><option value="en">English</option><option value="ja">日本語</option></select></label>
                 <label class="form-field"><span>源语言</span><select id="sourceLang"><option value="auto">自动识别</option><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option><option value="ko">한국어</option></select><small>每个翻译按钮旁的 ⋯ 仍可单独选择 EN / KO。</small></label>
-                <label class="form-field full"><span>翻译风格</span><select id="translationStyle"><option value="novel" selected>小说化 · 生动自然（推荐）</option><option value="natural">自然本地化</option><option value="faithful">准确忠实</option></select><small>小说/自然模式会读取只读段落语境后重组中文；系统提示词、后历史指令等规则字段仍自动转入精准翻译。</small></label>
+                <label class="form-field full"><span>翻译风格</span><select id="translationStyle"><option value="novel" selected>小说化 · 整段母语重写（推荐）</option><option value="natural">自然本地化</option><option value="faithful">准确忠实</option></select><small>小说/自然模式使用整段语义块翻译，不再按保护片段逐句回填；小说化会对较长叙事自动做第二遍母语润色。规则、UI、代码与语言依赖继续使用严格安全翻译。</small></label>
                 <div class="settings-checks full">
                   <label class="check-row"><input id="smartRuleTranslation" type="checkbox" checked /> 规则字段自动精准翻译</label>
                   <label class="check-row"><input id="translateNames" type="checkbox" /> 一键翻译包含姓名</label>
@@ -450,7 +777,7 @@ console.info("CardLingo build:", window.CARDLINGO_BUILD);
             </section>
 
             <section id="protectionSettingsSection" class="settings-section-card">
-              <div class="settings-section-title"><div class="settings-icon">◈</div><div><h2>保护与额外要求</h2><p>受保护结构仍在浏览器本地分离；模型只接收允许翻译的自然语言片段和只读上下文。</p></div></div>
+              <div class="settings-section-title"><div class="settings-icon">◈</div><div><h2>保护与额外要求</h2><p>叙事文本中的模板、变量、URL、HTML 与未选语言会转成不可修改锚点，整段送给模型；规则/UI/代码仍使用严格片段保护。</p></div></div>
               <div class="api-grid">
                 <label class="form-field full"><span>额外翻译要求（可选）</span><textarea id="extraPrompt" rows="5" placeholder="例如：Julia 固定译为朱莉娅；对白偏轻佻；保持日式称呼。"></textarea><small>这里仅追加本卡或个人翻译偏好，不需要重新粘贴内置翻译提示词。</small></label>
                 <label class="form-field full"><span>额外保护词 / 正则</span><textarea id="customProtected" rows="4" placeholder="每行一个；正则可写 /pattern/flags"></textarea><small>这些内容不会发送给模型，并会在原位置拼回。</small></label>
@@ -601,7 +928,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   <script>
 'use strict';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const state={file:null,fileType:null,sourceExt:null,containerKind:'card',originalBytes:null,originalCard:null,originalContainer:null,card:null,pngMetaKey:null,charxZip:null,charxPrefix:null,charxEntryCount:0,charxCardPath:'card.json',risumModules:[],risumErrors:[],lorebookAdapter:null,jsonlAdapter:null,formatConversion:null,view:'character',history:[],redo:[],fieldHistory:new Map(),glossary:[],consistencyMemory:[],termCandidates:[],usage:{requests:0,prompt:0,completion:0,hit:0,miss:0,total:0,cost:0,costUsd:0,pricedRequests:0,pricedRequestsUsd:0,lastModel:''},integrity:null,visibility:{findings:[],targets:[],scannedAt:0,resources:[]},visibilitySelected:{},localizationKnowledge:{version:1,overrides:{}},localizationAcceptance:null,visibilityFilter:'all',projectId:null,pendingQueue:null,autosaveTimer:null,abortController:null,isTranslating:false,assistantPatches:null,translateLangPrefs:{},translateLangDefault:{en:true,ko:true},translationLangDialogKey:null,translationLangDialogLabel:'',runtimeJob:null};
+const state={file:null,fileType:null,sourceExt:null,containerKind:'card',originalBytes:null,originalCard:null,originalContainer:null,card:null,pngMetaKey:null,charxZip:null,charxPrefix:null,charxEntryCount:0,charxCardPath:'card.json',tpgZip:null,tpgManifest:null,tpgResources:[],risumModules:[],risumErrors:[],lorebookAdapter:null,jsonlAdapter:null,formatConversion:null,view:'character',history:[],redo:[],fieldHistory:new Map(),glossary:[],consistencyMemory:[],termCandidates:[],usage:{requests:0,prompt:0,completion:0,hit:0,miss:0,total:0,cost:0,costUsd:0,pricedRequests:0,pricedRequestsUsd:0,lastModel:''},integrity:null,visibility:{findings:[],targets:[],scannedAt:0,resources:[]},visibilitySelected:{},localizationKnowledge:{version:1,overrides:{}},localizationAcceptance:null,visibilityFilter:'all',projectId:null,pendingQueue:null,autosaveTimer:null,abortController:null,isTranslating:false,assistantPatches:null,translateLangPrefs:{},translateLangDefault:{en:true,ko:true},translationLangDialogKey:null,translationLangDialogLabel:'',runtimeJob:null};
 const MODEL_PRICING_CNY={
   'deepseek-v4-flash':{label:'DeepSeek V4 Flash',inputHit:0.02,inputMiss:1,output:2,updated:'2026-08-15'},
   'deepseek-v4-pro':{label:'DeepSeek V4 Pro',inputHit:0.025,inputMiss:3,output:6,updated:'2026-08-15'}
@@ -628,11 +955,14 @@ function estimateTargetsCost(targets){
   const sourceTokens=targets.reduce((n,x)=>n+roughTokenCount(x.text),0);
   let instructionTokens=330;try{instructionTokens=Math.max(220,roughTokenCount(translationInstruction('mixed'))+150)}catch{}
   const unitOverhead=Math.max(targets.length*24,Math.ceil(chars/3000)*36);
-  const inputTokens=Math.ceil(sourceTokens+batches*instructionTokens+unitOverhead);
   const target=$('#targetLang')?.value||'zh-CN',style=$('#translationStyle')?.value||'novel';
   let langFactor=target.startsWith('zh')?1.18:target==='en'?1.12:1.10;
-  const styleFactor=style==='novel'?1.14:style==='natural'?1.05:0.99;
-  const outputTokens=Math.ceil(Math.max(1,sourceTokens*langFactor*styleFactor));
+  const styleFactor=style==='novel'?1.12:style==='natural'?1.05:0.99;
+  const firstOutput=Math.ceil(Math.max(1,sourceTokens*langFactor*styleFactor));
+  // v1.4 小说化叙事会在较长语义块上自动做第二遍母语润色；估价按最坏情况预留一次 source+draft 输入和一份润色输出。
+  const polishEligible=style==='novel'&&targets.some(x=>String(x?.text||'').length>=180);
+  const inputTokens=Math.ceil(sourceTokens+batches*instructionTokens+unitOverhead+(polishEligible?(sourceTokens+firstOutput+batches*180):0));
+  const outputTokens=Math.ceil(firstOutput+(polishEligible?firstOutput:0));
   return{chars,inputTokens,outputTokens,batches};
 }
 function priceEstimate(est,pricing,cacheHit=false){if(!pricing)return NaN;return(est.inputTokens/1e6)*(cacheHit?pricing.inputHit:pricing.inputMiss)+(est.outputTokens/1e6)*pricing.output}
@@ -914,7 +1244,7 @@ function detectSpec(card){
 function fileExt(name){const m=String(name||'').toLowerCase().match(/\.([^.]+)$/);return m?m[1]:''}
 function safeBaseName(name){return(name||'character').replace(/\.charx\.zip$/i,'').replace(/\.(png|apng|jsonl?|charx|zip|jpe?g|lorebook)$/i,'')}
 function formatLabel(){
-  const map={png:'PNG Card',apng:'APNG Card',json:'JSON Card',jsonl:'JSONL',charx:'CHARX',charxzip:'CHARX ZIP',charxjpeg:'JPEG-CHARX',lorebook:'Standalone Lorebook',catai:'catai → Tavo V2'};
+  const map={png:'PNG Card',apng:'APNG Card',json:'JSON Card',jsonl:'JSONL',charx:'CHARX',charxzip:'CHARX ZIP',charxjpeg:'JPEG-CHARX',lorebook:'Standalone Lorebook',catai:'catai → Tavo V2',tpg:'Tavo Plugin (.tpg)'};
   return map[state.fileType]||String(state.fileType||'').toUpperCase()||'UNKNOWN';
 }
 function pathExists(obj,path){let o=obj;for(const k of path){if(o==null||!(k in Object(o)))return false;o=o[k]}return true}
@@ -1246,17 +1576,62 @@ function buildJsonlExportText(){
   if(!state.jsonlAdapter)return JSON.stringify(currentJsonExportObject());
   const lines=[...state.jsonlAdapter.lines];lines[state.jsonlAdapter.index]=JSON.stringify(currentJsonExportObject());return lines.join('\n');
 }
+
+/* ===== Tavo .tpg Package Adapter =====
+   .tpg is a ZIP plugin package, not a standard Character Card.
+   CardLingo only performs static inspection/editing and never executes imported JS/HTML. */
+function looksLikeTavoPluginManifest(m){
+  return !!(m&&typeof m==='object'&&!Array.isArray(m)&&typeof m.id==='string'&&typeof m.name==='string'&&typeof m.version==='string'&&Number.isFinite(Number(m.specVersion))&&(m.entry||m.contributes||m.permissions||m.localization));
+}
+function tpgVirtualCard(manifest){
+  return {spec:'chara_card_v3',spec_version:'3.0',data:{
+    name:String(manifest?.name||''),description:'',personality:'',scenario:'',first_mes:'',mes_example:'',
+    creator_notes:String(manifest?.description||''),system_prompt:'',post_history_instructions:'',alternate_greetings:[],
+    character_book:{name:'',description:'',scan_depth:4,token_budget:1024,recursive_scanning:false,extensions:{},entries:[]},
+    tags:['Tavo Plugin'],creator:String(manifest?.author||''),character_version:String(manifest?.version||''),
+    extensions:{cardlingo:{container:'tpg',note:'Virtual metadata view; plugin scripts/assets stay inside the original .tpg package.'},tavo_plugin_manifest:clone(manifest||{})}
+  }};
+}
+async function tryLoadTpgPackage(bytes,strict=false){
+  let zip;try{zip=await JSZip.loadAsync(bytes)}catch(e){if(strict)throw new Error('TPG ZIP 解析失败：'+e.message);return null}
+  const mf=zip.file('manifest.json');if(!mf){if(strict)throw new Error('TPG 缺少根目录 manifest.json');return null}
+  let manifest;try{manifest=JSON.parse((await mf.async('string')).replace(/^\uFEFF/,''))}catch(e){if(strict)throw new Error('TPG manifest.json 不是有效 JSON：'+e.message);return null}
+  if(!looksLikeTavoPluginManifest(manifest)){if(strict)throw new Error('manifest.json 不符合可识别的 Tavo 插件包结构');return null}
+  if(manifest.entry){const ep=String(manifest.entry).replace(/^\.\//,'');if(!zip.file(ep))throw new Error(`TPG manifest.entry 指向不存在的文件：${ep}`)}
+  const resources=Object.keys(zip.files).filter(n=>!zip.files[n].dir).map(n=>({name:n,size:Number(zip.files[n]?._data?.uncompressedSize||0)}));
+  let coverBlob=null;const cp=String(manifest.cover||'').replace(/^\.\//,'');if(cp&&zip.file(cp)){try{coverBlob=await zip.file(cp).async('blob')}catch{}}
+  return{zip,manifest,resources,coverBlob,card:tpgVirtualCard(manifest)};
+}
+function syncTpgManifestFromCard(){
+  if(state.containerKind!=='tpg'||!state.tpgManifest)return null;const d=cardData()||{},m=clone(state.tpgManifest);
+  if(String(d.name||'').trim())m.name=String(d.name).trim();
+  if(typeof d.creator_notes==='string')m.description=d.creator_notes;
+  if(String(d.creator||'').trim())m.author=String(d.creator).trim();
+  if(String(d.character_version||'').trim())m.version=String(d.character_version).trim();
+  return m;
+}
+async function exportTpgPackage(){
+  if(!state.tpgZip||state.containerKind!=='tpg')throw new Error('当前不是 Tavo .tpg 插件包');
+  const m=syncTpgManifestFromCard()||state.tpgManifest;state.tpgZip.file('manifest.json',JSON.stringify(m,null,2));
+  return await state.tpgZip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
+}
+function activePackageZip(){return state.tpgZip||state.charxZip||null}
+function renderTpgPackageSummary(root){
+  const m=state.tpgManifest;if(!root||!m)return false;const contrib=m.contributes||{},files=state.tpgResources||[];
+  const actions=(contrib.inputActions||[]).length+(contrib.sidebarActions||[]).length,fragments=(contrib.htmlFragments||[]).length,perms=Array.isArray(m.permissions)?m.permissions:[];
+  root.innerHTML=`<div class="visual-config-card"><div class="lock-note"><strong>Tavo 插件包：</strong>.tpg 是插件 ZIP，不是标准角色卡。CardLingo 已以静态方式打开，不会执行其中 JavaScript/HTML。角色页仅显示 manifest 元数据；真实玩法逻辑仍保留在插件资源中。</div><div class="format-report-grid" style="margin-top:12px"><div class="format-report-stat"><b>${escapeHtml(String(m.specVersion??''))}</b><span>Spec Version</span></div><div class="format-report-stat"><b>${files.length}</b><span>包内文件</span></div><div class="format-report-stat"><b>${actions}</b><span>动作</span></div><div class="format-report-stat"><b>${fragments}</b><span>HTML Fragment</span></div></div><div class="info-tip" style="margin-top:12px"><b>ID：</b>${escapeHtml(m.id||'')}<br><b>版本：</b>${escapeHtml(m.version||'')}<br><b>入口：</b>${escapeHtml(m.entry||'无')}<br><b>权限：</b>${escapeHtml(perms.join(', ')||'无')}</div></div>`;return true;
+}
 async function parseFile(file){
-  state.file=file;state.sourceExt=fileExt(file.name);state.originalBytes=new Uint8Array(await file.arrayBuffer());state.pngMetaKey=null;state.charxZip=null;state.charxPrefix=null;state.charxEntryCount=0;state.charxCardPath='card.json';state.risumModules=[];state.risumErrors=[];state.containerKind='card';state.lorebookAdapter=null;state.jsonlAdapter=null;state.formatConversion=null;state.originalContainer=null;let avatar=fallbackAvatar();
+  state.file=file;state.sourceExt=fileExt(file.name);state.originalBytes=new Uint8Array(await file.arrayBuffer());state.pngMetaKey=null;state.charxZip=null;state.charxPrefix=null;state.charxEntryCount=0;state.charxCardPath='card.json';state.tpgZip=null;state.tpgManifest=null;state.tpgResources=[];state.risumModules=[];state.risumErrors=[];state.containerKind='card';state.lorebookAdapter=null;state.jsonlAdapter=null;state.formatConversion=null;state.originalContainer=null;let avatar=fallbackAvatar();
   const bytes=state.originalBytes,zipStart=findZipStart(bytes);
   if(isPngBytes(bytes)){const r=await extractPngCard(bytes);state.card=r.card;state.pngMetaKey=r.key;state.fileType=state.sourceExt==='apng'?'apng':'png';avatar=URL.createObjectURL(new Blob([bytes],{type:'image/png'}));}
   else if(isJpegBytes(bytes)&&zipStart>0){const r=await loadCharx(bytes);state.card=r.card;state.charxZip=r.zip;state.charxPrefix=r.prefix;state.charxEntryCount=r.count;state.charxCardPath=r.cardPath;state.fileType='charxjpeg';avatar=URL.createObjectURL(new Blob([state.charxPrefix],{type:'image/jpeg'}));}
-  else if(zipStart===0||['charx','zip'].includes(state.sourceExt)){const r=await loadCharx(bytes);state.card=r.card;state.charxZip=r.zip;state.charxPrefix=r.prefix;state.charxEntryCount=r.count;state.charxCardPath=r.cardPath;state.fileType=state.sourceExt==='zip'?'charxzip':'charx';const af=findCharxAvatar(state.card,r.zip);if(af)avatar=URL.createObjectURL(await af.async('blob'));}
-  else{const text=new TextDecoder().decode(bytes).replace(/^\uFEFF/,'');let obj=null,parsed=false;try{obj=JSON.parse(text);parsed=true}catch{}if(parsed){await parseJsonObject(obj)}else{const jl=parseJsonlText(text);if(!jl)throw new Error('无法识别文件：支持 PNG/APNG、JSON/JSONL、CHARX/ZIP、JPEG-CHARX、.lorebook 与 catai JSON');state.jsonlAdapter=jl;await parseJsonObject(jl.obj);state.fileType='jsonl';}}
+  else if(zipStart===0||['charx','zip','tpg'].includes(state.sourceExt)){let tp=null;try{tp=await tryLoadTpgPackage(bytes,state.sourceExt==='tpg')}catch(e){throw e}if(tp){state.card=tp.card;state.tpgZip=tp.zip;state.tpgManifest=tp.manifest;state.tpgResources=tp.resources;state.originalContainer=clone(tp.manifest);state.containerKind='tpg';state.fileType='tpg';if(tp.coverBlob)avatar=URL.createObjectURL(tp.coverBlob);}else{const r=await loadCharx(bytes);state.card=r.card;state.charxZip=r.zip;state.charxPrefix=r.prefix;state.charxEntryCount=r.count;state.charxCardPath=r.cardPath;state.fileType=state.sourceExt==='zip'?'charxzip':'charx';const af=findCharxAvatar(state.card,r.zip);if(af)avatar=URL.createObjectURL(await af.async('blob'));}}
+  else{const text=new TextDecoder().decode(bytes).replace(/^\uFEFF/,'');let obj=null,parsed=false;try{obj=JSON.parse(text);parsed=true}catch{}if(parsed){await parseJsonObject(obj)}else{const jl=parseJsonlText(text);if(!jl)throw new Error('无法识别文件：支持 PNG/APNG、JSON/JSONL、CHARX/ZIP、JPEG-CHARX、.lorebook、catai JSON 与 Tavo .tpg 插件包');state.jsonlAdapter=jl;await parseJsonObject(jl.obj);state.fileType='jsonl';}}
   if(state.charxZip)await loadRisumModulesFromZip();
   state.originalCard=clone(state.card);state.history=[];state.redo=[];state.fieldHistory.clear();state.consistencyMemory=[];state.termCandidates=[];state.usage={requests:0,prompt:0,completion:0,hit:0,miss:0,total:0,cost:0,costUsd:0,pricedRequests:0,pricedRequestsUsd:0,lastModel:''};state.integrity=null;state.visibility={findings:[],targets:[],scannedAt:0,resources:[]};state.visibilitySelected={};state.localizationKnowledge={version:1,overrides:{}};state.localizationAcceptance=null;state.visibilityFilter='all';state.pendingQueue=null;state.projectId=makeProjectId(file);await maybeRestoreProject();$('#sidebarAvatar').src=avatar;$('#welcome').classList.add('hidden');$('#editor').classList.remove('hidden');$('#clearCardBtn').disabled=false;$('#batchTranslateTop').disabled=false;$('#batchTranslateTopOptions').disabled=false;$('#exportJsonBtn').disabled=false;$('#exportImageBtn').disabled=!['png','apng'].includes(state.fileType);$('#quickDownloadBtn').disabled=false;
-  const charTab=$('.main-tab[data-view="character"]');if(charTab)charTab.disabled=state.containerKind==='lorebook';switchView(state.containerKind==='lorebook'?'book':(state.view||'character'),true);renderAll();renderActualUsage();renderConsistencyBadge();updateAutosaveUi(state.pendingQueue?'自动保存：已恢复未完成翻译':'自动保存：项目已载入',state.pendingQueue?'warn':'ok');scheduleAutosave('载入项目');
-  const extra=state.charxEntryCount?` · ${state.charxEntryCount} 个容器文件`:'';const rm=state.risumModules.length?` · RISUM ${state.risumModules.length}`:'';toast(`已载入：${file.name} · ${formatLabel()}${extra}${rm}${state.pendingQueue?' · 可继续翻译':''}`);runVisibilityScan(true).catch(()=>{});if(state.formatConversion?.source==='catai')setTimeout(()=>openFormatConversionDialog(),120);
+  const charTab=$('.main-tab[data-view="character"]');if(charTab)charTab.disabled=state.containerKind==='lorebook';const bookTab=$('.main-tab[data-view="book"]');if(bookTab)bookTab.disabled=state.containerKind==='tpg';switchView(state.containerKind==='lorebook'?'book':(state.containerKind==='tpg'?'scripts':(state.view||'character')),true);renderAll();renderActualUsage();renderConsistencyBadge();updateAutosaveUi(state.pendingQueue?'自动保存：已恢复未完成翻译':'自动保存：项目已载入',state.pendingQueue?'warn':'ok');scheduleAutosave('载入项目');
+  const extra=state.charxEntryCount?` · ${state.charxEntryCount} 个容器文件`:state.containerKind==='tpg'?` · ${state.tpgResources.length} 个插件文件`:'';const rm=state.risumModules.length?` · RISUM ${state.risumModules.length}`:'';toast(state.containerKind==='tpg'?`已识别 Tavo 插件包：${file.name} · 静态安全模式${extra}`:`已载入：${file.name} · ${formatLabel()}${extra}${rm}${state.pendingQueue?' · 可继续翻译':''}`);runVisibilityScan(true).catch(()=>{});if(state.formatConversion?.source==='catai')setTimeout(()=>openFormatConversionDialog(),120);
 }
 function renderAll(){if(!state.card){renderCostEstimate();renderActualUsage();return}const d=cardData()||{};$('#sidebarName').textContent=d.name||'未命名角色';$('#sidebarSpec').textContent=`${detectSpec(state.card)} · ${formatLabel()}`;renderCharacterFields();renderGreetings();renderAdvancedFields();renderBook();renderScriptWorkspace();renderVisibilityResults();updateHistoryUI();updateRollbackButton();renderCostEstimate();renderActualUsage();renderConsistencyBadge();renderIntegrityBadge();renderVisibilityBadge();renderLocalizationIntelligenceUi()}
 function makeField(def,group='character'){const path=resolvePath(def),value=pathGet(state.card,path),key=pathKey(path),wrap=document.createElement('div');wrap.className='card-field';const display=def.type==='tags'?(Array.isArray(value)?value.join(', '):(value||'')):(value??'');const hist=(state.fieldHistory.get(key)||[]).length;wrap.innerHTML=`<div class="field-head"><div class="field-title">${escapeHtml(def.label)} <small>(${escapeHtml(def.en)})</small></div><div class="field-actions">${def.translate?'<button class="mini-btn translate">翻译</button><button class="mini-btn lang-options translate-options" title="翻译语言设置">⋯</button>':''}${hist?'<button class="mini-btn rollback">回退</button>':''}<button class="mini-btn restore">原文</button></div></div>${def.type==='input'||def.type==='tags'?'<input />':`<textarea class="${def.size||''}"></textarea>`}<div class="field-foot"><span>${hist?'<b class="translated-mark">已翻译 · 可回退</b>':'编辑会直接写入当前卡'}</span><span class="char-count"></span></div>`;const el=wrap.querySelector(def.type==='input'||def.type==='tags'?'input':'textarea');el.value=display;wrap.querySelector('.char-count').textContent=`${String(display).length} 字符`;let last=clone(value);el.addEventListener('focus',()=>{last=clone(pathGet(state.card,path))});el.addEventListener('input',()=>wrap.querySelector('.char-count').textContent=`${el.value.length} 字符`);el.addEventListener('change',()=>{const before=clone(last),after=def.type==='tags'?el.value.split(',').map(x=>x.trim()).filter(Boolean):el.value;pathSet(state.card,path,after);recordTransaction(`编辑 ${def.label}`,[{path,before,after:clone(after)}]);last=clone(after);renderAll()});const t=wrap.querySelector('.translate');if(t)t.onclick=()=>translateSingle(path,def.label,def.translate,fieldLanguageKey(path));const opt=wrap.querySelector('.translate-options');if(opt){const lk=fieldLanguageKey(path);opt.title=`翻译语言：${translationLanguageScopeLabel(getTranslationLanguagePrefs(lk))}`;opt.onclick=()=>openTranslationLanguageDialog(lk,def.label)}const rb=wrap.querySelector('.rollback');if(rb)rb.onclick=()=>rollbackField(path);wrap.querySelector('.restore').onclick=()=>restoreField(path);return wrap}
@@ -1289,13 +1664,13 @@ function safeJson(v){try{return JSON.stringify(v??[],null,2)}catch{return'[]'}}
 function parseJsonField(input,label){try{input.classList.remove('json-error');return input.value.trim()?JSON.parse(input.value):[]}catch(e){input.classList.add('json-error');toast(`${label} 不是有效 JSON`);throw e}}
 function commitDirect(path,before,after,label){pathSet(state.card,path,after);recordTransaction(label,[{path,before:clone(before),after:clone(after)}]);scheduleAutosave(label);renderScriptWorkspace();runVisibilityScan(true)}
 function renderScriptWorkspace(){if(!state.card||state.containerKind==='lorebook')return;renderVisualConfigEditor();renderRegexScripts();renderTriggers();renderScriptResources()}
-function renderVisualConfigEditor(){const root=$('#visualConfigEditor');if(!root)return;const r=getRisuExt()||{};const fields=[['backgroundHTML','背景 HTML / BACKGROUND HTML','textarea'],['virtualscript','虚拟脚本 / VIRTUAL SCRIPT','textarea'],['additionalText','附加文本 / ADDITIONAL TEXT','textarea'],['prebuiltAssetCommand','预置资源命令 / ASSET COMMAND','textarea'],['prebuiltAssetStyle','预置资源样式 / ASSET STYLE','textarea'],['viewScreen','View Screen','input'],['inlayViewScreen','Inlay View Screen','check'],['lowLevelAccess','Low Level Access','check'],['toggles','侧栏开关 / TOGGLES','json']];const card=document.createElement('div');card.className='visual-config-card';card.innerHTML='<div class="lock-note"><strong>默认不翻译：</strong>HTML/CSS/JS、开关语法、变量和资源命令都可能影响运行。CardLingo 只允许原样编辑并做静态检测。</div><div class="visual-config-grid" style="margin-top:12px"></div>';const grid=card.querySelector('.visual-config-grid');for(const [k,label,type] of fields){const wrap=document.createElement('label');if(['backgroundHTML','virtualscript','additionalText','prebuiltAssetCommand','prebuiltAssetStyle','toggles'].includes(k))wrap.className='full';wrap.innerHTML=`<span>${label}</span>`;let el;if(type==='textarea'||type==='json'){el=document.createElement('textarea');el.value=type==='json'?safeJson(r[k]||{}):String(r[k]??'')}else if(type==='check'){el=document.createElement('input');el.type='checkbox';el.checked=!!r[k]}else{el=document.createElement('input');el.value=String(r[k]??'')}el.dataset.visualKey=k;wrap.appendChild(el);let before=clone(r[k]);el.onfocus=()=>before=clone((getRisuExt()||{})[k]);el.onchange=()=>{const ext=ensureRisuExt(),old=clone(before);let val;if(type==='check')val=el.checked;else if(type==='json'){try{val=el.value.trim()?JSON.parse(el.value):{};el.classList.remove('json-error')}catch(e){el.classList.add('json-error');return toast('Toggles 不是有效 JSON')}}else val=el.value;ext[k]=val;recordTransaction(`编辑 Risu ${k}`,[{path:[...risuExtPath(),k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave(`Risu ${k}`);runVisibilityScan(true)};grid.appendChild(wrap)}root.innerHTML='';root.appendChild(card)}
-function renderRegexScripts(){const root=$('#regexScriptsList');if(!root)return;root.innerHTML='';const st=getRegexStore(false);if(!st.arr.length){root.innerHTML='<div class="empty-mini">当前角色卡没有可直接读取的正则脚本。若 CHARX 只有 module.risum，检测页会标记为“未解析模块”。</div>';return}st.arr.forEach((x,i)=>{if(!x||typeof x!=='object')return;const base=[...st.path,i],box=document.createElement('div');box.className='script-card';const type=x.type||'editoutput',visible=['editdisplay','edittrans','editoutput'].includes(type);box.innerHTML=`<div class="script-card-head"><strong>${escapeHtml(x.comment||`正则脚本 ${i+1}`)}</strong><span class="script-badge ${visible?'visible':'hidden'}">${visible?'可能外显':'处理逻辑'}</span><span class="script-badge code">正则保护</span><div class="entry-actions"><button class="mini-btn copy-regex">复制</button><button class="mini-btn danger del-regex">删除</button></div></div><div class="script-grid"><label><span>名称 / COMMENT</span><input data-rk="comment"></label><label><span>类型 / TYPE</span><select data-rk="type"><option value="editinput">editinput · 输入</option><option value="editoutput">editoutput · 输出</option><option value="editprocess">editprocess · 处理</option><option value="editdisplay">editdisplay · 聊天显示</option><option value="edittrans">edittrans · 翻译显示</option><option value="disabled">disabled</option></select></label><label class="full"><span>IN / REGEX</span><input data-rk="in"></label><label class="full"><span>OUT / REPLACEMENT</span><textarea data-rk="out"></textarea></label><label class="full"><span>FLAG</span><input data-rk="flag"></label><label class="switch-line"><input type="checkbox" data-rk="ableFlag"> Custom Flag</label></div>`;for(const el of box.querySelectorAll('[data-rk]')){const k=el.dataset.rk;if(el.type==='checkbox')el.checked=!!x[k];else el.value=x[k]??'';let before=clone(x[k]);el.onfocus=()=>before=clone(x[k]);el.onchange=()=>{const old=clone(before),val=el.type==='checkbox'?el.checked:el.value;x[k]=val;recordTransaction(`编辑正则脚本 ${i+1}.${k}`,[{path:[...base,k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave('正则脚本已修改');renderRegexScripts();runVisibilityScan(true)}}box.querySelector('.del-regex').onclick=()=>{if(!confirm('删除这个正则脚本？'))return;const before=clone(st.arr);st.arr.splice(i,1);recordTransaction('删除正则脚本',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};box.querySelector('.copy-regex').onclick=()=>{const before=clone(st.arr);st.arr.splice(i+1,0,clone(x));recordTransaction('复制正则脚本',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};root.appendChild(box)})}
+function renderVisualConfigEditor(){const root=$('#visualConfigEditor');if(!root)return;if(state.containerKind==='tpg'){renderTpgPackageSummary(root);return}const r=getRisuExt()||{};const fields=[['backgroundHTML','背景 HTML / BACKGROUND HTML','textarea'],['virtualscript','虚拟脚本 / VIRTUAL SCRIPT','textarea'],['additionalText','附加文本 / ADDITIONAL TEXT','textarea'],['prebuiltAssetCommand','预置资源命令 / ASSET COMMAND','textarea'],['prebuiltAssetStyle','预置资源样式 / ASSET STYLE','textarea'],['viewScreen','View Screen','input'],['inlayViewScreen','Inlay View Screen','check'],['lowLevelAccess','Low Level Access','check'],['toggles','侧栏开关 / TOGGLES','json']];const card=document.createElement('div');card.className='visual-config-card';card.innerHTML='<div class="lock-note"><strong>默认不翻译：</strong>HTML/CSS/JS、开关语法、变量和资源命令都可能影响运行。CardLingo 只允许原样编辑并做静态检测。</div><div class="visual-config-grid" style="margin-top:12px"></div>';const grid=card.querySelector('.visual-config-grid');for(const [k,label,type] of fields){const wrap=document.createElement('label');if(['backgroundHTML','virtualscript','additionalText','prebuiltAssetCommand','prebuiltAssetStyle','toggles'].includes(k))wrap.className='full';wrap.innerHTML=`<span>${label}</span>`;let el;if(type==='textarea'||type==='json'){el=document.createElement('textarea');el.value=type==='json'?safeJson(r[k]||{}):String(r[k]??'')}else if(type==='check'){el=document.createElement('input');el.type='checkbox';el.checked=!!r[k]}else{el=document.createElement('input');el.value=String(r[k]??'')}el.dataset.visualKey=k;wrap.appendChild(el);let before=clone(r[k]);el.onfocus=()=>before=clone((getRisuExt()||{})[k]);el.onchange=()=>{const ext=ensureRisuExt(),old=clone(before);let val;if(type==='check')val=el.checked;else if(type==='json'){try{val=el.value.trim()?JSON.parse(el.value):{};el.classList.remove('json-error')}catch(e){el.classList.add('json-error');return toast('Toggles 不是有效 JSON')}}else val=el.value;ext[k]=val;recordTransaction(`编辑 Risu ${k}`,[{path:[...risuExtPath(),k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave(`Risu ${k}`);runVisibilityScan(true)};grid.appendChild(wrap)}root.innerHTML='';root.appendChild(card)}
+function renderRegexScripts(){const root=$('#regexScriptsList');if(!root)return;root.innerHTML='';if(state.containerKind==='tpg'){root.innerHTML='<div class="empty-mini">TPG 的正则/预设可能由插件脚本运行时创建。CardLingo 不执行插件，因此这里只静态保留并检查资源，不伪装成角色卡正则。</div>';return}const st=getRegexStore(false);if(!st.arr.length){root.innerHTML='<div class="empty-mini">当前角色卡没有可直接读取的正则脚本。若 CHARX 只有 module.risum，检测页会标记为“未解析模块”。</div>';return}st.arr.forEach((x,i)=>{if(!x||typeof x!=='object')return;const base=[...st.path,i],box=document.createElement('div');box.className='script-card';const type=x.type||'editoutput',visible=['editdisplay','edittrans','editoutput'].includes(type);box.innerHTML=`<div class="script-card-head"><strong>${escapeHtml(x.comment||`正则脚本 ${i+1}`)}</strong><span class="script-badge ${visible?'visible':'hidden'}">${visible?'可能外显':'处理逻辑'}</span><span class="script-badge code">正则保护</span><div class="entry-actions"><button class="mini-btn copy-regex">复制</button><button class="mini-btn danger del-regex">删除</button></div></div><div class="script-grid"><label><span>名称 / COMMENT</span><input data-rk="comment"></label><label><span>类型 / TYPE</span><select data-rk="type"><option value="editinput">editinput · 输入</option><option value="editoutput">editoutput · 输出</option><option value="editprocess">editprocess · 处理</option><option value="editdisplay">editdisplay · 聊天显示</option><option value="edittrans">edittrans · 翻译显示</option><option value="disabled">disabled</option></select></label><label class="full"><span>IN / REGEX</span><input data-rk="in"></label><label class="full"><span>OUT / REPLACEMENT</span><textarea data-rk="out"></textarea></label><label class="full"><span>FLAG</span><input data-rk="flag"></label><label class="switch-line"><input type="checkbox" data-rk="ableFlag"> Custom Flag</label></div>`;for(const el of box.querySelectorAll('[data-rk]')){const k=el.dataset.rk;if(el.type==='checkbox')el.checked=!!x[k];else el.value=x[k]??'';let before=clone(x[k]);el.onfocus=()=>before=clone(x[k]);el.onchange=()=>{const old=clone(before),val=el.type==='checkbox'?el.checked:el.value;x[k]=val;recordTransaction(`编辑正则脚本 ${i+1}.${k}`,[{path:[...base,k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave('正则脚本已修改');renderRegexScripts();runVisibilityScan(true)}}box.querySelector('.del-regex').onclick=()=>{if(!confirm('删除这个正则脚本？'))return;const before=clone(st.arr);st.arr.splice(i,1);recordTransaction('删除正则脚本',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};box.querySelector('.copy-regex').onclick=()=>{const before=clone(st.arr);st.arr.splice(i+1,0,clone(x));recordTransaction('复制正则脚本',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};root.appendChild(box)})}
 function addRegexScript(){if(!state.card)return;const st=getRegexStore(true),before=clone(st.arr);st.arr.push({comment:'新正则脚本',type:'editdisplay',in:'',out:'',flag:'g',ableFlag:true});recordTransaction('新增正则脚本',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)}
-function renderTriggers(){const root=$('#triggersList');if(!root)return;root.innerHTML='';const st=getTriggerStore(false);if(!st.arr.length){root.innerHTML='<div class="empty-mini">当前 card.json 没有直接可读的触发器。</div>';return}st.arr.forEach((x,i)=>{if(!x||typeof x!=='object')return;const base=[...st.path,i],box=document.createElement('div');box.className='trigger-card'+(x.lowLevelAccess?' danger-zone':'');box.innerHTML=`<div class="trigger-card-head"><strong>${escapeHtml(x.comment||`触发器 ${i+1}`)}</strong><span class="script-badge ${x.type==='display'?'visible':'hidden'}">${escapeHtml(x.type||'manual')}</span>${x.lowLevelAccess?'<span class="script-badge risk">LOW LEVEL</span>':''}<div class="entry-actions"><button class="mini-btn copy-trigger">复制</button><button class="mini-btn danger del-trigger">删除</button></div></div><div class="script-grid"><label><span>名称 / COMMENT</span><input data-tk="comment"></label><label><span>触发时机 / TYPE</span><select data-tk="type"><option value="start">start</option><option value="manual">manual</option><option value="output">output</option><option value="input">input</option><option value="display">display · 显示阶段</option><option value="request">request</option></select></label><label class="switch-line"><input type="checkbox" data-tk="lowLevelAccess"> Low Level Access</label><div class="full lock-note"><strong>代码保护：</strong>conditions / effects 以 JSON 编辑；TriggerCode、TriggerLua、正则和变量名不会进入自动翻译。</div><label class="full"><span>条件 / CONDITIONS JSON</span><textarea class="code-area" data-tjson="conditions"></textarea></label><label class="full"><span>效果 / EFFECTS JSON</span><textarea class="code-area" data-tjson="effect"></textarea></label></div>`;for(const el of box.querySelectorAll('[data-tk]')){const k=el.dataset.tk;if(el.type==='checkbox')el.checked=!!x[k];else el.value=x[k]??'';let before=clone(x[k]);el.onfocus=()=>before=clone(x[k]);el.onchange=()=>{const old=clone(before),val=el.type==='checkbox'?el.checked:el.value;x[k]=val;recordTransaction(`编辑触发器 ${i+1}.${k}`,[{path:[...base,k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave('触发器已修改');renderTriggers();runVisibilityScan(true)}}for(const el of box.querySelectorAll('[data-tjson]')){const k=el.dataset.tjson;el.value=safeJson(x[k]||[]);let before=clone(x[k]);el.onfocus=()=>before=clone(x[k]);el.onchange=()=>{let val;try{val=parseJsonField(el,k)}catch{return}const old=clone(before);x[k]=val;recordTransaction(`编辑触发器 ${i+1}.${k}`,[{path:[...base,k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave('触发器已修改');runVisibilityScan(true)}}box.querySelector('.del-trigger').onclick=()=>{if(!confirm('删除这个触发器？'))return;const before=clone(st.arr);st.arr.splice(i,1);recordTransaction('删除触发器',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};box.querySelector('.copy-trigger').onclick=()=>{const before=clone(st.arr);st.arr.splice(i+1,0,clone(x));recordTransaction('复制触发器',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};root.appendChild(box)})}
+function renderTriggers(){const root=$('#triggersList');if(!root)return;root.innerHTML='';if(state.containerKind==='tpg'){root.innerHTML='<div class="empty-mini">TPG 的动作与事件由 manifest + entry 脚本声明。CardLingo 只做静态检查，不执行或模拟 Tavo 插件运行时。</div>';return}const st=getTriggerStore(false);if(!st.arr.length){root.innerHTML='<div class="empty-mini">当前 card.json 没有直接可读的触发器。</div>';return}st.arr.forEach((x,i)=>{if(!x||typeof x!=='object')return;const base=[...st.path,i],box=document.createElement('div');box.className='trigger-card'+(x.lowLevelAccess?' danger-zone':'');box.innerHTML=`<div class="trigger-card-head"><strong>${escapeHtml(x.comment||`触发器 ${i+1}`)}</strong><span class="script-badge ${x.type==='display'?'visible':'hidden'}">${escapeHtml(x.type||'manual')}</span>${x.lowLevelAccess?'<span class="script-badge risk">LOW LEVEL</span>':''}<div class="entry-actions"><button class="mini-btn copy-trigger">复制</button><button class="mini-btn danger del-trigger">删除</button></div></div><div class="script-grid"><label><span>名称 / COMMENT</span><input data-tk="comment"></label><label><span>触发时机 / TYPE</span><select data-tk="type"><option value="start">start</option><option value="manual">manual</option><option value="output">output</option><option value="input">input</option><option value="display">display · 显示阶段</option><option value="request">request</option></select></label><label class="switch-line"><input type="checkbox" data-tk="lowLevelAccess"> Low Level Access</label><div class="full lock-note"><strong>代码保护：</strong>conditions / effects 以 JSON 编辑；TriggerCode、TriggerLua、正则和变量名不会进入自动翻译。</div><label class="full"><span>条件 / CONDITIONS JSON</span><textarea class="code-area" data-tjson="conditions"></textarea></label><label class="full"><span>效果 / EFFECTS JSON</span><textarea class="code-area" data-tjson="effect"></textarea></label></div>`;for(const el of box.querySelectorAll('[data-tk]')){const k=el.dataset.tk;if(el.type==='checkbox')el.checked=!!x[k];else el.value=x[k]??'';let before=clone(x[k]);el.onfocus=()=>before=clone(x[k]);el.onchange=()=>{const old=clone(before),val=el.type==='checkbox'?el.checked:el.value;x[k]=val;recordTransaction(`编辑触发器 ${i+1}.${k}`,[{path:[...base,k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave('触发器已修改');renderTriggers();runVisibilityScan(true)}}for(const el of box.querySelectorAll('[data-tjson]')){const k=el.dataset.tjson;el.value=safeJson(x[k]||[]);let before=clone(x[k]);el.onfocus=()=>before=clone(x[k]);el.onchange=()=>{let val;try{val=parseJsonField(el,k)}catch{return}const old=clone(before);x[k]=val;recordTransaction(`编辑触发器 ${i+1}.${k}`,[{path:[...base,k],before:old,after:clone(val)}]);before=clone(val);scheduleAutosave('触发器已修改');runVisibilityScan(true)}}box.querySelector('.del-trigger').onclick=()=>{if(!confirm('删除这个触发器？'))return;const before=clone(st.arr);st.arr.splice(i,1);recordTransaction('删除触发器',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};box.querySelector('.copy-trigger').onclick=()=>{const before=clone(st.arr);st.arr.splice(i+1,0,clone(x));recordTransaction('复制触发器',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)};root.appendChild(box)})}
 function addTrigger(){if(!state.card)return;const st=getTriggerStore(true),before=clone(st.arr);st.arr.push({comment:'新触发器',type:'manual',conditions:[],effect:[],lowLevelAccess:false});recordTransaction('新增触发器',[{path:st.path,before,after:clone(st.arr)}]);renderScriptWorkspace();runVisibilityScan(true)}
-function charxScriptResourceNames(){if(!state.charxZip)return[];return Object.keys(state.charxZip.files).filter(n=>/\.(?:lua|js|mjs|cjs|html?|css|risum)$/i.test(n)&&!state.charxZip.files[n].dir)}
-function renderScriptResources(){const root=$('#scriptResourcesList');if(!root)return;const names=charxScriptResourceNames();if(!names.length){root.innerHTML='<div class="empty-mini">容器中没有发现 .lua / .js / .html / .css / .risum 脚本型资源。</div>';return}root.innerHTML=names.slice(0,120).map(n=>`<div class="module-file"><span>${/\.risum$/i.test(n)?'◈':'⌘'}</span><code>${escapeHtml(n)}</code><small>${/\.risum$/i.test(n)?'Risu module · 保留但不执行':'静态资源'}</small></div>`).join('')+(names.length>120?`<div class="empty-mini">另有 ${names.length-120} 个脚本型资源未展开。</div>`:'')}
+function charxScriptResourceNames(){const zip=activePackageZip();if(!zip)return[];return Object.keys(zip.files).filter(n=>/\.(?:lua|js|mjs|cjs|html?|css|risum)$/i.test(n)&&!zip.files[n].dir)}
+function renderScriptResources(){const root=$('#scriptResourcesList');if(!root)return;const names=charxScriptResourceNames(),zip=activePackageZip();if(!names.length){root.innerHTML='<div class="empty-mini">容器中没有发现 .lua / .js / .html / .css / .risum 脚本型资源。</div>';return}root.innerHTML=names.slice(0,120).map(n=>`<div class="module-file"><span>${/\.risum$/i.test(n)?'◈':'⌘'}</span><code>${escapeHtml(n)}</code><small>${state.containerKind==='tpg'?'TPG 静态资源 · 不执行':(/\.risum$/i.test(n)?'Risu module · 保留但不执行':'静态资源')}</small></div>`).join('')+(names.length>120?`<div class="empty-mini">另有 ${names.length-120} 个脚本型资源未展开。</div>`:'')}
 function addFinding(list,category,title,path,reason,confidence='high',snippet=''){list.push({category,title,path,reason,confidence,snippet:String(snippet||'').slice(0,500)})}
 function scanTextSignals(text,path,list,baseCategory='code'){const t=String(text||'');if(!t.trim())return;const rules=[[/\b(document\.|window\.|querySelector\(|createElement\(|innerHTML|insertAdjacentHTML|appendChild\()/i,'fixed','脚本直接操作 DOM','可能创建或修改持续显示的界面元素','medium'],[/<(?:div|style|button|iframe|img|svg|canvas)\b/i,'fixed','包含可渲染 HTML / UI','文本包含 HTML/CSS 界面结构，可能在聊天背景或插件区域持续显示','medium'],[/\b(fetch\(|XMLHttpRequest|WebSocket|https?:\/\/)/i,'network','访问外部网络 / 资源','检测到网络请求或远程 URL；实际是否请求取决于运行路径','medium'],[/\b(alert\(|showAlert|v2ShowAlert|toast\b)/i,'chat','弹窗 / 提示外显','可能向用户显示提示、弹窗或可见通知','medium'],[/\b(modifychat|v2ModifyChat|v2UpdateChatAt|impersonate|v2Impersonate)\b/i,'chat','修改聊天内容','代码/触发器可能直接写入或改变聊天框消息','high'],[/\b(setDisplayState|v2SetDisplayState|updateGUI|v2UpdateGUI|getDisplayState)\b/i,'fixed','修改显示状态 / GUI','可能控制固定界面、插件状态或强制刷新 UI','high']];for(const [re,cat,title,reason,conf] of rules)if(re.test(t))addFinding(list,cat,title,path,reason,conf,t.match(re)?.[0]||'')}
 function recursiveEffectTypes(v,out=[]){if(Array.isArray(v)){for(const x of v)recursiveEffectTypes(x,out)}else if(v&&typeof v==='object'){if(typeof v.type==='string')out.push(v);for(const [k,x] of Object.entries(v))if(k!=='type')recursiveEffectTypes(x,out)}return out}
@@ -1316,7 +1691,7 @@ async function runVisibilityScan(silent=false){if(!state.card){if(!silent)toast(
   const book=getBook(),bp=getBookPath();if(book?.entries)book.entries.forEach((e,i)=>{if(loreEntryLooksVisible(e))addFinding(f,e.constant?'fixed':'chat',`角色书直接界面词条：${e.name||e.comment||i+1}`,pathKey([...bp,'entries',i]),'词条正文含 HTML / GUI / DOM 显示结构。','high',visibleTextPreview(e.content,24)||'界面结构');else if(loreEntryDrivesVisibleOutput(e))addFinding(f,'chat',`外显驱动规则：${e.name||e.comment||i+1}`,pathKey([...bp,'entries',i]),'该词条明确要求在回复中输出/显示状态栏、面板、菜单或固定格式。','high',stripNonVisibleMarkup(e.content).slice(0,360))});
   // 5) Parsed RISUM module main data.
   for(const [mi,rec] of (state.risumModules||[]).entries()){const mod=rec.wrapper?.module||{},base=rec.path;addFinding(f,'code',`已解析 Risu 模块：${mod.name||base}`,base,`安全读取主数据：正则 ${(mod.regex||[]).length}、触发器 ${(mod.trigger||[]).length}、角色书 ${(mod.lorebook||[]).length}；未执行脚本。`,'high');(mod.regex||[]).forEach((x,i)=>{const t=x?.type||'',p=`${base}.module.regex[${i}]`;if(t==='editdisplay'||t==='edittrans'){const vis=visibleTextPreview(x.out,28);if(vis)addFinding(f,'chat',`RISUM 显示正则文案：${x.comment||i+1}`,p,`${t} 直接改变聊天显示层，并含固定文案。`,'high',vis);else addFinding(f,'hidden',`RISUM 显示管道：${x.comment||i+1}`,p,`${t} 只有结构/动态变量，没有固定可翻译文案。`,'high',String(x.out||'').slice(0,220))}else if(t==='editoutput'){const vis=visibleTextPreview(x.out,28);if(vis)addFinding(f,'chat',`RISUM 输出正则文案：${x.comment||i+1}`,p,'editoutput 会修改最终输出，并含固定文案。','medium',vis);else addFinding(f,'hidden',`RISUM 输出结构正则：${x.comment||i+1}`,p,'只有结构/动态变量。','medium',String(x.out||'').slice(0,220))}scanTextSignals((x?.out||'')+'\n'+(x?.in||''),p,f)});(mod.trigger||[]).forEach((x,i)=>{const p=`${base}.module.trigger[${i}]`;for(const it of recursiveEffectEntries(x?.effect||[],['effect'])){const e=it.effect,typ=String(e?.type||'');if(/ShowAlert|showAlert|ModifyChat|modifychat|UpdateChatAt|Impersonate|impersonate|SetDisplayState|UpdateGUI/i.test(typ))addFinding(f,/SetDisplayState|UpdateGUI/i.test(typ)?'fixed':'chat',`RISUM 触发器外显：${x.comment||i+1}`,`${p}.${pathKey(it.path)}`,`${typ} 可能直接产生/修改用户可见内容。`,'high',safeJson(e));if((typ==='triggerlua'||typ==='triggercode')&&typeof e.code==='string'){const gg=extractScriptDataflowGroups(e.code),n=Object.values(gg).reduce((a,b)=>a+b.length,0);if(n)addFinding(f,'dependency',`RISUM 脚本外显数据流：${x.comment||i+1}`,`${p}.${pathKey(it.path)}.code`,`追踪到 ${n} 个界面/提示/选项/生成依赖字符串。`,'high',Object.values(gg).flat().slice(0,10).map(z=>z.text).join(' · '))}}});(mod.lorebook||[]).forEach((e,i)=>{if(loreEntryLooksVisible(e))addFinding(f,e.alwaysActive?'fixed':'chat',`RISUM 直接界面词条：${e.comment||e.name||e.key||i+1}`,`${base}.module.lorebook[${i}]`,'模块角色书正文包含 HTML / GUI 显示结构。','high',visibleTextPreview(e.content,24)||'界面结构');else if(loreEntryDrivesVisibleOutput(e))addFinding(f,'chat',`RISUM 外显驱动规则：${e.comment||e.name||e.key||i+1}`,`${base}.module.lorebook[${i}]`,'该模块词条明确要求回复输出状态栏/面板/菜单/固定格式。','high',stripNonVisibleMarkup(e.content).slice(0,360))});if(typeof mod.backgroundEmbedding==='string'&&mod.backgroundEmbedding.trim()){const vis=visibleTextPreview(mod.backgroundEmbedding);addFinding(f,'fixed',`RISUM 固定背景：${mod.name||base}`,`${base}.module.backgroundEmbedding`,vis?'背景嵌入含真正可见文字。':'背景嵌入主要为结构/样式。','high',vis||'仅结构')}if(typeof mod.customModuleToggle==='string'&&mod.customModuleToggle.trim())addFinding(f,'control',`RISUM 可见 Toggle：${mod.name||base}`,`${base}.module.customModuleToggle`,'模块 Toggle 会生成可见控制。','high',mod.customModuleToggle)}
-  const resources=[];if(state.charxZip){for(const n of charxScriptResourceNames()){const zf=state.charxZip.files[n];if(/\.risum$/i.test(n)){const parsed=state.risumModules?.some(r=>r.path===n);resources.push({name:n,type:'risum',parsed});if(!parsed)addFinding(f,'opaque','Risu module.risum（解析失败）',n,'无法读取该模块主数据。','medium');continue}resources.push({name:n,type:n.split('.').pop().toLowerCase()});try{if((zf?._data?.uncompressedSize||0)<1024*1024){const txt=await zf.async('string');scanTextSignals(txt,n,f)}}catch(e){}}}
+  const resourceZip=activePackageZip(),resources=[];if(resourceZip){for(const n of charxScriptResourceNames()){const zf=resourceZip.files[n];if(/\.risum$/i.test(n)){const parsed=state.risumModules?.some(r=>r.path===n);resources.push({name:n,type:'risum',parsed});if(!parsed)addFinding(f,'opaque','Risu module.risum（解析失败）',n,'无法读取该模块主数据。','medium');continue}resources.push({name:n,type:n.split('.').pop().toLowerCase()});try{if((zf?._data?.uncompressedSize||0)<1024*1024){const txt=await zf.async('string');scanTextSignals(txt,n,f)}}catch(e){}}}
   const uniq=[],seen=new Set();for(const x of f){const k=[x.category,x.title,x.path,x.reason].join('|');if(!seen.has(k)){seen.add(k);uniq.push(x)}}const oldSel=state.visibilitySelected||{};state.visibility={findings:uniq,targets:buildVisibilityTargets(),scannedAt:Date.now(),resources};state.visibilitySelected={};for(const t of state.visibility.targets){if(!t.selectable)continue;if(oldSel[t.id]!==undefined)state.visibilitySelected[t.id]=oldSel[t.id];else state.visibilitySelected[t.id]=!!t.autoSelect}renderVisibilityResults();renderVisibilityTargets();renderVisibilityBadge();renderLocalizationIntelligenceUi();if(!silent){const selectable=state.visibility.targets.filter(x=>x.selectable),auto=selectable.filter(x=>x.autoSelect).length,review=selectable.filter(x=>x.reviewRequired).length,parsed=(state.risumModules||[]).length;toast(`项目理解完成：可翻译 ${selectable.length} · 自动选择 ${auto} · 待复核 ${review} · RISUM ${parsed}`)}return state.visibility
 }
 function visibilityCategoryLabel(c){return{fixed:'固定外显',chat:'聊天框外显',control:'可见控制',dependency:'外显生成依赖',hidden:'隐藏逻辑',network:'外部网络',code:'脚本/权限',opaque:'未解析模块'}[c]||c}
@@ -1565,7 +1940,7 @@ function prepareSafeDocument(text,context,docId,maxUnitChars=3500,sourceLangs={e
           if(!containsSelectedSourceLanguage(core,sourceLangs))parts.push({kind:'keep',text:core});
           else{
             const id=`${docId}_${seq++}`,semanticContext=buildReadOnlyTranslationContext(fullText,core,context);
-            const unit={id,context,text:core,semanticContext,protectedBefore:parts.length>0&&parts[parts.length-1].kind==='keep',localizationPacket:localizationPacket?clone(localizationPacket):null};
+            const unit={id,mode:'strict',context,text:core,semanticContext,protectedBefore:parts.length>0&&parts[parts.length-1].kind==='keep',localizationPacket:localizationPacket?clone(localizationPacket):null};
             units.push(unit);parts.push({kind:'unit',id});
           }
         }
@@ -1578,6 +1953,140 @@ function prepareSafeDocument(text,context,docId,maxUnitChars=3500,sourceLangs={e
   }
   return{parts,units};
 }
+
+/* ===== v1.4 Semantic Block Translation Engine =====
+   叙事/对白/自然设定：整块翻译 + 不可修改锚点；
+   规则/UI/代码：继续走 Strict Safe Segments。
+   这样“结构安全”和“中文自然度”不再互相打架。 */
+function looksRuleLikeText(text){
+  const s=String(text||'');if(!s.trim())return false;
+  let score=0;
+  const tests=[
+    /\b(?:MUST|MUST NOT|SHALL|SHOULD|NEVER|ALWAYS|ONLY|PRIORITY|TRIGGER|CONDITION|IF|WHEN|RULE|INSTRUCTION)\b/i,
+    /(?:必须|禁止|不得|严禁|仅限|只能|优先级|最高优先级|触发|条件|规则|指令|若(?:满足|命中)|当.+时)/,
+    /(?:반드시|금지|규칙|조건|우선순위|트리거)/,
+    /(?:^|\n)\s*(?:\d+[.)、]|[-*]\s+).{0,80}(?:必须|禁止|MUST|NEVER|ONLY|조건|규칙)/im,
+    /(?:STATE|MODE|PRIORITY|CONDITION|TRIGGER|OUTPUT|INPUT)\s*[:=]/i
+  ];
+  for(const re of tests)if(re.test(s))score++;
+  if(/```|\{\{|<%|\$\{|@@|\b(?:JSON|regex|Lua|JavaScript)\b/i.test(s))score++;
+  return score>=2;
+}
+function effectiveTranslationContext(context,text){
+  if(context==='lore'&&looksRuleLikeText(text))return'rules';
+  return context;
+}
+function semanticModeEligible(context,text,kind){
+  if(kind==='tags')return false;
+  if(context==='narrative')return true;
+  if(context==='lore'&&!looksRuleLikeText(text))return true;
+  return false;
+}
+function semanticLockify(text,sourceLangs,docId){
+  let seq=0;const locks=[];const out=[];
+  const docNo=(String(docId).match(/\d+/)?.[0]||'0').padStart(4,'0');
+  const addLock=(value,type='locked')=>{if(!value)return;const id=`⟪${docNo}${String(seq++).padStart(4,'0')}⟫`;locks.push({id,text:value,type});out.push(id)};
+  for(const seg of splitProtectedSegments(String(text||''))){
+    if(seg.kind==='keep'){addLock(seg.text,'structure');continue}
+    for(const ss of splitSourceLanguageSegments(seg.text,sourceLangs)){
+      if(ss.kind==='keep')addLock(ss.text,'language');else out.push(ss.text);
+    }
+  }
+  return{text:out.join(''),locks};
+}
+function splitSemanticAnchoredChunks(text,maxChars=9000){
+  const s=String(text||'');if(s.length<=maxChars)return[s];
+  const out=[];let pos=0;
+  while(pos<s.length){
+    let end=Math.min(s.length,pos+maxChars);
+    if(end<s.length){
+      const part=s.slice(pos,end),min=Math.floor(maxChars*.48);let cut=-1;
+      const doubles=[...part.matchAll(/\n\s*\n/g)];if(doubles.length){const c=doubles[doubles.length-1].index+doubles[doubles.length-1][0].length;if(c>=min)cut=c}
+      if(cut<0){const nl=part.lastIndexOf('\n');if(nl>=min)cut=nl+1}
+      // 只有超长无段落文本才允许退到句界；正常叙事不会主动按句拆。
+      if(cut<0){const ms=[...part.matchAll(/[。！？.!?][”’"')\]}】》」』]*\s+/g)];if(ms.length){const m=ms[ms.length-1],c=m.index+m[0].length;if(c>=min)cut=c}}
+      if(cut>0)end=pos+cut;
+    }
+    out.push(s.slice(pos,end));pos=end;
+  }
+  return out;
+}
+function semanticLocksForChunk(chunk,locks){return locks.filter(x=>String(chunk).includes(x.id))}
+function prepareSemanticDocument(text,context,docId,maxUnitChars=9000,sourceLangs={en:true,ko:true},localizationPacket=null){
+  const fullText=String(text||''),anchored=semanticLockify(fullText,sourceLangs,docId),parts=[],units=[];let seq=0;
+  for(const chunk0 of splitSemanticAnchoredChunks(anchored.text,maxUnitChars)){
+    if(!chunk0)continue;const m=chunk0.match(/^(\s*)([\s\S]*?)(\s*)$/),lead=m?m[1]:'',core=m?m[2]:chunk0,tail=m?m[3]:'';
+    if(lead)parts.push({kind:'keep',text:lead});
+    if(core){
+      const hasSource=containsSelectedSourceLanguage(core,sourceLangs);
+      if(!hasSource)parts.push({kind:'keep',text:restoreSemanticAnchors(core,semanticLocksForChunk(core,anchored.locks),false)});
+      else{
+        const id=`${docId}_sb${seq++}`,locks=semanticLocksForChunk(core,anchored.locks);
+        units.push({id,mode:'semantic',context,text:core,sourceOriginal:fullText,semanticContext:'',locks,localizationPacket:localizationPacket?clone(localizationPacket):null});parts.push({kind:'unit',id});
+      }
+    }
+    if(tail)parts.push({kind:'keep',text:tail});
+  }
+  return{parts,units,mode:'semantic'};
+}
+function semanticAnchorOrder(text){return[...String(text||'').matchAll(/⟪\d{8}⟫/g)].map(m=>m[0])}
+function semanticAnchorsValid(text,locks){
+  const expected=(locks||[]).map(x=>x.id),actual=semanticAnchorOrder(text);
+  if(expected.length!==actual.length)return false;
+  for(let i=0;i<expected.length;i++)if(expected[i]!==actual[i])return false;
+  return expected.every(id=>String(text).split(id).length===2);
+}
+function restoreSemanticAnchors(text,locks,validate=true){
+  let out=String(text??'');if(validate&&!semanticAnchorsValid(out,locks))throw new CardLingoRuntimeError('parse','叙事翻译中的结构锚点缺失、重复或顺序改变，已阻止写回',{retryable:false});
+  for(const x of locks||[])out=out.split(x.id).join(x.text);return out;
+}
+function semanticStylePrompt(style,target){
+  if(style==='faithful')return`整块翻译为${target}。以事实、关系、语气与信息层级准确为第一目标，但不要复制源语言句法。可以跨句调整语序、主语承接和连接方式，使整段在目标语言中自然成立；不要文学化扩写。`;
+  if(style==='natural')return`把整块内容本地化为自然的${target}。先把整段当成一个完整场景理解，再重新组织句子；允许合并/拆分句子、移动句内信息、省略源语言重复主语和连接词。不要保持“原句A→译句A、原句B→译句B”的对应关系。译文应像母语使用者直接写下，而不是翻译稿。`;
+  return`把整块内容重写成像原生${target}小说/角色扮演文本。先理解场景推进、人物关系、动作因果、情绪、潜台词与叙事重心，再重新安排中文句子和节奏。明确禁止逐句对位：可以把源文三句写成中文两句，也可以把一条长句拆开；可以重排同一局部内的信息顺序、省略重复代词和僵硬连接词。对白必须像人物当场会说的话，叙述要像中文作者自然写作。不得增加原文没有的剧情、事实、心理、设定，也不得削弱粗口、暧昧、讽刺、冷淡、幽默等强度。`;
+}
+function semanticTranslationInstruction(context='narrative',strict=false){
+  const target={"zh-CN":'简体中文',"zh-TW":'繁体中文',en:'英文',ja:'日文'}[$('#targetLang').value]||$('#targetLang').value,style=$('#translationStyle')?.value||'novel',extra=$('#extraPrompt').value.trim();
+  const role=context==='lore'?'当前块是角色书/世界书中的自然语言设定。保持世界观事实准确，但按目标语言自然重组。':'当前块是角色卡叙事、人物描写、场景或对白。';
+  return`你是角色卡与 RP 文本的母语本地化编辑。\n目标语言：${target}\n${role}\n\n${semanticStylePrompt(style,target)}\n\n整块规则：\n1. block 是一个完整语义块，不是句子数组。必须先通读完整 block，再写最终译文。\n2. 忠实的是事件、事实、设定、人物关系、情绪强度和语气，不是源语言句子数量、语序或主语结构。\n3. 不要求句句对应。允许在同一语义块内合并句子、拆句、调整承接和局部信息顺序。\n4. 保留必要的 Markdown/对白/动作标记的功能含义，但不要为了“格式一一对应”牺牲自然中文。\n5. 所有形如 ⟪00000001⟫ 的标记都是不可修改结构锚点：必须原样保留、各出现一次、顺序不变；不得翻译、删除、复制或猜测锚点内容。锚点前后的自然语言可以跨句重组。\n6. 术语表必须保持一致；不得添加解释、免责声明、总结。\n7. ${strict?'这是锚点/格式恢复请求：宁可减少改写，也必须保证所有锚点完整。':'输出前静默检查：如果仍明显能看出源文逐句对应关系，在不改变事实的前提下再重写一遍。'}${glossaryPrompt()}${extra?`\n额外要求：${extra}`:''}`;
+}
+function semanticMarkerContract(units){return units.map(u=>`<<<CARDLINGO_BLOCK:${u.id}>>>\n整块译文（保留全部 ⟪00000001⟫ 类锚点）\n<<<CARDLINGO_BLOCK_END:${u.id}>>>`).join('\n')}
+function parseSemanticBatchResponse(raw,units){
+  const text=String(raw??''),map=new Map();for(const u of units){const id=escapeRegExpText(u.id),re=new RegExp(`<<<CARDLINGO_BLOCK:${id}>>>\\s*([\\s\\S]*?)\\s*<<<CARDLINGO_BLOCK_END:${id}>>>`),m=text.match(re);if(m)map.set(u.id,m[1].replace(/^\\r?\\n/,'').replace(/\\r?\\n$/,''))}return map;
+}
+async function requestSemanticBlockBatch(units,signal,sourceLangs,strict=false){
+  const context=[...new Set(units.map(u=>u.context||'narrative'))];const ctx=context.length===1?context[0]:'narrative',scope=translationLanguageScopeLabel(sourceLangs),contract=semanticMarkerContract(units);
+  const payload=units.map(u=>({id:u.id,context:u.context,block:u.text,localization:u.localizationPacket?{semanticRole:u.localizationPacket.semanticRole,semanticLabel:u.localizationPacket.semanticLabel,origin:u.localizationPacket.origin}:undefined}));
+  const prompt=`${semanticTranslationInstruction(ctx,strict)}\n\n本次允许翻译的源语言：${scope}。未选语言、模板、变量、URL、HTML、代码和自定义保护内容已经变成形如 ⟪00000001⟫ 的锚点。\n\n输出协议：不要 JSON、Markdown 代码围栏或解释。每个 block 只输出一次完整译文；标记只用于区分不同语义块，不代表句子边界。\n${contract}\n\n输入：${JSON.stringify(payload)}`;
+  const raw=await apiCall(prompt,signal);return{raw,map:parseSemanticBatchResponse(raw,units)};
+}
+async function requestSemanticPolishBatch(units,draftMap,signal){
+  const target={"zh-CN":'简体中文',"zh-TW":'繁体中文',en:'英文',ja:'日文'}[$('#targetLang').value]||$('#targetLang').value,contract=semanticMarkerContract(units);
+  const payload=units.map(u=>({id:u.id,source:u.text,draft:draftMap.get(u.id)}));
+  const prompt=`你是${target}母语小说编辑。下面的 draft 已经完成翻译，现在只做第二遍“去翻译腔”润色。\n\n目标：让文字像直接用${target}创作，而不是逐句译稿。重点修复：源语言语序、连续重复主语、机械连接词、字幕式对白、句子长度一一对应、说明书腔。\n硬约束：不得新增/删除剧情事实、人物关系、动作、情绪或设定；不得改变专名；所有形如 ⟪00000001⟫ 的锚点必须原样保留、各一次、顺序不变。允许合并/拆句和调整同一局部内的信息顺序。\n只输出润色后的完整 block。\n${contract}\n\n输入：${JSON.stringify(payload)}`;
+  const raw=await apiCall(prompt,signal);return parseSemanticBatchResponse(raw,units);
+}
+async function translateSemanticUnitBatch(units,signal,sourceLangs={en:true,ko:true}){
+  let first=await requestSemanticBlockBatch(units,signal,sourceLangs,false),result=new Map(first.map);
+  for(const u of units){let v=result.get(u.id);if(v!=null&&!semanticAnchorsValid(v,u.locks||[]))result.delete(u.id)}
+  const missing=()=>units.filter(u=>!result.has(u.id));
+  for(const u of missing()){
+    const retry=await requestSemanticBlockBatch([u],signal,sourceLangs,true),v=retry.map.get(u.id);
+    if(v!=null&&semanticAnchorsValid(v,u.locks||[]))result.set(u.id,v);
+  }
+  if(missing().length)throw new CardLingoRuntimeError('parse',`整段翻译格式异常：${missing().length} 个语义块的结构锚点无法恢复。CardLingo 已阻止危险写回`,{retryable:false});
+  const style=$('#translationStyle')?.value||'novel',polish=style==='novel'?units.filter(u=>String(u.text||'').length>=180):[];
+  if(polish.length){
+    try{
+      const polished=await requestSemanticPolishBatch(polish,result,signal);
+      for(const u of polish){const v=polished.get(u.id);if(v!=null&&semanticAnchorsValid(v,u.locks||[]))result.set(u.id,v)}
+    }catch(e){
+      // 润色属于质量增强层：失败时保留第一遍完整译文，不让非关键二次请求破坏已完成翻译。
+      console.warn('Semantic polish skipped:',e);
+    }
+  }
+  const restored=new Map();for(const u of units)restored.set(u.id,restoreSemanticAnchors(result.get(u.id),u.locks||[],true));return restored;
+}
 function rebuildSafeDocument(doc,resultMap){
   return doc.parts.map(p=>p.kind==='keep'?p.text:(resultMap.get(p.id)??(()=>{throw new Error(`模型缺少翻译片段 ${p.id}`)})())).join('');
 }
@@ -1585,7 +2094,17 @@ function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 function glossaryPrompt(){const merged=new Map();for(const x of state.consistencyMemory||[]){if(x.source?.trim()&&x.target?.trim())merged.set(x.source.trim().toLowerCase(),x)}for(const x of state.glossary||[]){if(x.source?.trim()&&x.target?.trim())merged.set(x.source.trim().toLowerCase(),x)}const valid=[...merged.values()];if(!valid.length)return'';return'\n术语与一致性记忆（必须优先、全程保持同一译法）：\n'+valid.map(x=>`- ${x.source} => ${x.target}${x.note?`（${x.note}）`:''}`).join('\n')}
 function translationContextFor(path,label=''){const key=pathKey(path),last=String(path?.[path.length-1]??'');if(['name','tags','keys','secondary_keys'].includes(last))return'term';if($('#smartRuleTranslation')?.checked&&(key.includes('system_prompt')||key.includes('post_history_instructions')||/系统提示词|后历史指令|SYSTEM PROMPT|POST HISTORY/i.test(label)))return'rules';if(key.includes('character_book'))return'lore';return'narrative'}
 function stylePrompt(style){if(style==='faithful')return`采用“准确忠实”翻译：准确传达原意、事实、语气和信息层级，但忠实的是含义，不是源语言句法。中文必须自然通顺；允许为中文语法调整语序、主语和连接方式，但不要主动文学化、扩写或改变人物表达。`;if(style==='natural')return`采用“自然本地化”翻译：先完整理解一句/一段在场景中的意思，再用母语中文重新组织。禁止逐词对位、照搬英文/韩文语序、机械保留代词和连接词。优先使用中文自然的短句、承接、省略和语气；只有信息与语气需要忠实，句型不需要忠实。译完后在心里检查一次：如果像“翻译出来的中文”，就在不增删事实的前提下再改成中国读者自然会写/会说的表达。`;return`采用“小说化 · 母语重写”翻译：目标不是让中文看得懂，而是让它像原本就由中文作者写成。先理解整段的场景、人物关系、动作因果、情绪和潜台词，再重新组织中文句子；不要沿着源语言逐句逐词搬运。允许合并或拆分句子、调换语序、补足中文必要的承接、省略源语言重复代词和僵硬连接词，并用符合人物身份与关系的中文等效表达语气。叙述要有中文小说的节奏和画面感，对白必须像真人在现场说话，而不是字幕或机翻。不得增加原文没有的事实、剧情、心理活动或设定，也不得削弱原有粗口、暧昧、讽刺、冷淡、傲慢、幽默等强度。输出前静默自检：凡是仍带英文/韩文语序、抽象名词堆叠、过度“其/该/进行/对于/从而/这使得”或说明书腔的句子，在保持信息不变的前提下再改写一遍。`}
-function translationInstruction(context='mixed'){const target={"zh-CN":'简体中文',"zh-TW":'繁体中文',en:'英文',ja:'日文'}[$('#targetLang').value]||$('#targetLang').value,style=$('#translationStyle')?.value||'novel',extra=$('#extraPrompt').value.trim();let contextRule='';if(context==='rules')contextRule=`当前内容属于系统提示词、规则或指令。无论选择何种风格，都以“精准、不歧义、不改变约束强度”为最高优先级；保留 MUST/禁止/必须/仅限/优先级等逻辑关系，不做文学润色。`;else if(context==='lore')contextRule=`当前内容属于角色书/世界书。用自然清晰、有可读性的中文表达设定与世界观；可以消除翻译腔，但不得补写世界观事实。若正文中包含规则、触发条件、优先级或程序性指令，必须按规则文本精准翻译。`;else if(context==='term')contextRule=`当前内容属于姓名、标签、关键词或短术语。保持简洁、稳定、可检索，不要扩写成句子。`;else if(context==='ui')contextRule=`当前内容属于聊天框外显、固定插件界面、按钮、状态栏、提示、菜单或显示文本。采用自然、简洁、一致的界面本地化表达；不要小说化，不要扩写，不要改变占位符、变量、结构、条件或功能语义。`;else if(context==='language_dependency')contextRule=`当前内容属于“外显生成语言约束”。不要忠实保留“用韩文/英文等源语言输出”的要求，而要把这条约束本地化到当前目标语言：凡是要求 narration / field value / text / reply / output 使用某种源语言的地方，都改为要求使用${target}。其他格式、字段名、约束强度与程序逻辑必须保持不变。`;else if(context==='mixed')contextRule=`输入数组中的每一项都带有 context：narrative=叙事/对白，rules=规则/指令，lore=角色书设定，term=名称/标签，ui=界面/外显文案，language_dependency=外显生成语言约束。必须按各自 context 分别处理；rules、ui 与 language_dependency 都不得小说化。`;else contextRule=`当前内容属于角色卡叙事、人物描写或对白。`;return`你是专业的角色卡、角色书与 RP 文本本地化译者。把输入翻译成${target}。\n\n${stylePrompt(style)}\n${contextRule}\n\n通用硬性规则：\n1. 忠实保留原意、人物设定、事实、关系、情绪强度与细节，不擅自新增、删减、弱化或道德化。\n2. 保持原文 Markdown、标题、列表、段落、换行和对白结构；除非中文自然表达确有必要，不随意重排结构。\n3. 成人、暴力、粗口、暧昧、黑色幽默等原有表达强度按原文保留。\n4. 模板变量、代码、正则、URL、HTML 标签及用户指定保护内容已由浏览器侧完全剔除，不会出现在输入中；不要猜测、补写、解释或自行插入任何缺失的保护内容。\n5. 每个输入片段只翻译它实际包含的文字；即使片段位于受保护内容前后，也不要补全被隔开的内容。\n6. 专有名词优先遵循术语表；术语表未指定时，同一译名必须前后一致。\n7. 只输出翻译结果，不解释翻译过程，不添加前言、免责声明、总结或注释。${glossaryPrompt()}${extra?`\n额外要求：${extra}`:''}`}
+function translationInstruction(context='mixed'){
+  const target={"zh-CN":'简体中文',"zh-TW":'繁体中文',en:'英文',ja:'日文'}[$('#targetLang').value]||$('#targetLang').value,style=$('#translationStyle')?.value||'novel',extra=$('#extraPrompt').value.trim();
+  let contextRule='',styleRule='';
+  if(context==='rules')contextRule=`当前内容属于系统提示词、规则或指令。以精准、不歧义、不改变约束强度为最高优先级；保留 MUST/禁止/必须/仅限/优先级等逻辑关系，不做文学润色。`;
+  else if(context==='term')contextRule=`当前内容属于姓名、标签、关键词或短术语。保持简洁、稳定、可检索，不扩写成句子。`;
+  else if(context==='ui')contextRule=`当前内容属于界面、按钮、状态栏、提示、菜单或外显文本。采用自然、简洁、一致的界面本地化表达；不小说化，不改变变量、结构、条件或功能语义。`;
+  else if(context==='language_dependency')contextRule=`当前内容属于外显生成语言约束。凡是要求 narration / field value / text / reply / output 使用源语言的地方，都应本地化为要求使用${target}；其他格式、字段名、约束强度和程序逻辑保持不变。`;
+  else if(context==='lore')contextRule=`当前内容是需要严格处理的角色书/世界书规则型文本。保留条件、优先级、触发逻辑和事实，不进行小说化改写。`;
+  else{contextRule=`当前内容是无法安全进入整段模式的普通文本，采用自然但保守的翻译。`;styleRule=stylePrompt(style)}
+  return`你是专业的角色卡本地化译者。把输入翻译成${target}。\n\n${styleRule?styleRule+'\n':''}${contextRule}\n\n严格安全模式：\n1. 忠实保留原意、事实、关系、情绪强度与逻辑，不新增、删减、弱化或道德化。\n2. 保持当前片段的结构和边界；本模式用于规则/UI/术语或被结构隔离的文本，不跨片段重组。\n3. 成人、暴力、粗口、暧昧、黑色幽默等强度按原文保留。\n4. 模板变量、代码、正则、URL、HTML 与用户保护内容已在浏览器侧隔离；不得猜测或补写。\n5. 每个输入片段只修改它自己的 text。\n6. 专有名词遵循术语表并保持一致。\n7. 只输出指定协议中的译文，不解释。${glossaryPrompt()}${extra?`\n额外要求：${extra}`:''}`;
+}
 function getSettings(){return{provider:$('#apiProvider')?.value||'custom',key:$('#apiKey').value.trim(),base:$('#baseUrl').value.trim().replace(/\/+$/,''),model:$('#modelName').value.trim(),protocol:$$('input[name="protocol"]').find(x=>x.checked)?.value||'chat',temp:Number($('#temperature').value)||0,timeout:(Number($('#timeoutSec').value)||120)*1000,nonThinking:$('#nonThinking').checked,adaptiveRuntime:$('#adaptiveRuntime')?.checked!==false,maxRetries:Math.max(0,Math.min(8,Number($('#maxRetries')?.value)||4)),retryMaxWaitMs:Math.max(5000,Math.min(120000,(Number($('#retryMaxWaitSec')?.value)||30)*1000))}}
 const API_PROVIDER_PRESETS={
   deepseek:{label:'DeepSeek 官方',base:'https://api.deepseek.com',model:'deepseek-v4-flash',protocol:'chat',models:['deepseek-v4-flash','deepseek-v4-pro'],help:'DeepSeek 官方 OpenAI-compatible 接口。Chat Completions 使用 /chat/completions；翻译建议关闭思考模式以降低延迟与输出成本。'},
@@ -1785,8 +2304,8 @@ function stripFence(t){return String(t).trim().replace(/^```(?:json|text)?\s*/i,
 function chunkUnits(units,maxChars){
   const out=[];let cur=[],n=0,curContext='';
   for(const u of units){
-    const locCtx=String(u.localizationPacket?.readOnlyContext||''),semCtx=String(u.semanticContext||''),c=String(u.text||'').length+140+Math.min(850,locCtx.length)+Math.min(900,semCtx.length),kind=u.context||'narrative';
-    // 叙事/对白不要和规则、术语、UI 混在同一个模型请求里；混批会让模型趋向最保守的直译策略。
+    const locCtx=String(u.localizationPacket?.readOnlyContext||''),semCtx=String(u.semanticContext||''),c=String(u.text||'').length+140+Math.min(850,locCtx.length)+Math.min(900,semCtx.length),kind=`${u.mode||'strict'}:${u.context||'narrative'}`;
+    // 语义块与严格片段绝不混批；同一请求中的语义任务也保持同类上下文。
     if(cur.length&&((curContext!==kind)||n+c>maxChars)){out.push(cur);cur=[];n=0;curContext=''}
     if(!cur.length)curContext=kind;cur.push(u);n+=c
   }
@@ -1810,10 +2329,11 @@ function translationMarkerContract(units){return units.map(u=>`<<<CARDLINGO_ITEM
 async function requestTranslationMarkerBatch(units,signal,sourceLangs,strict=false){
   const payload=units.map(u=>({id:u.id,context:u.context,text:u.text,semanticContext:u.semanticContext||undefined,localization:u.localizationPacket?{semanticRole:u.localizationPacket.semanticRole,semanticLabel:u.localizationPacket.semanticLabel,confidence:u.localizationPacket.confidence,origin:u.localizationPacket.origin,readOnlyContext:u.localizationPacket.readOnlyContext,lockPolicy:u.localizationPacket.lockPolicy}:undefined,boundary:{protectedBefore:!!u.protectedBefore,protectedAfter:!!u.protectedAfter}}));
   const scope=translationLanguageScopeLabel(sourceLangs),contract=translationMarkerContract(units),contexts=[...new Set(units.map(u=>u.context||'narrative'))],instructionContext=contexts.length===1?contexts[0]:'mixed';
-  const prompt=`${translationInstruction(instructionContext)}\n\n本次源语言范围：${scope}。浏览器已经把未勾选语言与其他非目标脚本隔离，输入中只会留下本次允许翻译的英文/韩文文字及必要标点。不得翻译、猜测或补写被隔离的其他语言。\n你收到的是已经在浏览器中做过“安全切片”的文本片段。原文中的模板变量、代码、正则、URL、HTML 与自定义保护词不会发送给你。boundary 只表示该片段前后是否紧邻被保护内容；禁止猜测或补写这些被保护内容。若某项带 semanticContext，它是当前字段/段落的只读语境，仅用来理解前后关系、人物语气、指代和句子节奏；不得翻译、复述或输出 semanticContext，只返回 text 的译文。若某项带 localization，它是 CardLingo 的项目级理解：readOnlyContext 同样只供理解语义和用途，绝对禁止翻译或返回上下文中的其他内容；只能修改该项 text。semanticRole 用于决定界面文案、生成语言约束、默认值或提示的本地化方式。对于 narrative / lore，必须先结合只读语境理解整段，再以母语中文重组 text；不要因为输出标记协议而退化成逐句逐词对应。\n\n${strict?'这是格式恢复请求。上一次返回格式不可解析。':''}输出协议非常重要：不要返回 JSON，不要 Markdown，不要代码围栏，不要解释。必须为每个 id 原样输出一组开始/结束标记，翻译结果只能放在标记中间；一项不少，不得改 id。\n格式示例：\n${contract}\n\n输入数据：${JSON.stringify(payload)}`;
+  const prompt=`${translationInstruction(instructionContext)}\n\n本次源语言范围：${scope}。浏览器已经把未勾选语言与其他非目标脚本隔离，输入中只会留下本次允许翻译的英文/韩文文字及必要标点。不得翻译、猜测或补写被隔离的其他语言。\n你收到的是已经在浏览器中做过“安全切片”的文本片段。原文中的模板变量、代码、正则、URL、HTML 与自定义保护词不会发送给你。boundary 只表示该片段前后是否紧邻被保护内容；禁止猜测或补写这些被保护内容。若某项带 semanticContext，它是当前字段/段落的只读语境，仅用来理解前后关系、人物语气、指代和句子节奏；不得翻译、复述或输出 semanticContext，只返回 text 的译文。若某项带 localization，它是 CardLingo 的项目级理解：readOnlyContext 同样只供理解语义和用途，绝对禁止翻译或返回上下文中的其他内容；只能修改该项 text。semanticRole 用于决定界面文案、生成语言约束、默认值或提示的本地化方式。严格模式不承担整段文学重写；narrative / 自然 lore 已由 Semantic Block Engine 单独处理。\n\n${strict?'这是格式恢复请求。上一次返回格式不可解析。':''}输出协议非常重要：不要返回 JSON，不要 Markdown，不要代码围栏，不要解释。必须为每个 id 原样输出一组开始/结束标记，翻译结果只能放在标记中间；一项不少，不得改 id。\n格式示例：\n${contract}\n\n输入数据：${JSON.stringify(payload)}`;
   const raw=await apiCall(prompt,signal);return{raw,map:parseTranslationBatchResponse(raw,units)};
 }
 async function translateSafeUnitBatch(units,signal,sourceLangs={en:true,ko:true}){
+  if(units.length&&units.every(u=>u.mode==='semantic'))return translateSemanticUnitBatch(units,signal,sourceLangs);
   const first=await requestTranslationMarkerBatch(units,signal,sourceLangs,false),result=new Map(first.map);
   const missing=()=>units.filter(u=>!result.has(u.id));
   if(!missing().length)return result;
@@ -1822,13 +2342,19 @@ async function translateSafeUnitBatch(units,signal,sourceLangs={en:true,ko:true}
     if(retry.map.has(u.id))result.set(u.id,retry.map.get(u.id));
   }
   const left=missing();
-  if(left.length)throw new CardLingoRuntimeError('parse',`模型输出格式异常：${left.length} 个翻译片段无法恢复。CardLingo 已自动进行单片段恢复`,{retryable:false});
+  if(left.length)throw new CardLingoRuntimeError('parse',`模型输出格式异常：${left.length} 个严格翻译片段无法恢复。CardLingo 已自动进行单片段恢复`,{retryable:false});
   return result;
 }
 async function translatePreparedDocuments(items,signal,onProgress,sourceLangs={en:true,ko:true}){
   sourceLangs=normalizeTranslationLanguagePrefs(sourceLangs);
   const maxBatch=Math.max(1400,Number($('#batchChars').value)||12000);
-  const docs=items.map((x,i)=>{const ctx=x.context||translationContextFor(x.path,x.label),unitMax=['narrative','lore'].includes(ctx)?Math.min(6200,Math.max(2600,Math.floor(maxBatch*.62))):Math.min(4200,Math.max(1600,Math.floor(maxBatch*.42)));return{item:x,doc:prepareSafeDocument(x.text,ctx,`d${i}`,unitMax,sourceLangs,x.localizationPacket||null)}});
+  const docs=items.map((x,i)=>{
+    const baseCtx=x.context||translationContextFor(x.path,x.label),ctx=effectiveTranslationContext(baseCtx,x.text),semantic=semanticModeEligible(ctx,x.text,x.kind);
+    // Semantic Block 使用更大的段落级单位；Strict Segments 继续使用保守小块。
+    const unitMax=semantic?Math.min(10000,Math.max(4200,Math.floor(maxBatch*.82))):Math.min(4200,Math.max(1600,Math.floor(maxBatch*.42)));
+    const doc=semantic?prepareSemanticDocument(x.text,ctx,`d${i}`,unitMax,sourceLangs,x.localizationPacket||null):prepareSafeDocument(x.text,ctx,`d${i}`,unitMax,sourceLangs,x.localizationPacket||null);
+    return{item:x,doc,context:ctx,mode:semantic?'semantic':'strict'}
+  });
   const allUnits=docs.flatMap(d=>d.doc.units);if(!allUnits.length){for(const d of docs)d.item.result=d.item.text;return}
   const batches=chunkUnits(allUnits,maxBatch),resultMap=new Map(),completed=new Set();let next=0,done=0,fatal=null;
   RuntimeCore.resetJob(batches.length);
@@ -1956,9 +2482,10 @@ function parseDotPath(s){return s.split('.').filter(Boolean).map(x=>/^\d+$/.test
 function applyAssistantPatches(patches){const changes=[];for(const p of patches){const path=parseDotPath(p.path);if(!path.length||['spec','spec_version'].includes(String(path[0])))continue;const before=clone(pathGet(state.card,path)),after=clone('text'in p?p.text:p.value);pathSet(state.card,path,after);changes.push({path,before,after})}recordTransaction('AI 助手应用修改',changes);renderAll();toast(`已应用 ${changes.length} 项修改`)}
 function restoreWholeOriginal(){if(!state.originalCard)return;const before=clone(state.card),after=clone(state.originalCard);state.card=after;state.fieldHistory.clear();state.history=[];state.redo=[];renderAll();toast('已恢复整张原始角色卡')}
 function currentJsonExportObject(){return state.containerKind==='lorebook'?buildStandaloneLorebookExport():state.card}
-function exportJson(){if(!state.card)return;if(state.fileType==='jsonl'){downloadBlob(new Blob([buildJsonlExportText()],{type:'application/x-ndjson'}),`${safeBaseName(state.file?.name)}_translated.jsonl`);return}const ext=state.containerKind==='lorebook'&&state.sourceExt==='lorebook'?'.lorebook':'.json';downloadBlob(new Blob([JSON.stringify(currentJsonExportObject(),null,2)],{type:'application/json'}),`${safeBaseName(state.file?.name)}_translated${ext}`)}
+function exportJson(){if(!state.card)return;if(state.fileType==='tpg'){const m=syncTpgManifestFromCard()||state.tpgManifest;downloadBlob(new Blob([JSON.stringify(m,null,2)],{type:'application/json'}),`${safeBaseName(state.file?.name)}_manifest.json`);return}if(state.fileType==='jsonl'){downloadBlob(new Blob([buildJsonlExportText()],{type:'application/x-ndjson'}),`${safeBaseName(state.file?.name)}_translated.jsonl`);return}const ext=state.containerKind==='lorebook'&&state.sourceExt==='lorebook'?'.lorebook':'.json';downloadBlob(new Blob([JSON.stringify(currentJsonExportObject(),null,2)],{type:'application/json'}),`${safeBaseName(state.file?.name)}_translated${ext}`)}
 async function quickDownload(){if(!state.card)return;const base=`${safeBaseName(state.file?.name)}_中文版`;try{
-  if(state.fileType==='png')downloadBlob(exportPng(),base+'.png');
+  if(state.fileType==='tpg')downloadBlob(await exportTpgPackage(),base+'.tpg');
+  else if(state.fileType==='png')downloadBlob(exportPng(),base+'.png');
   else if(state.fileType==='apng')downloadBlob(exportPng(),base+'.apng');
   else if(state.fileType==='charx')downloadBlob(await exportCharx(),base+'.charx');
   else if(state.fileType==='charxzip')downloadBlob(await exportCharx(),base+'.charx');
@@ -1967,15 +2494,15 @@ async function quickDownload(){if(!state.card)return;const base=`${safeBaseName(
   else if(state.containerKind==='lorebook'){const ext=state.sourceExt==='lorebook'?'.lorebook':'.json';downloadBlob(new Blob([JSON.stringify(buildStandaloneLorebookExport(),null,2)],{type:'application/json'}),base+ext)}
   else downloadBlob(new Blob([JSON.stringify(state.card,null,2)],{type:'application/json'}),base+'.json');
 }catch(e){toast(`下载失败：${e.message}`)}}
-function clearCard(){clearTimeout(state.autosaveTimer);state.file=null;state.fileType=null;state.sourceExt=null;state.containerKind='card';state.card=null;state.originalCard=null;state.originalContainer=null;state.originalBytes=null;state.charxZip=null;state.charxPrefix=null;state.charxEntryCount=0;state.charxCardPath='card.json';state.risumModules=[];state.risumErrors=[];state.lorebookAdapter=null;state.jsonlAdapter=null;state.formatConversion=null;state.history=[];state.redo=[];state.fieldHistory.clear();state.consistencyMemory=[];state.termCandidates=[];state.integrity=null;state.visibility={findings:[],targets:[],scannedAt:0,resources:[]};state.visibilitySelected={};state.localizationKnowledge={version:1,overrides:{}};state.localizationAcceptance=null;state.visibilityFilter='all';state.pendingQueue=null;state.projectId=null;state.usage={requests:0,prompt:0,completion:0,hit:0,miss:0,total:0,cost:0,costUsd:0,pricedRequests:0,pricedRequestsUsd:0,lastModel:''};$('#editor').classList.add('hidden');$('#welcome').classList.remove('hidden');$('#sidebarName').textContent='尚未载入角色卡';$('#sidebarSpec').textContent='PNG / APNG / JSON / JSONL / CHARX / JPG-CHARX / ZIP / LOREBOOK';$('#sidebarAvatar').src=fallbackAvatar();const charTab=$('.main-tab[data-view="character"]');if(charTab)charTab.disabled=false;for(const id of['clearCardBtn','batchTranslateTop','batchTranslateTopOptions','exportJsonBtn','exportImageBtn','quickDownloadBtn'])$('#'+id).disabled=true;updateHistoryUI();renderActualUsage();renderConsistencyBadge();renderIntegrityBadge();renderVisibilityBadge();updateAutosaveUi('自动保存：等待载入文件');closeSidebar()}
+function clearCard(){clearTimeout(state.autosaveTimer);state.file=null;state.fileType=null;state.sourceExt=null;state.containerKind='card';state.card=null;state.originalCard=null;state.originalContainer=null;state.originalBytes=null;state.charxZip=null;state.charxPrefix=null;state.charxEntryCount=0;state.charxCardPath='card.json';state.tpgZip=null;state.tpgManifest=null;state.tpgResources=[];state.risumModules=[];state.risumErrors=[];state.lorebookAdapter=null;state.jsonlAdapter=null;state.formatConversion=null;state.history=[];state.redo=[];state.fieldHistory.clear();state.consistencyMemory=[];state.termCandidates=[];state.integrity=null;state.visibility={findings:[],targets:[],scannedAt:0,resources:[]};state.visibilitySelected={};state.localizationKnowledge={version:1,overrides:{}};state.localizationAcceptance=null;state.visibilityFilter='all';state.pendingQueue=null;state.projectId=null;state.usage={requests:0,prompt:0,completion:0,hit:0,miss:0,total:0,cost:0,costUsd:0,pricedRequests:0,pricedRequestsUsd:0,lastModel:''};$('#editor').classList.add('hidden');$('#welcome').classList.remove('hidden');$('#sidebarName').textContent='尚未载入角色卡';$('#sidebarSpec').textContent='PNG / APNG / JSON / JSONL / CHARX / TPG / JPG-CHARX / ZIP / LOREBOOK';$('#sidebarAvatar').src=fallbackAvatar();const charTab=$('.main-tab[data-view="character"]');if(charTab)charTab.disabled=false;const bookTab=$('.main-tab[data-view="book"]');if(bookTab)bookTab.disabled=false;for(const id of['clearCardBtn','batchTranslateTop','batchTranslateTopOptions','exportJsonBtn','exportImageBtn','quickDownloadBtn'])$('#'+id).disabled=true;updateHistoryUI();renderActualUsage();renderConsistencyBadge();renderIntegrityBadge();renderVisibilityBadge();updateAutosaveUi('自动保存：等待载入文件');closeSidebar()}
 function openSidebar(){$('#sidebar').classList.add('open');$('#sidebarMask').classList.add('show')}
 function closeSidebar(){$('#sidebar').classList.remove('open');$('#sidebarMask').classList.remove('show')}
 function openDialog(el){if(!el)return;if(typeof el.showModal==='function'){if(!el.open)el.showModal()}else el.setAttribute('open','')}
 function closeDialog(el){if(!el)return;if(typeof el.close==='function')el.close();else el.removeAttribute('open')}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function setUiLanguage(lang){const m=UI[lang]||UI.zh;$$('.main-tab').forEach(x=>x.textContent=m[x.dataset.view]||x.textContent);if(!['detect'].includes(state.view))$('#batchTranslateTop').textContent=m.batch;storageSet('cardlingo-ui-lang',lang)}
-function bind(){loadSettings();loadGlossary();loadTranslationLanguagePrefs();$('#sidebarAvatar').src=fallbackAvatar();const openFile=()=>$('#fileInput').click();$('#importCardBtn').onclick=openFile;$('#welcomeImportBtn').onclick=openFile;$('#fileInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#importJsonBtn').onclick=()=>$('#jsonImportInput').click();$('#jsonImportInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#menuBtn').onclick=openSidebar;$('#sidebarMask').onclick=closeSidebar;$$('.main-tab').forEach(x=>x.onclick=()=>switchView(x.dataset.view));$('#batchTranslateBtn').onclick=currentPrimaryAction;$('#batchTranslateTop').onclick=currentPrimaryAction;$('#batchTranslateOptions').onclick=()=>openTranslationLanguageDialog(batchLanguageKey(),state.view==='book'?'一键翻译角色书':'一键翻译角色');$('#batchTranslateTopOptions').onclick=()=>openTranslationLanguageDialog(batchLanguageKey(),state.view==='book'?'一键翻译角色书':'一键翻译角色');$('#rollbackAllBtn').onclick=rollbackCurrentView;$('#addGreetingBtn').onclick=addGreeting;$('#createBookBtn').onclick=createBook;$('#addBookEntryBtn').onclick=addBookEntry;$('#addBookFolderBtn').onclick=addBookFolder;$('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#historyBtn').onclick=()=>{openDialog($('#historyDialog'));renderHistoryList()};$('#closeHistory').onclick=()=>closeDialog($('#historyDialog'));$('#undoDialogBtn').onclick=undo;$('#redoDialogBtn').onclick=redo;$('#restoreOriginalBtn').onclick=restoreWholeOriginal;$('#settingsBtn').onclick=openSettingsPage;$('#settingsBackBtn').onclick=closeSettingsPage;$('#settingsBackBottomBtn').onclick=closeSettingsPage;$('#saveSettingsPageBtn').onclick=saveSettings;$('#saveSettingsBottomBtn').onclick=saveSettings;$('#saveApiSettingsBtn').onclick=saveSettings;$('#translationStyle').onchange=()=>{const v=$('#translationStyle').value;if(v==='novel'&&Number($('#temperature').value)<0.4)$('#temperature').value='0.55';};['modelName','batchChars','targetLang','sourceLang','translationStyle','translateNames','translateTags','translateBookKeys'].forEach(id=>{const el=$('#'+id);if(el)el.addEventListener('change',renderCostEstimate)});$('#modelName')?.addEventListener('input',renderCostEstimate);$('#toggleApiKey').onclick=()=>{$('#apiKey').type=$('#apiKey').type==='password'?'text':'password'};$('#testApiBtn').onclick=testApi;$('#apiProvider').onchange=switchApiProvider;bindOpenRouterModelCenter();$('#apiKey')?.addEventListener('input',()=>{providerKeyMemory[activeApiProvider]=$('#apiKey').value.trim();setApiConnectionStatus('idle','密钥已修改');if(activeApiProvider==='openrouter')invalidateOpenRouterAuth();else updateProviderCredentialUi(activeApiProvider)});$('#apiKey')?.addEventListener('change',()=>{if($('#apiProvider')?.value==='openrouter'){openRouterCatalogState.loaded=false;loadOpenRouterModels(true)}});$('#qwenRegion').onchange=()=>{if($('#apiProvider').value==='qwen'){ $('#baseUrl').value=QWEN_REGION_BASES[$('#qwenRegion').value]||$('#baseUrl').value;updateApiEndpointPreview();setApiConnectionStatus('idle','区域已修改')}};['baseUrl','modelName'].forEach(id=>$('#'+id)?.addEventListener('input',()=>{updateApiEndpointPreview();renderModelQuickPicks();setApiConnectionStatus('idle','配置已修改')}));$$('input[name="protocol"]').forEach(x=>x.addEventListener('change',()=>{updateApiEndpointPreview();setApiConnectionStatus('idle','协议已修改')}));$$('[data-settings-target]').forEach(b=>b.onclick=()=>{const id=b.dataset.settingsTarget;document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});$$('[data-settings-target]').forEach(x=>x.classList.toggle('active',x===b))});$('#glossaryBtn').onclick=()=>{openDialog($('#glossaryDialog'));renderGlossary()};$('#closeGlossary').onclick=()=>closeDialog($('#glossaryDialog'));$('#termScanBtn').onclick=()=>{openDialog($('#termScanDialog'));renderTermCandidates();closeSidebar()};$('#closeTermScan').onclick=()=>closeDialog($('#termScanDialog'));$('#runTermScanBtn').onclick=scanTerms;$('#selectAllTermsBtn').onclick=()=>{for(const x of state.termCandidates)x.selected=true;renderTermCandidates()};$('#applyTermsBtn').onclick=applyTermCandidates;$('#clearConsistencyBtn').onclick=clearConsistencyMemory;$('#integrityBtn').onclick=()=>{runIntegrityCheck(true);openDialog($('#integrityDialog'));closeSidebar()};$('#visibilityBtn').onclick=()=>{switchView('detect');runVisibilityScan(false);closeSidebar()};$('#formatConvertBtn').onclick=openFormatConversionDialog;$('#scanVisibilityFromScriptsBtn').onclick=()=>{switchView('detect');runVisibilityScan(false)};$('#runVisibilityScanBtn').onclick=()=>runVisibilityScan(false);$('#exportVisibilityReportBtn').onclick=exportVisibilityReport;$('#runLocalizationAcceptanceBtn').onclick=()=>runLocalizationAcceptance(false);$('#selectResidualTargetsBtn').onclick=selectResidualTargets;$('#exportLocalizationIntelligenceBtn').onclick=exportLocalizationIntelligence;$('#clearProjectKnowledgeBtn').onclick=clearProjectKnowledge;$$('.visibility-filter-btn').forEach(b=>b.onclick=()=>setVisibilityFilter(b.dataset.filter));$('#visibilitySelectAll').onchange=e=>setAllVisibilityTargets(e.target.checked);$('#visibilityAutoSelectBtn').onclick=applySmartVisibilitySelection;$('#visibilityClearSelectionBtn').onclick=()=>setAllVisibilityTargets(false);$('#translateVisibilitySelectedBtn').onclick=translateSelectedVisibilityTargets;$('#visibilityTranslateOptions').onclick=()=>openTranslationLanguageDialog(visibilityLanguageKey(),'外显词条批量翻译');$('#addRegexScriptBtn').onclick=addRegexScript;$('#addTriggerBtn').onclick=addTrigger;$('#closeIntegrity').onclick=()=>closeDialog($('#integrityDialog'));$('#closeFormatConvert').onclick=()=>closeDialog($('#formatConvertDialog'));$('#reconvertCataiBtn').onclick=reconvertCataiFromDialog;$('#exportConvertedCataiBtn').onclick=exportConvertedCatai;document.querySelectorAll('input[name="cataiFirstMesMode"]').forEach(x=>x.onchange=renderFormatConversionDialog);$('#closeTranslationLanguage').onclick=()=>closeDialog($('#translationLanguageDialog'));$('#cancelTranslationLanguage').onclick=()=>closeDialog($('#translationLanguageDialog'));$('#saveTranslationLanguage').onclick=saveTranslationLanguageDialog;$('#translationLangEn').onchange=updateTranslationLanguageDialogWarning;$('#translationLangKo').onchange=updateTranslationLanguageDialogWarning;$('#runIntegrityBtn').onclick=()=>runIntegrityCheck(false);$('#exportIntegrityBtn').onclick=exportIntegrityReport;$('#resumeTranslateBtn').onclick=resumePendingTranslation;$('#clearAutosaveBtn').onclick=clearCurrentAutosave;$('#addGlossaryBtn').onclick=()=>{state.glossary.push({source:'',target:'',category:'name',note:''});saveGlossary();renderGlossary()};$('#importGlossaryBtn').onclick=()=>$('#glossaryImportInput').click();$('#glossaryImportInput').onchange=e=>{if(e.target.files?.[0])importGlossary(e.target.files[0]);e.target.value=''};$('#exportGlossaryBtn').onclick=exportGlossary;$('#clearGlossaryBtn').onclick=()=>{if(confirm('确定清空全部术语吗？')){state.glossary=[];saveGlossary();renderGlossary()}};$('#assistantBtn').onclick=()=>{$('#assistantPanel').classList.add('open');closeSidebar()};$('#closeAssistant').onclick=()=>$('#assistantPanel').classList.remove('open');$('#sendChatBtn').onclick=sendAssistant;$('#chatInput').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')sendAssistant()});$('#clearCardBtn').onclick=()=>{if(confirm('确定清空当前角色卡吗？'))clearCard()};$('#exportJsonBtn').onclick=exportJson;$('#exportImageBtn').onclick=()=>{try{downloadBlob(exportPng(),`${safeBaseName(state.file?.name)}_中文版.${state.fileType==='apng'?'apng':'png'}`)}catch(e){toast(e.message)}};$('#quickDownloadBtn').onclick=quickDownload;$('#cancelTranslateBtn').onclick=()=>{state.abortController?.abort();hideProgress()};$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');storageSet('cardlingo-theme',document.body.classList.contains('light')?'light':'dark')};if(storageGet('cardlingo-theme')==='light')document.body.classList.add('light');const lang=storageGet('cardlingo-ui-lang')||'zh';$('#uiLanguage').value=lang;setUiLanguage(lang);$('#uiLanguage').onchange=e=>setUiLanguage(e.target.value);window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}});updateHistoryUI();renderActualUsage();renderConsistencyBadge();renderIntegrityBadge();renderVisibilityBadge();renderLocalizationIntelligenceUi();updateBatchLanguageButtons();updateAutosaveUi('自动保存：等待载入文件')}
-const CARDLINGO_VERSION="1.3.2-format-conversion-core-catai-adapter";
+function bind(){loadSettings();loadGlossary();loadTranslationLanguagePrefs();$('#sidebarAvatar').src=fallbackAvatar();const openFile=()=>$('#fileInput').click();$('#importCardBtn').onclick=openFile;$('#welcomeImportBtn').onclick=openFile;$('#fileInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#importJsonBtn').onclick=openFile;$('#jsonImportInput').onchange=e=>{const f=e.target.files?.[0];if(f)parseFile(f).catch(err=>toast(`载入失败：${err.message}`));e.target.value=''};$('#menuBtn').onclick=openSidebar;$('#sidebarMask').onclick=closeSidebar;$$('.main-tab').forEach(x=>x.onclick=()=>switchView(x.dataset.view));$('#batchTranslateBtn').onclick=currentPrimaryAction;$('#batchTranslateTop').onclick=currentPrimaryAction;$('#batchTranslateOptions').onclick=()=>openTranslationLanguageDialog(batchLanguageKey(),state.view==='book'?'一键翻译角色书':'一键翻译角色');$('#batchTranslateTopOptions').onclick=()=>openTranslationLanguageDialog(batchLanguageKey(),state.view==='book'?'一键翻译角色书':'一键翻译角色');$('#rollbackAllBtn').onclick=rollbackCurrentView;$('#addGreetingBtn').onclick=addGreeting;$('#createBookBtn').onclick=createBook;$('#addBookEntryBtn').onclick=addBookEntry;$('#addBookFolderBtn').onclick=addBookFolder;$('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#historyBtn').onclick=()=>{openDialog($('#historyDialog'));renderHistoryList()};$('#closeHistory').onclick=()=>closeDialog($('#historyDialog'));$('#undoDialogBtn').onclick=undo;$('#redoDialogBtn').onclick=redo;$('#restoreOriginalBtn').onclick=restoreWholeOriginal;$('#settingsBtn').onclick=openSettingsPage;$('#settingsBackBtn').onclick=closeSettingsPage;$('#settingsBackBottomBtn').onclick=closeSettingsPage;$('#saveSettingsPageBtn').onclick=saveSettings;$('#saveSettingsBottomBtn').onclick=saveSettings;$('#saveApiSettingsBtn').onclick=saveSettings;$('#translationStyle').onchange=()=>{const v=$('#translationStyle').value;if(v==='novel'&&Number($('#temperature').value)<0.4)$('#temperature').value='0.55';};['modelName','batchChars','targetLang','sourceLang','translationStyle','translateNames','translateTags','translateBookKeys'].forEach(id=>{const el=$('#'+id);if(el)el.addEventListener('change',renderCostEstimate)});$('#modelName')?.addEventListener('input',renderCostEstimate);$('#toggleApiKey').onclick=()=>{$('#apiKey').type=$('#apiKey').type==='password'?'text':'password'};$('#testApiBtn').onclick=testApi;$('#apiProvider').onchange=switchApiProvider;bindOpenRouterModelCenter();$('#apiKey')?.addEventListener('input',()=>{providerKeyMemory[activeApiProvider]=$('#apiKey').value.trim();setApiConnectionStatus('idle','密钥已修改');if(activeApiProvider==='openrouter')invalidateOpenRouterAuth();else updateProviderCredentialUi(activeApiProvider)});$('#apiKey')?.addEventListener('change',()=>{if($('#apiProvider')?.value==='openrouter'){openRouterCatalogState.loaded=false;loadOpenRouterModels(true)}});$('#qwenRegion').onchange=()=>{if($('#apiProvider').value==='qwen'){ $('#baseUrl').value=QWEN_REGION_BASES[$('#qwenRegion').value]||$('#baseUrl').value;updateApiEndpointPreview();setApiConnectionStatus('idle','区域已修改')}};['baseUrl','modelName'].forEach(id=>$('#'+id)?.addEventListener('input',()=>{updateApiEndpointPreview();renderModelQuickPicks();setApiConnectionStatus('idle','配置已修改')}));$$('input[name="protocol"]').forEach(x=>x.addEventListener('change',()=>{updateApiEndpointPreview();setApiConnectionStatus('idle','协议已修改')}));$$('[data-settings-target]').forEach(b=>b.onclick=()=>{const id=b.dataset.settingsTarget;document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});$$('[data-settings-target]').forEach(x=>x.classList.toggle('active',x===b))});$('#glossaryBtn').onclick=()=>{openDialog($('#glossaryDialog'));renderGlossary()};$('#closeGlossary').onclick=()=>closeDialog($('#glossaryDialog'));$('#termScanBtn').onclick=()=>{openDialog($('#termScanDialog'));renderTermCandidates();closeSidebar()};$('#closeTermScan').onclick=()=>closeDialog($('#termScanDialog'));$('#runTermScanBtn').onclick=scanTerms;$('#selectAllTermsBtn').onclick=()=>{for(const x of state.termCandidates)x.selected=true;renderTermCandidates()};$('#applyTermsBtn').onclick=applyTermCandidates;$('#clearConsistencyBtn').onclick=clearConsistencyMemory;$('#integrityBtn').onclick=()=>{runIntegrityCheck(true);openDialog($('#integrityDialog'));closeSidebar()};$('#visibilityBtn').onclick=()=>{switchView('detect');runVisibilityScan(false);closeSidebar()};$('#formatConvertBtn').onclick=openFormatConversionDialog;$('#scanVisibilityFromScriptsBtn').onclick=()=>{switchView('detect');runVisibilityScan(false)};$('#runVisibilityScanBtn').onclick=()=>runVisibilityScan(false);$('#exportVisibilityReportBtn').onclick=exportVisibilityReport;$('#runLocalizationAcceptanceBtn').onclick=()=>runLocalizationAcceptance(false);$('#selectResidualTargetsBtn').onclick=selectResidualTargets;$('#exportLocalizationIntelligenceBtn').onclick=exportLocalizationIntelligence;$('#clearProjectKnowledgeBtn').onclick=clearProjectKnowledge;$$('.visibility-filter-btn').forEach(b=>b.onclick=()=>setVisibilityFilter(b.dataset.filter));$('#visibilitySelectAll').onchange=e=>setAllVisibilityTargets(e.target.checked);$('#visibilityAutoSelectBtn').onclick=applySmartVisibilitySelection;$('#visibilityClearSelectionBtn').onclick=()=>setAllVisibilityTargets(false);$('#translateVisibilitySelectedBtn').onclick=translateSelectedVisibilityTargets;$('#visibilityTranslateOptions').onclick=()=>openTranslationLanguageDialog(visibilityLanguageKey(),'外显词条批量翻译');$('#addRegexScriptBtn').onclick=addRegexScript;$('#addTriggerBtn').onclick=addTrigger;$('#closeIntegrity').onclick=()=>closeDialog($('#integrityDialog'));$('#closeFormatConvert').onclick=()=>closeDialog($('#formatConvertDialog'));$('#reconvertCataiBtn').onclick=reconvertCataiFromDialog;$('#exportConvertedCataiBtn').onclick=exportConvertedCatai;document.querySelectorAll('input[name="cataiFirstMesMode"]').forEach(x=>x.onchange=renderFormatConversionDialog);$('#closeTranslationLanguage').onclick=()=>closeDialog($('#translationLanguageDialog'));$('#cancelTranslationLanguage').onclick=()=>closeDialog($('#translationLanguageDialog'));$('#saveTranslationLanguage').onclick=saveTranslationLanguageDialog;$('#translationLangEn').onchange=updateTranslationLanguageDialogWarning;$('#translationLangKo').onchange=updateTranslationLanguageDialogWarning;$('#runIntegrityBtn').onclick=()=>runIntegrityCheck(false);$('#exportIntegrityBtn').onclick=exportIntegrityReport;$('#resumeTranslateBtn').onclick=resumePendingTranslation;$('#clearAutosaveBtn').onclick=clearCurrentAutosave;$('#addGlossaryBtn').onclick=()=>{state.glossary.push({source:'',target:'',category:'name',note:''});saveGlossary();renderGlossary()};$('#importGlossaryBtn').onclick=()=>$('#glossaryImportInput').click();$('#glossaryImportInput').onchange=e=>{if(e.target.files?.[0])importGlossary(e.target.files[0]);e.target.value=''};$('#exportGlossaryBtn').onclick=exportGlossary;$('#clearGlossaryBtn').onclick=()=>{if(confirm('确定清空全部术语吗？')){state.glossary=[];saveGlossary();renderGlossary()}};$('#assistantBtn').onclick=()=>{$('#assistantPanel').classList.add('open');closeSidebar()};$('#closeAssistant').onclick=()=>$('#assistantPanel').classList.remove('open');$('#sendChatBtn').onclick=sendAssistant;$('#chatInput').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')sendAssistant()});$('#clearCardBtn').onclick=()=>{if(confirm('确定清空当前角色卡吗？'))clearCard()};$('#exportJsonBtn').onclick=exportJson;$('#exportImageBtn').onclick=()=>{try{downloadBlob(exportPng(),`${safeBaseName(state.file?.name)}_中文版.${state.fileType==='apng'?'apng':'png'}`)}catch(e){toast(e.message)}};$('#quickDownloadBtn').onclick=quickDownload;$('#cancelTranslateBtn').onclick=()=>{state.abortController?.abort();hideProgress()};$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');storageSet('cardlingo-theme',document.body.classList.contains('light')?'light':'dark')};if(storageGet('cardlingo-theme')==='light')document.body.classList.add('light');const lang=storageGet('cardlingo-ui-lang')||'zh';$('#uiLanguage').value=lang;setUiLanguage(lang);$('#uiLanguage').onchange=e=>setUiLanguage(e.target.value);window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}});updateHistoryUI();renderActualUsage();renderConsistencyBadge();renderIntegrityBadge();renderVisibilityBadge();renderLocalizationIntelligenceUi();updateBatchLanguageButtons();updateAutosaveUi('自动保存：等待载入文件')}
+const CARDLINGO_VERSION="1.4.1-monochrome-hard-edge";
 let __cardLingoBooted=false;
 function showBootError(err){console.error('[CardLingo boot error]',err);const el=document.getElementById('bootError');if(el){el.hidden=false;el.textContent='CardLingo 启动失败：'+(err?.message||String(err))+'。请截图这一行发给我。'}}
 function bootCardLingo(){if(__cardLingoBooted)return;__cardLingoBooted=true;try{const touch=(navigator.maxTouchPoints||0)>0||(window.matchMedia&&matchMedia('(pointer:coarse)').matches);if(touch)document.body.classList.add('touch-ui');bind();document.documentElement.dataset.cardlingoReady='1'}catch(err){showBootError(err)}}
